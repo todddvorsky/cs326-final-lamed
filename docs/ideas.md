@@ -17,3 +17,4 @@ profiles, they will have the option to focus on just workouts, just diets/recipe
 Assuming there will be multiple users of the app, users will be able to "like" sets of workouts/diets, workouts alone, or diets alone. Users can also comment on any set as well to give other users more insight. There will also be the option of looking at the price of diets given so users can get a better idea of diets that work better for their life. The diet/recipes will also include calorie counts and all nutritional data needed to gauge if it's the correct diet for you.
 
 
+
