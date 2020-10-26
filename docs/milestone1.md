@@ -65,5 +65,5 @@ recipes: {
 [Wireframes](https://drive.google.com/file/d/1CEFCk-R_HrVt_ahIVWXKrxtPOK4BYe0A/)
 
 ## Screenshots
-![Alt text](/cs326-final-lamed/public/screenshots/login.png?raw=true "Login Page")
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/login.png)
 
