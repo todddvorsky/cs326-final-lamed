@@ -65,5 +65,34 @@ recipes: {
 [Wireframes](https://drive.google.com/file/d/1CEFCk-R_HrVt_ahIVWXKrxtPOK4BYe0A/)
 
 ## Screenshots
+### Login Page
 ![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/login.png)
+
+### Home Page
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/home.png)
+
+### Diet Page
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/diets.png)
+
+### Browse Diet Page
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/browse_diets.png)
+
+### Workout Page
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/workouts.png)
+
+### Browse Workouts Page
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/browse_workouts.png)
+
+### Social Page
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/social.png)
+
+### Profile Page #1
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/profile_1.png)
+
+### Profile Page #2
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/profile_2.png)
+
+### About Page #2
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/about.png)
+
 
