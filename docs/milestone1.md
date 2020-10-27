@@ -15,7 +15,7 @@ Wireframes
 - Social page,
 Profile page,
 Data Interactions,
-HTML Screenshots
+HTML Screenshots, HTML descriptions
 
 
 ## Important Components/Data Interaction
