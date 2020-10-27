@@ -79,7 +79,7 @@ This page allows you to input any diet you customize yourself. You can click the
 
 ### Browse Diet Page
 ![Browse Diet Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/browse_diets.png)
-This is the browse diet page to pick a pre-made diet you like, or to draw inspiration to create your own diet!
+This is the browse diet page to pick a pre-made diet you like, or to draw inspiration to create your own diet! You can also see the diets you have already chosen to keep for yourself
 
 ### Workout Page
 ![Workout Page](https://github.com/todddvorsky/cs326-final-lamed/blob/patrick-dev/public/screenshots/workouts.png)
