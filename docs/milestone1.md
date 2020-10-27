@@ -17,6 +17,11 @@ Profile page,
 Data Interactions,
 HTML Screenshots, HTML descriptions
 
+### Jason Bolton
+- Nav bar fixes,
+Styling,
+Nav bar wireframe
+
 
 ## Important Components/Data Interaction
 Users of this app will have their own credentials to login to their account in order to keep their data separate from other users. Within their profiles, they will have the option to focus on just workouts, just diets/recipes/nutrition, or combine the two. When wanting to combine the two, users can pick a workout that they're currently focusing on and get a diet plan matched up with it, or vice versa if they're more in tune with their diet and want some help on the workout side of things. Users can also browse around on both the workout and diet sides if they're wanting a better idea of the app. While they'll always have the option to randomize options that match their desired profile, users can also customize their own diet or workout if they want to be very precise.
