@@ -1,0 +1,38 @@
+{
+	"user": {
+		"userId": "132",
+		"firstName": "John",
+		"lastName": "Doe",
+		"email": "jd@umass.edu",
+		"password": "jd123",
+		"friends": {
+			"ids": []
+		},
+		"diets": ["421", "55", "49"],
+		"workouts": ["465", "53"]
+	},
+
+	"workouts": {
+		"workoutsId": "421",
+		"exercises": ["77", "167", "135"]
+	},
+	"diets": {
+		"dietsId": "551",
+		"recipes": ["123", "1414", "4", "15"]
+	},
+
+	"exercises": {
+		"exerciseId": "557",
+		"name": "bench press",
+		"desc": "qfnweisjkdhgfbaawilkjdfoq",
+		"sets": "5",
+		"reps": "5"
+	},
+
+	"recipes": {
+		"recipeId": "435",
+		"name": "sandwich",
+		"desc": "dswrgjawinrjq",
+		"ingredients": "bread, cheese, meat, lettuce, tomato"
+	}
+}
