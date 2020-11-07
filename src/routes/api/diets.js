@@ -1,25 +1,50 @@
-const express = require('express');
-const router = express();
+//const express = require('express');
+//const router = express();
 
-/* GET diets homepage. */
-module.exports = {
-d: function(){
-router.get('/api/diets', function(req, res, next) {
-  res.send('respond with a list of diets');
-});
-}
+exports.handleGetDiets = function(req, res){
+  console.log('get all of the diets');
 }
 
-router.get('/diets/recipes', function(req, res, next) {
-  res.send('respond with a list of diets');
-});
+function handleGetDietId(req, res){
+  console.log('get the diet with the specific Id');
+}
 
-router.get('/diets/recipes/:id', function(req, res, next) {
-  res.send('respond with a specific recipe with id');
-});
+function handleGetRecipes(req, res){
+  console.log('get all of the recipes');
+}
 
-router.get('/diets/recipes/:tags', function(req, res, next) {
-  res.send('respond with a list of recipes with certain tags');
-});
+function handleGetRecipeId(req, res){
+  console.log('get the recipe with a specific Id');
+}
 
-module.exports = router;
+function handleGetRecipeTags(req, res){
+  console.log('Get a list of recipes with the specific tag');
+}
+
+function handleCreateDiet(req, res){
+  console.log('Create a new diet with the specified fields');
+}
+
+function handleCreateRecipe(req, res){
+  console.log('Create a new Recipe with the specified fields');
+}
+
+function handleUpdateDiet(req, res){
+  console.log('update a diet with the specified elements');
+}
+
+function handleUpdateRecipe(req, res){
+  console.log('update a recipe with the specified elements');
+}
+
+function handleDeleteDiet(req, res){
+  console.log('delete a specified diet');
+}
+
+function handleDeleteRecipe(req, res){
+  console.log('delete a specified recipe');
+}
+
+function handleDeleteRecipeFromDiet(req, res){
+  console.log('Delete a specified recipe from a diet');
+}
