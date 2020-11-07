@@ -1,49 +1,51 @@
-var router = require('express').Router();
+'use strict';
 
-export function handleGetWorkouts(req, res){
-  console.log('get all of the workouts');
-}
+module.exports = {
+  handleGetWO: function(req, res){
+    res.send('get all of the workouts');
+  },
 
-export function handleGetWOId(req, res){
-  console.log('get the workout with the specific Id');
-}
+  handleGetWOId: function(req, res){
+    res.send('get the workout with the specific Id');
+  },
 
-export function handleGetExercises(req, res){
-  console.log('get all of the exercises');
-}
+  handleGetExercises: function(req, res){
+    res.send('get all of the exercises');
+  },
 
-export function handleGetExerciseId(req, res){
-  console.log('get the exercise with a specific Id');
-}
+  handleGetExerciseId: function(req, res){
+    res.send('get the exercise with a specific Id');
+  },
 
-export function handleGetExerciseTags(req, res){
-  console.log('Get a list of exercises with the specific tag');
-}
+  handleGetExerciseTags: function(req, res){
+    res.send('Get a list of exercises with the specific tag');
+  },
 
-export function handleCreateWO(req, res){
-  console.log('Create a new Workout with the specified fields');
-}
+  handleCreateWO: function(req, res){
+    res.send('Create a new workout with the specified fields');
+  },
 
-export function handleCreateExercise(req, res){
-  console.log('Create a new Exercise with the specified fields');
-}
+  handleCreateExercise: function(req, res){
+    res.send('Create a new exercise with the specified fields');
+  },
 
-export function handleUpdateWO(req, res){
-  console.log('update a WO with the specified fields');
-}
+  handleUpdateWO: function(req, res){
+    res.send('update a workout with the specified elements');
+  },
 
-export function handleUpdateExercise(req, res){
-  console.log('update an exercise with the specified fields');
-}
+  handleUpdateExercise: function(req, res){
+    res.send('update an exercise with the specified elements');
+  },
 
-export function handleDeleteWO(req, res){
-  console.log('delete a specified Workout');
-}
+  handleDeleteWO: function(req, res){
+    res.send('delete a specified workout');
+  },
 
-export function handleDeleteExercise(req, res){
-  console.log('delete a specified exercise');
-}
+  handleDeleteExercise: function(req, res){
+    res.send('delete a specified exercise');
+  },
 
-export function handleDeleteExerciseFromWO(req, res){
-  console.log('Delete a specified exercise from a Workout');
+  handleDeleteExerciseFromWO: function(req, res){
+    res.send('Delete a specified exercise from a workout');
+  },
 }
