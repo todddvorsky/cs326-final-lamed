@@ -1,12 +1,14 @@
-var router = require('express').Router();
+'use strict';
+const express = require('express');
+const app = express();
 
-router.use('/users', require('./users'));
-router.use('/workouts', require('./workouts'));
-router.use('/diets', require('./diets'));
+app.use('/users', require('./users'));
+app.use('/workouts', require('./workouts'));
+app.use('/diets', require('./diets'));
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+app.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-module.exports = router;
+module.exports = app;
