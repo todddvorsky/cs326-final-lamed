@@ -9,7 +9,11 @@ const userFuncs = require('./api/users.js');
 
 //serves the static html files
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.use('/*', express.static('./src/views'));
+=======
+app.use('/', express.static('./src/views'));
+>>>>>>> parent of 067ea56... changes
 =======
 app.use('/', express.static('./src/views'));
 >>>>>>> parent of 067ea56... changes
