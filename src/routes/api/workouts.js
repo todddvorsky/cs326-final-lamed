@@ -1,10 +1,8 @@
-'use strict';
-const express = require('express');
-const app = express();
+var router = require('express').Router();
 
 /* GET workouts homepage. */
-app.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-module.exports = app;
+module.exports = router;

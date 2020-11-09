@@ -1,7 +1,5 @@
-'use strict';
-const express = require('express');
-const app = express();
+var router = require('express').Router();
 
-app.use('/api', require('./api'));
+router.use('/api', require('./api'));
 
-module.exports = app;
+module.exports = router;
