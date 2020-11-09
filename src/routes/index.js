@@ -7,6 +7,7 @@ const dietFuncs = require('./api/diets.js');
 const workoutFuncs = require('./api/workouts.js');
 const userFuncs = require('./api/users.js');
 
+<<<<<<< HEAD
 //app.use(express.static('./public/images'));
 
 //serves the static html files
@@ -54,8 +55,16 @@ app.get('/users/workouts/delete/:id',userFuncs.handleDeleteUsersWorkout);
 
 app.get('*', (req, res) => {
     res.send('NO FOOL');
+=======
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+>>>>>>> 1c9e76079329d1c599d6d2a6da2bf61a5714f81a
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-});
+/* use next middleware functions */
+router.use('/users', require('./users'));
+router.use('/workouts', require('./workouts'));
+router.use('/diets', require('./diets'));
+
+module.exports = router;
