@@ -8,7 +8,11 @@ const workoutFuncs = require('./api/workouts.js');
 const userFuncs = require('./api/users.js');
 
 //serves the static html files
+<<<<<<< HEAD
 app.use('/*', express.static('./src/views'));
+=======
+app.use('/', express.static('./src/views'));
+>>>>>>> parent of 067ea56... changes
 
 //endpoints for diets
 app.get('/diets', dietFuncs.handleGetDiets);
