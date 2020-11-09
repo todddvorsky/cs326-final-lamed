@@ -8,7 +8,23 @@
 			"password": "jd123",
 			"friends": ["893"],
 			"diets": ["421", "55", "49"],
-			"workouts": ["465", "53"]
+			"workouts": ["465", "53"],
+			"schedule": {
+				"mon-w":"465",
+				"mon-d":"49",
+				"tues-w":"53",
+				"tues-d":"55",
+				"wed-w":"",
+				"wed-d":"",
+				"thurs-w":"",
+				"thurs-d":"",
+				"fri-w":"",
+				"fri-d":"",
+				"sat-w":"",
+				"sat-d":"",
+				"sun-w":"",
+				"sun-d":""
+			}
 		},
 		{
 			"userId": "893",
@@ -18,7 +34,23 @@
 			"password": "pizzalover123",
 			"friends": ["132"],
 			"diets": ["421", "235"],
-			"workouts": ["551", "639"]
+			"workouts": ["551", "639"],
+			"schedule": {
+				"mon-w":"551",
+				"mon-d":"421",
+				"tues-w":"639",
+				"tues-d":"235",
+				"wed-w":"",
+				"wed-d":"",
+				"thurs-w":"",
+				"thurs-d":"",
+				"fri-w":"",
+				"fri-d":"",
+				"sat-w":"",
+				"sat-d":"",
+				"sun-w":"",
+				"sun-d":""
+			}
 		}
 	],
 

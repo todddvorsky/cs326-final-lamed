@@ -7,8 +7,11 @@ const dietFuncs = require('./api/diets.js');
 const workoutFuncs = require('./api/workouts.js');
 const userFuncs = require('./api/users.js');
 
+app.use(express.static('./public/images'));
+
 //serves the static html files
-app.use('/', express.static('./src/views'));
+app.use('/*', express.static('./src/views'));
+
 
 //endpoints for diets
 app.get('/diets', dietFuncs.handleGetDiets);
