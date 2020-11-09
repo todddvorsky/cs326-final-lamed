@@ -7,6 +7,19 @@ const dietFuncs = require('./api/diets.js');
 const workoutFuncs = require('./api/workouts.js');
 const userFuncs = require('./api/users.js');
 
+<<<<<<< HEAD
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+/* use next middleware functions */
+router.use('/users', require('./users'));
+router.use('/workouts', require('./workouts'));
+router.use('/diets', require('./diets'));
+
+module.exports = router;
+=======
 //serves the static html files
 app.use('/', express.static('./src/views'));
 
@@ -55,3 +68,4 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
+>>>>>>> master
