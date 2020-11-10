@@ -38,7 +38,7 @@ router.get('/:user', function(req, res){
 /* Create a user */
 router.post('/create', function(req, res){
   //send back the name of the user created just to test the create
-  res.json({name: req.name});
+  res.json({name: "created"});
 });
 
 /* Update a user with this id */
