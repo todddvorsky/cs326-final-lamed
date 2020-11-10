@@ -12,7 +12,7 @@ router.param('user', function (req, res, next){
 
 /* GET all users */
 router.get('/', function(req, res, next) {
-  res.send('get all users');
+  res.json({users: ["wendy", "grace", "liam"]});
 });
 /* GET a specific user. */
 router.get('/:user', function(req, res){
