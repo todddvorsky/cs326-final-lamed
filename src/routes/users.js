@@ -12,23 +12,50 @@ router.param('user', function (req, res, next){
 
 /* GET all users */
 router.get('/', function(req, res, next) {
-  res.json({users: ["wendy", "grace", "liam"]});
+  //send back all users & respectful info, but for now send back array of names to test
+  res.json({users: 
+    [{userid: 51, name: "Wendy"}, 
+    {userid: 43, name: "Grace"},
+    {userid: 67, name: "Liam"}]
+  });
 });
+
 /* GET a specific user. */
 router.get('/:user', function(req, res){
-  res.send('get user: ' + req.user);
+  //send back a user with that id and info
+  res.json({
+    userid: req.params.user, 
+    name: "Wendy",
+    workout: "HIIT",
+    diet: {
+      breakfast: "oats",
+      lunch: "soup",
+      dinner: "salmon"
+    }
+  });
 });
+
 /* Create a user */
 router.post('/create', function(req, res){
-  res.send('create user');
+  //send back the name of the user created just to test the create
+  res.json({name: req.name});
 });
-/* Update a user */
-router.put('/update/:user', function(req, res){
-  res.send('update user: ' + req.user);
+
+/* Update a user with this id */
+router.post('/update/:user', function(req, res){
+  /* update the user info and put it in the db
+      but for now send back the name of the user being updated to test.
+      Should be able to update any part of the user specified
+      by the ID with the body info given*/
+  res.json({userid: 65, name: "Pat"});
 });
+
 /* Delete a user */
 router.delete('/delete/:user', function(req, res){
-  res.send('delete user: ' + req.user);
+  //delete the user from the db, for now send back id of user being deleted
+  res.json({userid: req.params.user});
 });
+
+
 
 module.exports = router;

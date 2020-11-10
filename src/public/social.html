@@ -59,6 +59,10 @@
 			<div class="row">
 				<div class = "col">
 					<p>Pick a friend to see their workout & diet for the day!</p>
+				</div>
+			</div>
+			<div class = 'row'>		
+				<div class = 'col'>
 					<div class="dropdown">
 						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						  Friend's List
@@ -66,6 +70,12 @@
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id ="dropdownDiv">
 						</div>
 					</div>
+				</div>
+				<div class = "col">
+					<div class="input-group input-group-sm mb-3">
+						<button class = 'btn-success' id ='add-friend-btn'>Add Friend</button>
+						<input id = 'add-friend-name' type="text" class="form-control" placeholder="Type your friend's name here" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+					  </div>
 				</div>
 			</div>
 			<br/>
@@ -76,7 +86,9 @@
 					See what recipes your friends are cooking and what workouts they're 
 					doing today!
 				</p>
-				<h5 id = "friends-name"></h5><h5>'s list</h5>
+				<div class = 'row'>
+					<h5 id = "friends-name"></h5><h5>'s list</h5>
+				</div>
 				<hr class="my-4" />
 				<div class="container">
 					<div class="row text-center">
@@ -95,7 +107,7 @@
 						</div>
 						<div class="col" id = "lunch-col">
 							<h5>Lunch</h5>
-							<p>Pea & mint Salad</p>
+							<p id = 'lunch'>Pea & mint Salad</p>
 							<img
 								class="img-thumbnail"
 								src="./images/pea-mint.jpg"
@@ -105,7 +117,7 @@
 						</div>
 						<div class="col" id = "dinner-col">
 							<h5>Dinner</h5>
-							<p>salmon & asparagus</p>
+							<p id = "dinner">salmon & asparagus</p>
 							<img
 								class="img-thumbnail"
 								src="./images/salmon-asp.jpg"
@@ -118,7 +130,7 @@
 						
 						<div class="col" id = "workout-col">
 							<h4 class="text-center">Workout</h4>
-							<p><strong>HIIT</strong> - High intensity interval training</p>
+							<p id = 'workout'><strong>HIIT</strong> - High intensity interval training</p>
 							<img
 							class="img-thumbnail"
 							src="./images/HIIT.jpg"
@@ -126,6 +138,9 @@
 							height="200"
 						/>
 						</div>
+					</div>
+					<div class = 'row '>
+						<button class = ' col btn-danger' id ='delete-friend-btn'>Delete Friend</button>
 					</div>
 				</div>
 			</div>
