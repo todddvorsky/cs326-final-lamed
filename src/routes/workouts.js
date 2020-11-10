@@ -21,12 +21,52 @@ router.get('/allWorkouts', function (req, res, next) {
 	res.json([
 		{
 			workoutId: '421',
-			workoutName: 'my workouts',
+			workoutName: 'Jasons workout',
 			exercises: ['77', '167', '135'],
 		},
 		{
 			workoutId: '235',
-			workoutName: 'my favs',
+			workoutName: 'Patricks workout',
+			exercises: ['557', '77'],
+		},
+		{
+			workoutId: '765',
+			workoutName: 'Todds workout',
+			exercises: ['77', '167', '135'],
+		},
+		{
+			workoutId: '945',
+			workoutName: 'The Arnold',
+			exercises: ['557', '77'],
+		},
+		{
+			workoutId: '022',
+			workoutName: 'The Brady',
+			exercises: ['77', '167', '135'],
+		},
+		{
+			workoutId: '589',
+			workoutName: 'Run Every Day No Matter What',
+			exercises: ['557', '77'],
+		},
+		{
+			workoutId: '111',
+			workoutName: 'The Couch Potato',
+			exercises: ['77', '167', '135'],
+		},
+		{
+			workoutId: '578',
+			workoutName: 'Ab Ripper X',
+			exercises: ['557', '77'],
+		},
+		{
+			workoutId: '764',
+			workoutName: 'P90X',
+			exercises: ['77', '167', '135'],
+		},
+		{
+			workoutId: '036',
+			workoutName: 'Athlete Training',
 			exercises: ['557', '77'],
 		},
 	]);

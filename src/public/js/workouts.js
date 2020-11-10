@@ -13,7 +13,7 @@ async function loadUserWorkouts(element){
         const a = document.createElement('a');
         a.href = '#'; //TODO
         a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = workouts[i];
+        a.innerText = workouts[i].workoutName;
 
         a.addEventListener("click", () => {itemClickEvent(a)});
 
@@ -22,12 +22,13 @@ async function loadUserWorkouts(element){
 }
 async function loadRecs(element){
     const workouts = await (await fetch('/workouts/allWorkouts')).json();
+    console.log(JSON.stringify(workouts));
 
     for(let i=5; i<10; i++){
         const a = document.createElement('a');
         a.href = '#'; //TODO
         a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = workouts[i];
+        a.innerText = workouts[i].workoutName;
 
         a.addEventListener("click", () => {itemClickEvent(a)});
 
@@ -46,13 +47,13 @@ async function itemClickEvent(element){
         left.classList.remove("col-2");
     }
     else{
-        const description = JSON.stringify(await (await fetch('/workouts/id')).text());
+        const workout = await (await fetch('/workouts/id')).json();
 
         left.classList.add("col-2");
 
         const right = document.createElement("div");
         right.classList.add("col-2", "container");
-        right.innerText = element.innerText + ":\n" + description;
+        right.innerText = element.innerText + ":\nID: " + workout.workoutId + "\nExercises IDs: " + JSON.stringify(workout.exercises);
         right.id = "readmore";
         document.getElementById("container-a").appendChild(right);
     }
