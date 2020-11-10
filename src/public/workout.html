@@ -5,7 +5,9 @@
 		<meta charset="utf-8" />
 
 		<title></title>
-		<script src="./js/main.js"></script>
+
+		<script type="module" src="./js/workout.js" defer></script>
+
 
 		<link
 			rel="stylesheet"
@@ -37,7 +39,11 @@
 						<a class="nav-link" href="index.html">Home</a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link" href="workout.html">Workouts <span class="sr-only">(current)</span></a>
+
+						<a class="nav-link" href="workout.html"
+							>Workouts <span class="sr-only">(current)</span></a
+						>
+
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="diet.html">Diets</a>
@@ -68,7 +74,9 @@
 			<h2 class="workoutLinks">Create New Exercise:</h2>
 			<br />
 
-			<div class="dropdown">
+
+			<!-- <div class="dropdown">
+
 				<a
 					class="btn btn-secondary dropdown-toggle"
 					href="#"
@@ -87,15 +95,52 @@
 					<a class="dropdown-item" href="#">Workout 3...</a>
 				</div>
 			</div>
+
+		</br>
+			<div class="dropdown">
+				<a
+					class="btn btn-secondary dropdown-toggle"
+					href="#"
+					role="button"
+					id="dropdownMenuLink"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false"
+				>
+					Choose a Tag
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" href="#">Tag 1</a>
+					<a class="dropdown-item" href="#">Tag 2</a>
+					<a class="dropdown-item" href="#">Tag 3...</a>
+				</div>
+			</div> -->
 			<br />
 			<div class="form-group">
+				<label for="inputNameWorkout">Which Workout?</label>
+
 				<input
 					class="form-control"
 					id="workoutName"
 					aria-describedby="workoutNameHelp"
 				/>
 				<small id="workoutNameHelp" class="form-text text-muted"
-					>Choose an existing workout from above or enter a new one here.</small
+
+					>Choose an existing workout or enter a new one here.</small
+				>
+			</div>
+			<div class="form-group">
+				<label for="inputTagExercise">Exercise Tag</label>
+
+				<input
+					class="form-control"
+					id="tagName"
+					aria-describedby="tagNameHelp"
+				/>
+				<small id="tagNameHelp" class="form-text text-muted"
+					>Enter a tag for your new exercise.</small
+
 				>
 			</div>
 			<div class="form-group">
@@ -132,7 +177,8 @@
 					placeholder="8"
 				/>
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+
+			<button type="submit" id="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</body>
 
