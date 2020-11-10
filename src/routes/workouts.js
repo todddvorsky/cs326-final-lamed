@@ -18,7 +18,7 @@ router.param('exercise', function (req, res, next) {
 
 /* GET all workouts. */
 router.get('/allWorkouts', function (req, res, next) {
-	res.send('get all workouts');
+	res.send(["push-ups", "dead lift", "bench presses", "curls", "run a mile", "bike 10 miles", "sit-ups", "jumping jacks", "lounges", "squats"]);
 });
 /* GET all exercises. */
 router.get('/exercises', function (req, res) {
@@ -26,7 +26,7 @@ router.get('/exercises', function (req, res) {
 });
 /* GET a specific workout. */
 router.get('/:workout', function (req, res) {
-	res.send('get workout: ' + req.workout);
+	res.send("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 });
 /* GET a specific exercise. */
 router.get('/exercises/:exercise', function (req, res) {
