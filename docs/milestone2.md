@@ -14,7 +14,10 @@
 
 ### Patrick Kelley
 
-- 
+- Social page,
+Profile page,
+setup express app,
+MD milestone description
 
 ### Jason Bolton
 
@@ -153,18 +156,18 @@ This is the page to look for pre-made workout that you can choose to display for
 
 ### Social Page
 
-![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/social.png)
-This page will give you a brief overview of your profile at the top, allowing you to make a status that for other users at the top, or you can choose to navigate away from the page to change your profile. The bottom of the page will contain statuses from other users and allow you to look at those users profiles to see what their talking about!
+![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/socialUpdated.png)
+This updated social page provides a friends list to choose whose data you want to view, the option to add friends, and the option to delete friends at the bottom. Update functions are used when friends are added, Read functions are used to populate the data from the specific users, and Delete functions are used when deleting the person whose profile you're currently viewing.
 
 ### Profile Page #1
 
 ![Profile Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/profile_1.png)
-This is the top half of the profile page. You will have some general information and favorites show up here, as well as some personal information like your age, weight goals, and location if you wish. You can have a profile picture as well.
+This is the top half of the profile page. You will have some general information and favorites show up here, as well as some personal information like your age, weight goals, and location if you wish. If you are new to the site, you will be brought to the changing profile section to and use Create functions to create new users for the app. Read functions will be used to populate the html elements, Update functions are used to update existing data when changing your profile or workout plan, and Delete functions are interweaved with the updates.
 
 ### Profile Page #2
 
 ![Profile Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/profile_2.png)
-This is the bottom half of your profile page. Here your current workout and diet will be shown with pictures and recipes, as well as a workout description. You can choose what day of the week it shows so you can see what you've done/eaten, will do/eat, and what you should do/eat that day. The button at the bottom will allow you to change this information.
+This is the bottom half of your profile page. Here your current workout and diet will be shown with pictures and recipes, as well as a workout description. You can choose what day of the week it shows so you can see what you've done/eaten, will do/eat, and what you should do/eat that day. The button at the bottom will allow you to change this information and input completely new information which will be populated and updated according to the description above.
 
 ### About Page
 
