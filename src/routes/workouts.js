@@ -18,18 +18,66 @@ router.param('exercise', function (req, res, next) {
 
 /* GET all workouts. */
 router.get('/allWorkouts', function (req, res, next) {
-	res.send(["push-ups", "dead lift", "bench presses", "curls", "run a mile", "bike 10 miles", "sit-ups", "jumping jacks", "lounges", "squats"]);
+	res.json([
+		{
+			workoutId: '421',
+			workoutName: 'my workouts',
+			exercises: ['77', '167', '135'],
+		},
+		{
+			workoutId: '235',
+			workoutName: 'my favs',
+			exercises: ['557', '77'],
+		},
+	]);
+	res.status(200);
+	res.send('get all workouts');
 });
 /* GET all exercises. */
 router.get('/exercises', function (req, res) {
+	res.json([
+		{
+			exerciseId: '557',
+			name: 'run',
+			desc: 'qfnweisjkdhgfbaawilkjdfoq',
+			sets: '0',
+			reps: '0',
+			time: '0',
+			tags: ['cardio', 'intense'],
+		},
+		{
+			exerciseId: '77',
+			name: 'push up',
+			desc: 'up down up down',
+			sets: '5',
+			reps: '100',
+			tags: ['easy', 'muscle building'],
+		},
+	]);
+	res.status(200);
 	res.send('get all exercises');
 });
 /* GET a specific workout. */
 router.get('/:workout', function (req, res) {
-	res.send("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+	res.json({
+		workoutId: '235',
+		workoutName: 'my favs',
+		exercises: ['557', '77'],
+	});
+	res.status(200);
+	res.send('get workout: ' + req.workout);
 });
 /* GET a specific exercise. */
 router.get('/exercises/:exercise', function (req, res) {
+	res.json({
+		exerciseId: '77',
+		name: 'push up',
+		desc: 'up down up down',
+		sets: '5',
+		reps: '100',
+		tags: ['easy', 'muscle building'],
+	});
+	res.status(200);
 	res.send('get exercise: ' + req.exercise);
 });
 /* Create a workout */

@@ -14,11 +14,16 @@
 
 ### Patrick Kelley
 
-- 
+- Social page,
+Profile page,
+setup express app,
+MD milestone description
 
 ### Jason Bolton
 
-- 
+- Diet browse,
+Workout browse,
+setup express app
 
 ## API Description
 This app uses Express.js for the API. There are four separate route files, one for each type of data. 
@@ -134,17 +139,17 @@ This is a rough home page that has relative links to the other pages of the webs
 ### Diet Page
 
 ![Diet Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/diets.png)
-This page allows you to input any diet you customize yourself. You can click the browse diets button to look for new diets that you can choose for yourself. These chosen diets will show up in the diet dropdown or on your profile page.
+This page allows you to input any diet you customize yourself. You can click the browse diets button to look for new diets that you can choose for yourself. These chosen diets will show up in the diet dropdown or on your profile page. This page uses the CREATE part of the API when users enter their data and press submit. This page also uses the UPDATE part of the API in the case where users choose to add to a preexisting Diet. READ is done on the browse page, and DELETE will be on the profile page. 
 
 ### Browse Diet Page
 
 ![Browse Diet Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/browse_diets.png)
-This is the browse diet page to pick a pre-made diet you like, or to draw inspiration to create your own diet! You can also see the diets you have already chosen to keep for yourself
+This is the browse diet page to pick a pre-made diet you like, or to draw inspiration to create your own diet! You can also see the diets you have already chosen to keep for yourself.
 
 ### Workout Page
 
 ![Workout Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/workouts.png)
-This is a similar page to the diet page except for workouts. You can customize your own workouts that you will be able to set for yourself for the week/days ahead. Press the browse workout button to look for pre-made workouts.
+This is a similar page to the diet page except for workouts. You can customize your own workouts that you will be able to set for yourself for the week/days ahead. Press the browse workout button to look for pre-made workouts. This page uses the CREATE part of the API when users enter their data and press submit. This page also uses the UPDATE part of the API in the case where users choose to add to a preexisting workout. READ is done on the browse page, and DELETE will be on the profile page. 
 
 ### Browse Workouts Page
 
@@ -153,18 +158,18 @@ This is the page to look for pre-made workout that you can choose to display for
 
 ### Social Page
 
-![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/social.png)
-This page will give you a brief overview of your profile at the top, allowing you to make a status that for other users at the top, or you can choose to navigate away from the page to change your profile. The bottom of the page will contain statuses from other users and allow you to look at those users profiles to see what their talking about!
+![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/SocialUpdated.png)
+This updated social page provides a friends list to choose whose data you want to view, the option to add friends, and the option to delete friends at the bottom. Update functions are used when friends are added, Read functions are used to populate the data from the specific users, and Delete functions are used when deleting the person whose profile you're currently viewing. 
 
 ### Profile Page #1
 
 ![Profile Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/profile_1.png)
-This is the top half of the profile page. You will have some general information and favorites show up here, as well as some personal information like your age, weight goals, and location if you wish. You can have a profile picture as well.
+This is the top half of the profile page. You will have some general information and favorites show up here, as well as some personal information like your age, weight goals, and location if you wish. If you are new to the site, you will be brought to the changing profile section to and use Create functions to create new users for the app. Read functions will be used to populate the html elements, Update functions are used to update existing data when changing your profile or workout plan, and Delete functions are interweaved with the updates.
 
 ### Profile Page #2
 
 ![Profile Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/profile_2.png)
-This is the bottom half of your profile page. Here your current workout and diet will be shown with pictures and recipes, as well as a workout description. You can choose what day of the week it shows so you can see what you've done/eaten, will do/eat, and what you should do/eat that day. The button at the bottom will allow you to change this information.
+This is the bottom half of your profile page. Here your current workout and diet will be shown with pictures and recipes, as well as a workout description. You can choose what day of the week it shows so you can see what you've done/eaten, will do/eat, and what you should do/eat that day. The button at the bottom will allow you to change this information and input completely new information which will be populated and updated according to the description above.
 
 ### About Page
 
