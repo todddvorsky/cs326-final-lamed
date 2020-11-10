@@ -18,10 +18,40 @@ router.param('recipe', function (req, res, next) {
 
 /* GET all diets. */
 router.get('/allDiets', function (req, res, next) {
+	res.json([
+		{
+			dietId: '551',
+			dietName: 'my diet',
+			recipes: ['123', '1414', '4', '15'],
+		},
+		{
+			dietId: '639',
+			dietName: 'my diet 2',
+			recipes: ['435', '123'],
+		},
+	]);
+	res.status(200);
 	res.send('get all diets');
 });
 /* GET all recipes. */
 router.get('/recipes', function (req, res) {
+	res.json([
+		{
+			recipeId: '435',
+			name: 'sandwich',
+			desc: 'dswrgjawinrjq',
+			ingredients: 'bread, cheese, meat, lettuce, tomato',
+			tags: ['protein', 'easy'],
+		},
+		{
+			recipeId: '123',
+			name: 'pizza',
+			desc: 'pepperoni :)',
+			ingredients: 'dough, cheese, sauce',
+			tags: ['vegetarian', 'vegan'],
+		},
+	]);
+	res.status(200);
 	res.send('get all recipes');
 });
 /* GET a specific diet. */
@@ -30,6 +60,12 @@ router.get('/:diet', function (req, res) {
 });
 /* GET a specific recipe. */
 router.get('/recipes/:recipe', function (req, res) {
+	res.json({
+		dietId: '639',
+		dietName: 'my diet 2',
+		recipes: ['435', '123'],
+	});
+	res.status(200);
 	res.send('get recipe: ' + req.recipe);
 });
 /* Create a diet */
