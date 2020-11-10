@@ -21,7 +21,9 @@ MD milestone description
 
 ### Jason Bolton
 
-- 
+- Diet browse,
+Workout browse,
+setup express app
 
 ## API Description
 This app uses Express.js for the API. There are four separate route files, one for each type of data. 
@@ -156,7 +158,7 @@ This is the page to look for pre-made workout that you can choose to display for
 
 ### Social Page
 
-![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/socialUpdated.png)
+![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/SocialUpdated.png)
 This updated social page provides a friends list to choose whose data you want to view, the option to add friends, and the option to delete friends at the bottom. Update functions are used when friends are added, Read functions are used to populate the data from the specific users, and Delete functions are used when deleting the person whose profile you're currently viewing.
 
 ### Profile Page #1
