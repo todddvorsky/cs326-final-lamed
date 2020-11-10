@@ -2,9 +2,9 @@
 	"name": "cs326-final-lamed",
 	"version": "1.0.0",
 	"description": "",
-	"main": "main.js",
+	"main": "./src/views/public/js/main.js",
 	"scripts": {
-		"start": "node ./bin/www",
+		"start": "node ./src/app.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"nstart": "nodemon ./bin/www"
 	},
