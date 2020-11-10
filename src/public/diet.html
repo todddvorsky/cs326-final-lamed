@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 
 		<title></title>
-		<script src="./js/main.js"></script>
+		<script type="module" src="./js/diet.js" defer></script>
 
 		<link
 			rel="stylesheet"
@@ -69,7 +69,7 @@
 			<h2 class="recipeLinks">Create New Recipe:</h2>
 			<br />
 
-			<div class="dropdown">
+			<!-- <div class="dropdown">
 				<a
 					class="btn btn-secondary dropdown-toggle"
 					href="#"
@@ -107,16 +107,29 @@
 					<a class="dropdown-item" href="#">Tag 2</a>
 					<a class="dropdown-item" href="#">Tag 3...</a>
 				</div>
-			</div>
+			</div> -->
 			<br />
 			<div class="form-group">
+				<label for="inputNameDiet">Which Diet?</label>
 				<input
 					class="form-control"
 					id="dietName"
 					aria-describedby="dietNameHelp"
 				/>
 				<small id="dietNameHelp" class="form-text text-muted"
-					>Choose an existing diet from above or enter a new one here.</small
+					>Choose an existing diet or enter a new one here.
+				</small>
+			</div>
+			<div class="form-group">
+				<label for="inputTagRecipe">Recipe Tag</label>
+
+				<input
+					class="form-control"
+					id="tagName"
+					aria-describedby="tagNameHelp"
+				/>
+				<small id="tagNameHelp" class="form-text text-muted"
+					>Enter a tag for your new recipe.</small
 				>
 			</div>
 			<div class="form-group">
@@ -149,7 +162,7 @@
 				>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" id="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</body>
 	<script
