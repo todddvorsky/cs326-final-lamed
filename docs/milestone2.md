@@ -23,7 +23,8 @@ MD milestone description
 
 - Diet browse,
 Workout browse,
-setup express app
+setup express app,
+dummy data
 
 ## API Description
 This app uses Express.js for the API. There are four separate route files, one for each type of data. 
