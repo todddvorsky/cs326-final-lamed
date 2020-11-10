@@ -21,7 +21,9 @@ MD milestone description
 
 ### Jason Bolton
 
-- 
+- Diet browse,
+Workout browse,
+setup express app
 
 ## API Description
 This app uses Express.js for the API. There are four separate route files, one for each type of data. 
