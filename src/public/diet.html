@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 
 		<title></title>
-		<script src="../public/main.js"></script>
+		<script src="./js/main.js"></script>
 
 		<link
 			rel="stylesheet"
@@ -13,7 +13,7 @@
 			integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="../public/styles/app.css" />
+		<link rel="stylesheet" href="./styles/app.css" />
 	</head>
 
 	<body>
@@ -36,11 +36,11 @@
 					<li class="nav-item">
 						<a class="nav-link" href="index.html">Home</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="workout.html">Workouts <span class="sr-only">(current)</span></a>
-					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="diet.html">Diets</a>
+						<a class="nav-link" href="workout.html">Workouts</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="diet.html">Diets <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="social.html">Social</a>
@@ -56,16 +56,15 @@
 		</nav>
 		<br />
 		<div class="workoutLinks container">
-			<a class="btn btn-primary btn-lg" href="browseWorkouts.html" role="button"
-				>Browse Workouts</a
+			<a class="btn btn-primary btn-lg" href="browseDiets.html" role="button"
+				>Browse Diets</a
 			>
 		</div>
-
 		<br />
 
 		<form class="container">
 			<br />
-			<h2 class="workoutLinks">Create New Exercise:</h2>
+			<h2 class="recipeLinks">Create New Recipe:</h2>
 			<br />
 
 			<div class="dropdown">
@@ -78,64 +77,59 @@
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
-					Which Workout?
+					Which Diet?
 				</a>
 
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-					<a class="dropdown-item" href="#">Workout 1</a>
-					<a class="dropdown-item" href="#">Workout 2</a>
-					<a class="dropdown-item" href="#">Workout 3...</a>
+					<a class="dropdown-item" href="#">Diet 1</a>
+					<a class="dropdown-item" href="#">Diet 2</a>
+					<a class="dropdown-item" href="#">Diet 3...</a>
 				</div>
 			</div>
 			<br />
 			<div class="form-group">
 				<input
 					class="form-control"
-					id="workoutName"
-					aria-describedby="workoutNameHelp"
+					id="dietName"
+					aria-describedby="dietNameHelp"
 				/>
-				<small id="workoutNameHelp" class="form-text text-muted"
-					>Choose an existing workout from above or enter a new one here.</small
+				<small id="dietNameHelp" class="form-text text-muted"
+					>Choose an existing diet from above or enter a new one here.</small
 				>
 			</div>
 			<div class="form-group">
-				<label for="inputNameExercise">Name of Exercise</label>
+				<label for="inputNameRecipe">Name of Recipe</label>
 				<input
 					class="form-control"
-					id="inputNameExercise"
-					placeholder="Bench Press"
+					id="inputNameRecipe"
+					placeholder="Sandwich"
 				/>
 			</div>
 			<div class="form-group">
-				<label for="inputDescExercise">Description of Exercise</label>
+				<label for="inputDescRecipe">Description of Recipe</label>
 				<textarea
 					class="form-control"
-					id="inputDescExercise"
+					id="inputDescRecipe"
 					placeholder="Step 1..."
 				></textarea>
 			</div>
 			<div class="form-group">
-				<label for="inputSets">Sets</label>
+				<label for="ingredients">Ingredients</label>
 				<input
-					type="number"
 					class="form-control"
-					id="inputSets"
-					placeholder="5"
+					id="ingredients"
+					aria-describedby="ingredientsHelp"
+					placeholder="Two slices of bread..."
 				/>
+				<small id="ingredientsHelp" class="form-text text-muted"
+					>Please list all ingredients that are needed; separated by
+					commas.</small
+				>
 			</div>
-			<div class="form-group">
-				<label for="inputReps">Reps</label>
-				<input
-					type="number"
-					class="form-control"
-					id="inputReps"
-					placeholder="8"
-				/>
-			</div>
+
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</body>
-
 	<script
 		src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
