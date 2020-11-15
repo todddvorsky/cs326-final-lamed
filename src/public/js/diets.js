@@ -42,16 +42,16 @@ async function itemClickEvent(element){
     const left = document.getElementById("container-b");
     //check if item is currently open in right-hand container
     //TODO add an & to this condition checking if its the one currently being displayed
-    if(left.classList.contains("col-2")){
-        left.classList.remove("col-2");
+    if(left.classList.contains("col-5")){
+        left.classList.remove("col-5");
     }
     else{
         const diet = await (await fetch('/diets/id')).json();
 
-        left.classList.add("col-2");
+        left.classList.add("col-5");
 
         const right = document.createElement("div");
-        right.classList.add("col-2", "container");
+        right.classList.add("col-7", "container");
         right.innerText = element.innerText + ":\nId: " + diet.dietId + "\nRecipes: " + JSON.stringify(diet.recipes);
         right.id = "readmore";
         document.getElementById("container-a").appendChild(right);
