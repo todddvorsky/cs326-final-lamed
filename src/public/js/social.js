@@ -71,7 +71,7 @@ async function addFriend(id){
         })
     };
     console.log(myInit.body);
-    const response = await fetch(`http://127.0.0.1:8080/users/update/${id}`, myInit);
+    const response = await fetch(`/users/update/${id}`, myInit);
     if (!response.ok) {
         console.log(response.error);
         return;
@@ -95,7 +95,7 @@ async function deleteUser(){
     const myInit = {
         method: 'DELETE'
     };
-    const response = await fetch(`http://127.0.0.1:8080/users/delete/${curr_friend_id}`, myInit);
+    const response = await fetch(`/users/delete/${curr_friend_id}`, myInit);
     if (!response.ok) {
         console.log(response.error);
         return;

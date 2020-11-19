@@ -30,7 +30,7 @@ window.addEventListener("load", async function(){
 /*async function that populates the day buttons with their
     respective diets and workouts for a specific user - GET*/
     async function getDiets_workouts(){
-        const response = await fetch("http://127.0.0.1:8080/users/51");
+        const response = await fetch("/users/51");
         if (!response.ok) {
             console.log(response.error);
             return;
@@ -44,7 +44,7 @@ window.addEventListener("load", async function(){
         const myInit = {
             method: "POST"
         };
-        const response = await fetch("http://127.0.0.1:8080/users/update/65", myInit);
+        const response = await fetch("/users/update/65", myInit);
         if (!response.ok) {
             console.log(response.error);
             return;
@@ -58,7 +58,7 @@ window.addEventListener("load", async function(){
         const myInit = {
             method: "POST"
         };
-        const response = await fetch("http://127.0.0.1:8080/users/create", myInit);
+        const response = await fetch("/users/create", myInit);
         if (!response.ok) {
             console.log(response.error);
             return;
