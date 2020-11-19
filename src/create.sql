@@ -7,30 +7,30 @@ DROP TABLE IF EXISTS recipes;
 
 
 CREATE TABLE users (
-    userId INT SERIAL PRIMARY KEY,
+    userId SERIAL PRIMARY KEY,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     email VARCHAR(255),
-    password CHAR(60),
+    password CHAR(60)
 );
 
 CREATE TABLE friends (
-    friendsId INT SERIAL PRIMARY KEY,
+    friendsId SERIAL PRIMARY KEY,
     userId INT,
     friendId INT,
     FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (friendId) REFERENCES users(userId),
+    FOREIGN KEY (friendId) REFERENCES users(userId)
 );
 
 CREATE TABLE workouts (
-    workoutId INT SERIAL PRIMARY KEY,
+    workoutId SERIAL PRIMARY KEY,
     userId INT,
     workoutName VARCHAR(255),
-    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
 CREATE TABLE exercises (
-    exerciseId INT SERIAL PRIMARY KEY,
+    exerciseId SERIAL PRIMARY KEY,
     workoutId INT,
     FOREIGN KEY (workoutId) REFERENCES workouts(workoutId),
     name VARCHAR(255),
@@ -42,14 +42,14 @@ CREATE TABLE exercises (
 );
 
 CREATE TABLE diets (
-    dietId INT SERIAL PRIMARY KEY,
+    dietId SERIAL PRIMARY KEY,
     userId INT,
     dietName VARCHAR(255),
-    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
 CREATE TABLE recipes (
-    recipeId INT SERIAL PRIMARY KEY,
+    recipeId SERIAL PRIMARY KEY,
     dietId INT,
     FOREIGN KEY (dietId) REFERENCES diets(dietId),
     description TEXT,
