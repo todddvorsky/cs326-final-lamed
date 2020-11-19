@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS recipes;
 
 
 CREATE TABLE users (
-    userId INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT SERIAL PRIMARY KEY,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     email VARCHAR(255),
@@ -15,7 +15,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE friends (
-    friendsId INT AUTO_INCREMENT PRIMARY KEY,
+    friendsId INT SERIAL PRIMARY KEY,
     userId INT,
     friendId INT,
     FOREIGN KEY (userId) REFERENCES users(userId),
@@ -23,14 +23,14 @@ CREATE TABLE friends (
 );
 
 CREATE TABLE workouts (
-    workoutId INT AUTO_INCREMENT PRIMARY KEY,
+    workoutId INT SERIAL PRIMARY KEY,
     userId INT,
     workoutName VARCHAR(255),
     FOREIGN KEY (userId) REFERENCES users(userId),
 );
 
 CREATE TABLE exercises (
-    exerciseId INT AUTO_INCREMENT PRIMARY KEY,
+    exerciseId INT SERIAL PRIMARY KEY,
     workoutId INT,
     FOREIGN KEY (workoutId) REFERENCES workouts(workoutId),
     name VARCHAR(255),
@@ -42,14 +42,14 @@ CREATE TABLE exercises (
 );
 
 CREATE TABLE diets (
-    dietId INT AUTO_INCREMENT PRIMARY KEY,
+    dietId INT SERIAL PRIMARY KEY,
     userId INT,
     dietName VARCHAR(255),
     FOREIGN KEY (userId) REFERENCES users(userId),
 );
 
 CREATE TABLE recipes (
-    recipeId INT AUTO_INCREMENT PRIMARY KEY,
+    recipeId INT SERIAL PRIMARY KEY,
     dietId INT,
     FOREIGN KEY (dietId) REFERENCES diets(dietId),
     description TEXT,
