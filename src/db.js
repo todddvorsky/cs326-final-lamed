@@ -13,14 +13,14 @@ const pgp = require('pg-promise')({
 
 let currentUserId = 2; // temp
 
-// let secrets;
-// let password;
-// if (!process.env.PASSWORD) {
-// 	secrets = require('./secrets.json');
-// 	password = secrets.password;
-// } else {
-// 	password = process.env.PASSWORD;
-// }
+let secrets;
+let password;
+if (!process.env.PASSWORD) {
+	secrets = require('./secrets.json');
+	password = secrets.password;
+} else {
+	password = process.env.PASSWORD;
+}
 
 const url = process.env.DATABASE_URL || secrets.url;
 
