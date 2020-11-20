@@ -122,10 +122,30 @@ async function friendFunctions(userid, friendid, action) {
 	}
 }
 async function getUserByEmail(email) {
-	return connectAndRun(
+	return await connectAndRun(
 		(db) => db.any('SELECT * FROM users WHERE email = $1;')[email]
 	);
 }
+
+//DELETE to delete the selected friend from the current users friends list
+async function handleDeleteFriend(friendsid) {
+	await connectAndRun(
+		db => db.none('DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;', 
+					[currentUserId, friendsid, 'accepted'])
+		);
+	return await connectAndRun(db => db.none('DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;', 
+											[friendsid, currentUserId, 'accepted'])
+		);
+};
+
+//UPDATE the specified fields for a user, Body must contain firstname,lastname,email
+async function handlePostUpdateUserNames_Email(userid, body) {
+	await connectAndRun(
+		db => db.any('UPDATE users SET firstname = $1, lastname = $2, email=$3 WHERE userid = $4;', 
+					[body.firstname, body.lastname, body.email, userid])
+		);
+	return await connectAndRun(db => db.any('SELECT * from users WHERE userid =$1;',[userid]));
+};
 
 module.exports = {
 	connectAndRun,
@@ -136,6 +156,8 @@ module.exports = {
 	handleGetUserDiets,
 	handlePostCheckFriend,
 	handlePostCheckOwnRequest,
+	handleDeleteFriend,
+	handlePostUpdateUserNames_Email,
 	friendFunctions,
 	getUserByEmail,
 };

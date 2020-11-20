@@ -73,17 +73,16 @@ router.post('/addfriend/:friendemail', async function (req, res) {
 	}
 });
 
-/* Create a user */
-router.post('/create', function (req, res) {
-	//send back the name of the user created just to test the create
-
-	res.json({ name: 'created' });
+/* DELETE the friend selected off the current users friends list */
+router.delete('/friends/delete/:friendid', async function (req, res) {
+	const updated = await database.handleDeleteFriend(req.params.friendid);
+	res.json({msg: 'User has been deleted off friends list'});
 });
 
 /* Update a user with this id */
 router.post('/update/:user', async function (req, res) {
   console.log(req.body);
-	const updated = await handlePostUpdateUserNames_Email(req.params.user, req.body);
+	const updated = await database.handlePostUpdateUserNames_Email(req.params.user, req.body);
 	res.send(updated);
 });
 
