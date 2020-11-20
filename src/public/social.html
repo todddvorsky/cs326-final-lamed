@@ -2,21 +2,36 @@
 
 <html lang="en">
 	<head>
-
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-		
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+			crossorigin="anonymous"
+		></script>
+
 		<script src="./js/social.js"></script>
 		<title></title>
-
 	</head>
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="login.html">FitnessApp</a>
+			<a class="navbar-brand" href="index.html">FitnessApp</a>
 			<button
 				class="navbar-toggler"
 				type="button"
@@ -32,7 +47,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="index.html">Home</a>
+						<a class="nav-link" href="home.html">Home</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="workout.html">Workouts</a>
@@ -55,41 +70,58 @@
 			</div>
 		</nav>
 
-
 		<div class="container">
 			<h1>Social Page</h1>
 			<div class="row">
-				<div class = "col">
+				<div class="col">
 					<p>Pick a friend to see their workout & diet for the day!</p>
 				</div>
 			</div>
-			<div class = 'row'>		
-				<div class = 'col'>
+			<div class="row">
+				<div class="col">
 					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						  Friend's List
+						<button
+							class="btn btn-secondary dropdown-toggle"
+							type="button"
+							id="dropdownMenuButton"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							Friend's List
 						</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id ="dropdownDiv">
-						</div>
+						<div
+							class="dropdown-menu"
+							aria-labelledby="dropdownMenuButton"
+							id="dropdownDiv"
+						></div>
 					</div>
 				</div>
-				<div class = "col">
+				<div class="col">
 					<div class="input-group input-group-sm mb-3">
-						<button class = 'btn-success' id ='add-friend-btn'>Add Friend</button>
-						<input id = 'add-friend-name' type="text" class="form-control" placeholder="Type your friend's name here" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-					  </div>
+						<button class="btn-success" id="add-friend-btn">Add Friend</button>
+						<input
+							id="add-friend-name"
+							type="text"
+							class="form-control"
+							placeholder="Type your friend's name here"
+							aria-label="Sizing example input"
+							aria-describedby="inputGroup-sizing-sm"
+						/>
+					</div>
 				</div>
 			</div>
-			<br/>
+			<br />
 
 			<div class="jumbotron" width="500" id="friend_updates">
 				<h1 class="display-4">Friend Updates</h1>
 				<p class="lead">
-					See what recipes your friends are cooking and what workouts they're 
+					See what recipes your friends are cooking and what workouts they're
 					doing today!
 				</p>
-				<div class = 'row'>
-					<h5 id = "friends-name"></h5><h5>'s list</h5>
+				<div class="row">
+					<h5 id="friends-name"></h5>
+					<h5>'s list</h5>
 				</div>
 				<hr class="my-4" />
 				<div class="container">
@@ -97,9 +129,9 @@
 						<h4>Recipes</h4>
 					</div>
 					<div class="row">
-						<div class="col" id = "breakfast-col">
+						<div class="col" id="breakfast-col">
 							<h5>Breakfast</h5>
-							<p id = "breakfast">Oat cakes/yogurt</p>
+							<p id="breakfast">Oat cakes/yogurt</p>
 							<img
 								class="img-thumbnail"
 								src="./images/oat_cakes.jpg"
@@ -107,9 +139,9 @@
 								height="150"
 							/>
 						</div>
-						<div class="col" id = "lunch-col">
+						<div class="col" id="lunch-col">
 							<h5>Lunch</h5>
-							<p id = 'lunch'>Pea & mint Salad</p>
+							<p id="lunch">Pea & mint Salad</p>
 							<img
 								class="img-thumbnail"
 								src="./images/pea-mint.jpg"
@@ -117,9 +149,9 @@
 								height="150"
 							/>
 						</div>
-						<div class="col" id = "dinner-col">
+						<div class="col" id="dinner-col">
 							<h5>Dinner</h5>
-							<p id = "dinner">salmon & asparagus</p>
+							<p id="dinner">salmon & asparagus</p>
 							<img
 								class="img-thumbnail"
 								src="./images/salmon-asp.jpg"
@@ -129,24 +161,26 @@
 						</div>
 					</div>
 					<div class="row text-center">
-						
-						<div class="col" id = "workout-col">
+						<div class="col" id="workout-col">
 							<h4 class="text-center">Workout</h4>
-							<p id = 'workout'><strong>HIIT</strong> - High intensity interval training</p>
+							<p id="workout">
+								<strong>HIIT</strong> - High intensity interval training
+							</p>
 							<img
-							class="img-thumbnail"
-							src="./images/HIIT.jpg"
-							width="300"
-							height="200"
-						/>
+								class="img-thumbnail"
+								src="./images/HIIT.jpg"
+								width="300"
+								height="200"
+							/>
 						</div>
 					</div>
-					<div class = 'row '>
-						<button class = ' col btn-danger' id ='delete-friend-btn'>Delete Friend</button>
+					<div class="row">
+						<button class="col btn-danger" id="delete-friend-btn">
+							Delete Friend
+						</button>
 					</div>
 				</div>
 			</div>
-		</div>	
-
+		</div>
 	</body>
 </html>
