@@ -1,4 +1,4 @@
-var router = require('express').Router();
+const router = require('express').Router();
 
 /* set params */
 router.param('diet', function (req, res, next) {
