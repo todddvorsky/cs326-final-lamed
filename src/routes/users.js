@@ -62,11 +62,11 @@ async function handleGetDietsRecipes(dietid) {
   return await connectAndRun(db => db.any('SELECT * FROM recipes WHERE dietid = $1;', [dietid]));
 };
 //Check to see if the friend has already sent one to you
-async function handleGETCheckFriend(friendid) {
+async function handlePostCheckFriend(friendid) {
   return await connectAndRun(db => db.any('SELECT * FROM friends WHERE friendId = $1 AND userId = $2;', [currentUserId, friendid]));
 };
 //Check to see if you already sent a friend request
-async function handleGETCheckOwnRequest(friendid) {
+async function handlePostCheckOwnRequest(friendid) {
   return await connectAndRun(db => db.any('SELECT * FROM friends WHERE friendId = $1 AND userId = $2;', [friendid, currentUserId]));
 };
 
@@ -123,15 +123,15 @@ router.get('/diets/recipes/:dietid', async function(req, res){
   res.send(recipes);
 });
 
-/*GET to add a friend*/
+/*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function(req, res){
   let friendId = 0;
   const allUsers = await handleGetUsers();
   for(let users of allUsers){
     if(users.email === req.params.friendemail){
       friendId = users.userid;
-      const friendStatus = await handleGETCheckFriend(friendId);
-      const yourStatus = await handleGETCheckOwnRequest(friendId);
+      const friendStatus = await handlePostCheckFriend(friendId);
+      const yourStatus = await handlePostCheckOwnRequest(friendId);
       console.log(friendStatus);
       console.log(yourStatus);
       if(!yourStatus[0]){
