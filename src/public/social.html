@@ -101,7 +101,7 @@
 					<div class="input-group input-group-sm mb-3">
 						<button class="btn-success" id="add-friend-btn">Add Friend</button>
 						<input
-							id="add-friend-name"
+							id="add-friend-email"
 							type="text"
 							class="form-control"
 							placeholder="Type your friend's email here"
@@ -109,9 +109,14 @@
 							aria-describedby="inputGroup-sizing-sm"
 						/>
 					</div>
+					<div id = 'friendalert' class="alert alert-warning alert-dismissible fade show" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 				</div>
 			</div>
-			<br />
+			
 
 			<div class="jumbotron" width="500" id="friend_updates">
 				<h1 class="display-4">Friend Updates</h1>
@@ -126,7 +131,8 @@
 				<hr class="my-4" />
 				<div class="container">
 					<div class="row text-center">
-						<h4>Diet Name: </h4> <h4 id = "dietName"></h4>
+						<h4>Diet Name: </h4> 
+						<h4 id = "dietName">Diet</h4>
 					</div>
 					<div class="row">
 						<div class="col" id="breakfast-col">
@@ -134,7 +140,7 @@
 							<p id = "breakfast">Your friend's breakfast</p>
 							<img
 								class="img-thumbnail"
-								src="./images/oat_cakes.jpg"
+								src="./images/breakfast.jpg"
 								width="200"
 								height="150"
 							/>
@@ -144,7 +150,7 @@
 							<p id = 'lunch'>Your friend's lunch</p>
 							<img
 								class="img-thumbnail"
-								src="./images/pea-mint.jpg"
+								src="./images/lunch.png"
 								width="200"
 								height="150"
 							/>
@@ -154,7 +160,7 @@
 							<p id = "dinner">Your friend's dinner</p>
 							<img
 								class="img-thumbnail"
-								src="./images/salmon-asp.jpg"
+								src="./images/dinner.jpg"
 								width="200"
 								height="150"
 							/>
@@ -164,11 +170,11 @@
 						<div class="col" id="workout-col">
 							<h4 class="text-center">Workout</h4>
 							<p id = 'workout'>
-								<strong>Your friend's workout</strong> - High intensity interval training
+								Your friend's workout
 							</p>
 							<img
 								class="img-thumbnail"
-								src="./images/HIIT.jpg"
+								src="./images/workout.png"
 								width="300"
 								height="200"
 							/>

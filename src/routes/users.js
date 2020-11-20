@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let currentUserId = 2;
+let currentUserId = 1;
 
 /* set params */
 router.param('user', function (req, res, next) {
@@ -69,7 +69,23 @@ async function handlePostCheckFriend(friendid) {
 async function handlePostCheckOwnRequest(friendid) {
   return await connectAndRun(db => db.any('SELECT * FROM friends WHERE friendId = $1 AND userId = $2;', [friendid, currentUserId]));
 };
+//GET all of the current users friends
+async function handleGetFriends() {
+  return await connectAndRun(db => db.any('SELECT * FROM friends WHERE userId = $1 AND status = $2;', [currentUserId,'accepted']));
+};
+//DELETE to delete the selected friend from the current users friends list
+async function handlePostDeleteFriend(friendsid) {
+  await connectAndRun(db => db.none('DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;', [currentUserId, friendsid, 'accepted']));
+  return await connectAndRun(db => db.none('DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;', [friendsid, currentUserId, 'accepted']));
+};
+//UPDATE the specified fields for a user, Body must contain firstname,lastname,email
+async function handlePostUpdateUserNames_Email(userid, body) {
+  await connectAndRun(db => db.any('UPDATE users SET firstname = $1, lastname = $2, email=$3 WHERE userid = $4;', 
+                                [body.firstname, body.lastname, body.email, userid]));
+  return await connectAndRun(db => db.any('SELECT * from users WHERE userid =$1;',[userid]));
+};
 
+//Function to help with the friends table queries
 async function friendFunctions(userid, friendid, action){
   //if no status was found for these friends
   if(action === 'add_pending'){
@@ -92,7 +108,6 @@ async function friendFunctions(userid, friendid, action){
 router.get('/', async function(req, res, next) {
   //send back all users & respectful info, but for now send back array of names to test
   const data = await handleGetUsers();
-  console.log(data);
   res.send(data);
 });
 
@@ -123,17 +138,19 @@ router.get('/diets/recipes/:dietid', async function(req, res){
   res.send(recipes);
 });
 
-/*POST to add a friend*/
+/*POST to add a friend - checks to see if there is a pending request from the specified friend first,
+If so, accepts and reflects it from both sides in DB, if not creates a request from the current user
+*/
 router.post('/addfriend/:friendemail', async function(req, res){
   let friendId = 0;
   const allUsers = await handleGetUsers();
+  let foundEmail = false;
   for(let users of allUsers){
     if(users.email === req.params.friendemail){
+      foundEmail = true;
       friendId = users.userid;
       const friendStatus = await handlePostCheckFriend(friendId);
       const yourStatus = await handlePostCheckOwnRequest(friendId);
-      console.log(friendStatus);
-      console.log(yourStatus);
       if(!yourStatus[0]){
         if(!friendStatus[0]){
           await friendFunctions(currentUserId, friendId, 'add_pending');
@@ -156,28 +173,32 @@ router.post('/addfriend/:friendemail', async function(req, res){
       }
     }
   }
+  if(foundEmail === false) res.json({msg: 'No user was found with this email'});
+});
+
+/*GET the friends of the current user*/
+router.get('/friends/myfriends', async function(req, res){
+  const allFriends = await handleGetFriends();
+  res.send(allFriends);
+});
+
+/* Delete a user from the current users friends list */
+router.delete('/friends/delete/:friendid', async function (req, res) {
+	const deleted = await handlePostDeleteFriend(req.params.friendid);
+	res.json({msg:'This friend was deleted'});
+});
+
+/* Update a user with this id */
+router.post('/update/:user', async function (req, res) {
+  console.log(req.body);
+	const updated = await handlePostUpdateUserNames_Email(req.params.user, req.body);
+	res.send(updated);
 });
 
 /* Create a user */
 router.post('/create', function(req, res){
   //send back the name of the user created just to test the create
-
   res.json({name: "created"});
-});
-
-/* Update a user with this id */
-router.post('/update/:user', function (req, res) {
-	/* update the user info and put it in the db
-      but for now send back the name of the user being updated to test.
-      Should be able to update any part of the user specified
-      by the ID with the body info given*/
-	res.json({ userid: 65, name: 'Pat' });
-});
-
-/* Delete a user */
-router.delete('/delete/:user', function (req, res) {
-	//delete the user from the db, for now send back id of user being deleted
-	res.json({ userid: req.params.user });
 });
 
 module.exports = router;
