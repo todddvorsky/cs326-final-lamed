@@ -28,11 +28,9 @@ CREATE TABLE profile (
 );
 
 CREATE TABLE friends (
-    friendsId SERIAL PRIMARY KEY,
     userId INT,
     friendId INT,
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (friendId) REFERENCES users(userId)
+    status VARCHAR(255)
 );
 
 CREATE TABLE workouts (
