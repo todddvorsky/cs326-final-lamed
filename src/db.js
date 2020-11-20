@@ -136,6 +136,7 @@ module.exports = {
 	connectAndRun,
 	handleGetUsers,
 	handleGetSpecUser,
+	handleGetUserPwd,
 	handleGetUserWorkouts,
 	handleGetDietsRecipes,
 	handleGetUserDiets,
