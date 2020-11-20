@@ -1,3 +1,4 @@
+
 window.addEventListener("load", async function(){
    
     //Hide the elements that update until the 'change' buttons are hit
@@ -26,6 +27,9 @@ window.addEventListener("load", async function(){
     updateCurrentUser();
     createNewUser();
 });
+
+
+
 
 /*async function that populates the day buttons with their
     respective diets and workouts for a specific user - GET*/

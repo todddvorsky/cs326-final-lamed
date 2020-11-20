@@ -71,7 +71,7 @@ router.get('/allDiets', function (req, res, next) {
 		},
 	]);
 	res.status(200);
-	res.send('get all diets');
+	//res.send('get all diets');
 });
 /* GET all recipes. */
 router.get('/recipes', function (req, res) {
