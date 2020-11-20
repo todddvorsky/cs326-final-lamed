@@ -71,7 +71,7 @@ router.get('/allWorkouts', function (req, res, next) {
 		},
 	]);
 	res.status(200);
-	res.send('get all workouts');
+	// res.send('get all workouts');
 });
 /* GET all exercises. */
 router.get('/exercises', function (req, res) {
@@ -163,7 +163,7 @@ router.get('/exercises', function (req, res) {
 		},
 	]);
 	res.status(200);
-	res.send('get all exercises');
+	// res.send('get all exercises');
 });
 /* GET a specific workout. */
 router.get('/:workout', function (req, res) {

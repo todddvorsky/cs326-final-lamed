@@ -18,7 +18,7 @@ router.param('recipe', function (req, res, next) {
 
 /* GET all diets. */
 router.get('/allDiets', function (req, res, next) {
-	res.json([
+	res.send([
 		{
 			dietId: '551',
 			dietName: 'my diet',
@@ -71,7 +71,7 @@ router.get('/allDiets', function (req, res, next) {
 		},
 	]);
 	res.status(200);
-	res.send('get all diets');
+	// res.send('get all diets');
 });
 /* GET all recipes. */
 router.get('/recipes', function (req, res) {
@@ -92,7 +92,7 @@ router.get('/recipes', function (req, res) {
 		},
 	]);
 	res.status(200);
-	res.send('get all recipes');
+	// res.send('get all recipes');
 });
 /* GET a specific diet. */
 router.get('/:diet', function (req, res) {
