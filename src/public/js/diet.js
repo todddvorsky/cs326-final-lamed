@@ -10,20 +10,19 @@ document.getElementById('submit').addEventListener('click', async () => {
 	) {
 		alert('Please fill out all fields');
 	} else {
-		const recipeID = '1111111'; // add id generator
-		await fetch('diets/recipe/create', {
+		const recipeID = await fetch('diets/recipe/create', {
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				recipeId: recipeID,
 				name: document.getElementById('inputNameRecipe').value,
 				desc: document.getElementById('inputDescRecipe').value,
 				ingredients: document.getElementById('ingredients').value,
 				tags: document.getElementById('tagName').value,
 			}),
 		});
+		console.log(recipeID);
 
 		const diets = await (await fetch('/diets/allDiets')).json(); // change to only user's diets
 		if (document.getElementById('dietName').value in diets) {
@@ -44,7 +43,6 @@ document.getElementById('submit').addEventListener('click', async () => {
 				},
 				method: 'POST',
 				body: JSON.stringify({
-					dietId: '111111111', // add id generator
 					dietName: document.getElementById('dietName').value,
 					recipes: recipeID,
 				}),

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const database = require('../db.js');
 
 /* set params */
 router.param('diet', function (req, res, next) {
