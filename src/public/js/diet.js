@@ -1,6 +1,3 @@
-// import { v4 as uuidv4 } from 'uuid';
-// uuidv4();
-
 document.getElementById('submit').addEventListener('click', async () => {
 	if (
 		!(
@@ -14,8 +11,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 		alert('Please fill out all fields');
 	} else {
 		const recipeID = '1111111'; // add id generator
-
-		await fetch('/recipe/create', {
+		await fetch('diets/recipe/create', {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -29,9 +25,9 @@ document.getElementById('submit').addEventListener('click', async () => {
 			}),
 		});
 
-		const diets = await fetch('/allDiets');
+		const diets = await (await fetch('/diets/allDiets')).json(); // change to only user's diets
 		if (document.getElementById('dietName').value in diets) {
-			await fetch('/update/:diet', {
+			await fetch('diets/update/:diet', {
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -42,7 +38,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 				}),
 			});
 		} else {
-			await fetch('/create', {
+			await fetch('/diets/create', {
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -55,4 +51,5 @@ document.getElementById('submit').addEventListener('click', async () => {
 			});
 		}
 	}
+	document.getElementById('forms').reset();
 });

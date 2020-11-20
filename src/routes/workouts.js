@@ -1,4 +1,4 @@
-var router = require('express').Router();
+const router = require('express').Router();
 
 /* set params */
 router.param('workout', function (req, res, next) {
@@ -71,7 +71,6 @@ router.get('/allWorkouts', function (req, res, next) {
 		},
 	]);
 	res.status(200);
-	res.send('get all workouts');
 });
 /* GET all exercises. */
 router.get('/exercises', function (req, res) {
@@ -163,7 +162,6 @@ router.get('/exercises', function (req, res) {
 		},
 	]);
 	res.status(200);
-	res.send('get all exercises');
 });
 /* GET a specific workout. */
 router.get('/:workout', function (req, res) {
@@ -173,7 +171,6 @@ router.get('/:workout', function (req, res) {
 		exercises: ['557', '77'],
 	});
 	res.status(200);
-	res.send('get workout: ' + req.workout);
 });
 /* GET a specific exercise. */
 router.get('/exercises/:exercise', function (req, res) {
@@ -186,7 +183,6 @@ router.get('/exercises/:exercise', function (req, res) {
 		tags: ['easy', 'muscle building'],
 	});
 	res.status(200);
-	res.send('get exercise: ' + req.exercise);
 });
 /* Create a workout */
 router.post('/create', function (req, res) {

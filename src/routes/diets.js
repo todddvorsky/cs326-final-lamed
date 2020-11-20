@@ -1,4 +1,4 @@
-var router = require('express').Router();
+const router = require('express').Router();
 
 /* set params */
 router.param('diet', function (req, res, next) {
@@ -71,7 +71,6 @@ router.get('/allDiets', function (req, res, next) {
 		},
 	]);
 	res.status(200);
-	//res.send('get all diets');
 });
 /* GET all recipes. */
 router.get('/recipes', function (req, res) {
@@ -92,7 +91,6 @@ router.get('/recipes', function (req, res) {
 		},
 	]);
 	res.status(200);
-	res.send('get all recipes');
 });
 /* GET a specific diet. */
 router.get('/:diet', function (req, res) {

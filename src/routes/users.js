@@ -1,12 +1,12 @@
-var router = require('express').Router();
+const router = require('express').Router();
 let currentUserId = 2;
 
 /* set params */
-router.param('user', function (req, res, next){
-  //TODO
-  req.user = "User.";
+router.param('user', function (req, res, next) {
+	//TODO
+	req.user = 'User.';
 
-  next();
+	next();
 });
 
 const pgp = require('pg-promise')({
@@ -166,20 +166,18 @@ router.post('/create', function(req, res){
 });
 
 /* Update a user with this id */
-router.post('/update/:user', function(req, res){
-  /* update the user info and put it in the db
+router.post('/update/:user', function (req, res) {
+	/* update the user info and put it in the db
       but for now send back the name of the user being updated to test.
       Should be able to update any part of the user specified
       by the ID with the body info given*/
-  res.json({userid: 65, name: "Pat"});
+	res.json({ userid: 65, name: 'Pat' });
 });
 
 /* Delete a user */
-router.delete('/delete/:user', function(req, res){
-  //delete the user from the db, for now send back id of user being deleted
-  res.json({userid: req.params.user});
+router.delete('/delete/:user', function (req, res) {
+	//delete the user from the db, for now send back id of user being deleted
+	res.json({ userid: req.params.user });
 });
-
-
 
 module.exports = router;
