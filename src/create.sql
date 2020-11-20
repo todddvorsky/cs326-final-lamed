@@ -1,9 +1,10 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS friends;
-DROP TABLE IF EXISTS workouts;
-DROP TABLE IF EXISTS exercises;
-DROP TABLE IF EXISTS diets;
-DROP TABLE IF EXISTS recipes;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS friends CASCADE;
+DROP TABLE IF EXISTS workouts CASCADE;
+DROP TABLE IF EXISTS exercises CASCADE;
+DROP TABLE IF EXISTS diets CASCADE;
+DROP TABLE IF EXISTS recipes CASCADE;
+DROP TABLE IF EXISTS profile CASCADE;
 
 
 CREATE TABLE users (
@@ -11,7 +12,19 @@ CREATE TABLE users (
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     email VARCHAR(255),
-    password CHAR(60)
+    salt TEXT,
+    hashedpwd TEXT
+);
+
+CREATE TABLE profile (
+    userID INT,
+    age INT,
+    goalweight INT,
+    country VARCHAR(255),
+    about VARCHAR(255),
+    favgym VARCHAR(255),
+    favworkout VARCHAR(255),
+    favrecipe VARCHAR(255)
 );
 
 CREATE TABLE friends (
@@ -52,6 +65,7 @@ CREATE TABLE recipes (
     recipeId SERIAL PRIMARY KEY,
     dietId INT,
     FOREIGN KEY (dietId) REFERENCES diets(dietId),
+    recipeName TEXT,
     description TEXT,
     ingredients TEXT,
     tag VARCHAR(255)
