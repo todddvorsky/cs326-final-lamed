@@ -1,6 +1,3 @@
-// import { v4 as uuidv4 } from 'uuid';
-// uuidv4();
-
 document.getElementById('submit').addEventListener('click', async () => {
 	if (
 		!(
@@ -17,7 +14,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 
 	const exerciseID = '1111111'; // add id generator
 
-	await fetch('/exercise/create', {
+	await fetch('workouts/exercise/create', {
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -32,9 +29,9 @@ document.getElementById('submit').addEventListener('click', async () => {
 		}),
 	});
 
-	const workouts = await fetch('/allWorkouts');
+	const workouts = await (await fetch('/workouts/allWorkouts')).json(); // change to only user's workouts
 	if (document.getElementById('workoutName').value in workouts) {
-		await fetch('/update/:workout', {
+		await fetch('workouts/update/:workout', {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -45,7 +42,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 			}),
 		});
 	} else {
-		await fetch('/create', {
+		await fetch('workouts/create', {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -57,4 +54,5 @@ document.getElementById('submit').addEventListener('click', async () => {
 			}),
 		});
 	}
+	document.getElementById('forms').reset();
 });
