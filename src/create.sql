@@ -12,8 +12,6 @@ CREATE TABLE users (
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     email VARCHAR(255),
-    salt TEXT,
-    hashedpwd TEXT 
 );
 
 CREATE TABLE profile (
@@ -69,4 +67,11 @@ CREATE TABLE recipes (
     description TEXT,
     ingredients TEXT,
     tag VARCHAR(255)
+);
+
+CREATE TABLE passwords (
+    userId INT,
+    FOREIGN KEY (userId) REFERENCES users(userId)
+    salt CHAR(32),
+    hashedpwd CHAR(128) 
 );
