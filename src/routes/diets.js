@@ -18,7 +18,7 @@ router.param('recipe', function (req, res, next) {
 
 /* GET all diets. */
 router.get('/allDiets', function (req, res, next) {
-	res.send([
+	res.json([
 		{
 			dietId: '551',
 			dietName: 'my diet',
