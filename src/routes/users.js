@@ -73,26 +73,23 @@ router.post('/addfriend/:friendemail', async function (req, res) {
 	}
 });
 
-/* Create a user */
-router.post('/create', function (req, res) {
-	//send back the name of the user created just to test the create
-
-	res.json({ name: 'created' });
+/* DELETE the friend selected off the current users friends list */
+router.delete('/friends/delete/:friendid', async function (req, res) {
+	const updated = await database.handleDeleteFriend(req.params.friendid);
+	res.json({msg: 'User has been deleted off friends list'});
 });
 
 /* Update a user with this id */
-router.post('/update/:user', function (req, res) {
-	/* update the user info and put it in the db
-      but for now send back the name of the user being updated to test.
-      Should be able to update any part of the user specified
-      by the ID with the body info given*/
-	res.json({ userid: 65, name: 'Pat' });
+router.post('/update/:user', async function (req, res) {
+  console.log(req.body);
+	const updated = await database.handlePostUpdateUserNames_Email(req.params.user, req.body);
+	res.send(updated);
 });
 
-/* Delete a user */
-router.delete('/delete/:user', function (req, res) {
-	//delete the user from the db, for now send back id of user being deleted
-	res.json({ userid: req.params.user });
+/* Create a user */
+router.post('/create', function(req, res){
+  //send back the name of the user created just to test the create
+  res.json({name: "created"});
 });
 
 module.exports = router;
