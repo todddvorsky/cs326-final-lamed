@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const database = require('../db.js');
 
-// let currentUserId = 2;
+let currentUserId = 2;
 
 /* set params */
 router.param('user', function (req, res, next) {
@@ -49,40 +49,27 @@ router.get('/diets/recipes/:dietid', async function (req, res) {
 
 /*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function (req, res) {
-	let friendId = 0;
-	const allUsers = await database.handleGetUsers();
-	for (let users of allUsers) {
-		if (users.email === req.params.friendemail) {
-			friendId = users.userid;
-			const friendStatus = await database.handlePostCheckFriend(friendId);
-			const yourStatus = await database.handlePostCheckOwnRequest(friendId);
-			console.log(friendStatus);
-			console.log(yourStatus);
-			if (!yourStatus[0]) {
-				if (!friendStatus[0]) {
-					await database.friendFunctions(
-						currentUserId,
-						friendId,
-						'add_pending'
-					);
-					res.json({ msg: 'friend request sent!' });
-				} else if (friendStatus[0].status === 'pending') {
-					await database.friendFunctions(currentUserId, friendId, 'change');
-					await database.friendFunctions(
-						currentUserId,
-						friendId,
-						'add_accepted'
-					);
-					res.json({ msg: 'friend request accepted!' });
-				} else if (friendStatus[0].status === 'accepted') {
-					res.json({ msg: 'friend request already accepted!' });
-				}
-			} else if (yourStatus[0].status === 'pending') {
-				res.json({ msg: 'friend request already sent!' });
-			} else if (yourStatus[0].status === 'accepted') {
-				res.json({ msg: 'This person is already your friend!' });
-			}
+	const users = await database.getUserByEmail(req.params.friendemail);
+	const friendId = users.userid;
+	const friendStatus = await database.handlePostCheckFriend(friendId);
+	const yourStatus = await database.handlePostCheckOwnRequest(friendId);
+	console.log(friendStatus);
+	console.log(yourStatus);
+	if (!yourStatus[0]) {
+		if (!friendStatus[0]) {
+			await database.friendFunctions(currentUserId, friendId, 'add_pending');
+			res.json({ msg: 'friend request sent!' });
+		} else if (friendStatus[0].status === 'pending') {
+			await database.friendFunctions(currentUserId, friendId, 'change');
+			await database.friendFunctions(currentUserId, friendId, 'add_accepted');
+			res.json({ msg: 'friend request accepted!' });
+		} else if (friendStatus[0].status === 'accepted') {
+			res.json({ msg: 'friend request already accepted!' });
 		}
+	} else if (yourStatus[0].status === 'pending') {
+		res.json({ msg: 'friend request already sent!' });
+	} else if (yourStatus[0].status === 'accepted') {
+		res.json({ msg: 'This person is already your friend!' });
 	}
 });
 

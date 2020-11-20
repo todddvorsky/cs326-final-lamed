@@ -121,6 +121,11 @@ async function friendFunctions(userid, friendid, action) {
 		);
 	}
 }
+async function getUserByEmail(email) {
+	return connectAndRun(
+		(db) => db.any('SELECT * FROM users WHERE email = $1;')[email]
+	);
+}
 
 module.exports = {
 	connectAndRun,
@@ -132,4 +137,5 @@ module.exports = {
 	handlePostCheckFriend,
 	handlePostCheckOwnRequest,
 	friendFunctions,
+	getUserByEmail,
 };
