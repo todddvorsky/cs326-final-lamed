@@ -72,6 +72,11 @@ async function handleGetDietsRecipes(dietid) {
 		db.any('SELECT * FROM recipes WHERE dietid = $1;', [dietid])
 	);
 }
+async function handleGetWorkoutsExercises(workoutid) {
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM exercises WHERE workoutid = $1;', [workoutid])
+	);
+}
 // Check to see if the friend has already sent one to you
 async function handlePostCheckFriend(friendid) {
 	return connectAndRun((db) =>
@@ -83,7 +88,7 @@ async function handlePostCheckFriend(friendid) {
 }
 // Check to see if you already sent a friend request
 async function handlePostCheckOwnRequest(friendid) {
-	return await connectAndRun((db) =>
+	return connectAndRun((db) =>
 		db.any('SELECT * FROM friends WHERE friendid = $1 AND userid = $2;', [
 			friendid,
 			currentUserId,
@@ -127,15 +132,18 @@ async function friendFunctions(userid, friendid, action) {
 	}
 }
 async function getUserByEmail(email) {
-	return await connectAndRun(
-		db => db.any('SELECT * FROM users WHERE email = $1;',[email])
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM users WHERE email = $1;', [email])
 	);
 }
 
 //Get the current users friends
-async function handleGetMyFriends(){
-	return await connectAndRun((db) =>
-		db.any('SELECT * FROM friends WHERE userid = $1 AND status = $2;', [currentUserId, 'accepted'])
+async function handleGetMyFriends() {
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM friends WHERE userid = $1 AND status = $2;', [
+			currentUserId,
+			'accepted',
+		])
 	);
 }
 
@@ -169,18 +177,123 @@ async function handlePostUpdateUserNames_Email(userid, body) {
 }
 
 //Get the profile info for the current user
-async function handleGetMyProfileInfo(){
-	return await connectAndRun((db) =>
+async function handleGetMyProfileInfo() {
+	return connectAndRun((db) =>
 		db.any('SELECT * FROM profileinfo WHERE userId = $1;', [currentUserId])
+	);
+}
+
+//Get the profile plan for the current user
+async function handleGetMyProfilePlan() {
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM profileplan WHERE userId = $1;', [currentUserId])
+	);
+}
+
+//CREATE the profile info with initial values in DB
+async function handlePostCreateInitialProfile(info) {
+	console.log(info);
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO profileinfo(userId,username,age,goalweight,country,about,favgym,favworkout,favrecipe) VALUES($1,$2, $3, $4,$5, $6, $7, $8, $9);',
+			[
+				currentUserId,
+				info.username,
+				info.age,
+				info.goalweight,
+				info.country,
+				info.about,
+				info.favgym,
+				info.favworkout,
+				info.favrecipe,
+			]
+		)
+	);
+}
+
+//CREATE the profile plan with initial values in DB
+async function handlePostCreateInitialProfilePlan(info) {
+	console.log(info);
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO profileplan(userId,username,age,goalweight,country,about,favgym,favworkout,favrecipe) VALUES($1,$2, $3, $4,$5, $6, $7, $8, $9);',
+			[
+				currentUserId,
+				info.username,
+				info.age,
+				info.goalweight,
+				info.country,
+				info.about,
+				info.favgym,
+				info.favworkout,
+				info.favrecipe,
+			]
+		)
+	);
+}
+
+//CREATE the profile plan with initial values in DB
+async function handlePostCreateDaysPlan(info) {
+	console.log(info);
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO profileplan(userId, day, dietId, workoutId) VALUES($1,$2,$3,$4);',
+			[info.userId, info.day, info.dietId, info.workoutId])
+	);
+}
+
+//GET a specific day's diet and workout for the profile page
+async function handleGetaDaysPlan(day){
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM profileplan WHERE userId = $1 AND day= $2;', [currentUserId, day])
+	);
+}
+
+//UPDATE the profile info with whatever is inputed into the html
+async function handlePostUpdateProfileInfo(info) {
+	return connectAndRun((db) =>
+		db.any(
+			'UPDATE profileinfo SET username = $1, age=$2, goalweight = $3, country = $4, about = $5, favgym = $6, favworkout = $7, favrecipe = $8 WHERE userId = $9;',
+			[
+				info.username,
+				info.age,
+				info.goalweight,
+				info.country,
+				info.about,
+				info.favgym,
+				info.favworkout,
+				info.favrecipe,
+				currentUserId,
+			]
+		)
+	);
+}
+
+//UPDATE the profile workout for the day given in info
+async function handlePostUpdateDaysWorkout(info) {
+	return connectAndRun((db) =>
+		db.any(
+			'UPDATE profileplan SET workoutId = $1 WHERE userId = $2 AND day = $3;',
+			[info.workoutid, currentUserId, info.day])
+	);
+}
+
+//UPDATE the profile diet for the day given in info
+async function handlePostUpdateDaysDiet(info) {
+	return connectAndRun((db) =>
+		db.any(
+			'UPDATE profileplan SET dietId = $1 WHERE userId = $2 AND day = $3;',
+			[info.dietid, currentUserId, info.day])
 	);
 }
 
 //POST a new user in both the user table and password table
 //TODO update to also post to user table
 async function handlePostNewUser(userid, salt, pwd) {
-	return connectAndRun((db) => 
+	return connectAndRun((db) =>
 		db.none(
-			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);', [userid, salt, pwd]
+			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);',
+			[userid, salt, pwd]
 		)
 	);
 }
@@ -192,14 +305,23 @@ module.exports = {
 	handleGetUserPwd,
 	handleGetUserWorkouts,
 	handleGetDietsRecipes,
+	handleGetWorkoutsExercises,
 	handleGetUserDiets,
 	handleGetMyFriends,
 	handlePostCheckFriend,
 	handlePostNewUser,
 	handlePostCheckOwnRequest,
+	handlePostUpdateDaysDiet,
+	handlePostUpdateDaysWorkout,
 	handleDeleteFriend,
 	handlePostUpdateUserNames_Email,
 	handleGetMyProfileInfo,
+	handleGetaDaysPlan,
+	handlePostCreateInitialProfilePlan,
+	handleGetMyProfilePlan,
+	handlePostUpdateProfileInfo,
+	handlePostCreateDaysPlan,
+	handlePostCreateInitialProfile,
 	friendFunctions,
 	getUserByEmail,
 };

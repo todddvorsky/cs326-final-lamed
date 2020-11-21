@@ -8,7 +8,7 @@ const LocalStrategy = require('passport-local').Strategy; // username/password s
 
 const app = require('../app');
 
-const minicrypt = require('./miniCrypt');
+const minicrypt = require('../public/js/miniCrypt');
 const mc = new minicrypt();
 
 const database = require('../db');
@@ -29,7 +29,7 @@ const strategy = new LocalStrategy(async (name, password, done) => {
 		// no such user
 		return done(null, false, { message: 'Invalid Username or Email' });
 	}
-	if (!await validatePassword(id, password)) {
+	if (!(await validatePassword(id, password))) {
 		// invalid password
 		// delay return to rate-limit brute-force attacks
 		await new Promise((r) => setTimeout(r, 2000)); // two second delay
@@ -62,7 +62,7 @@ passport.deserializeUser((uid, done) => {
 async function findUser(input) {
 	const user = await database.handleGetSpecUser(input);
 	// TODO test this
-	console.log("Find User: " + JSON.stringify(user));
+	console.log('Find User: ' + JSON.stringify(user));
 	if (!user) {
 		return [false, null];
 	} else {
@@ -190,5 +190,5 @@ app.get('*', (req, res) => {
 });
 
 module.exports = {
-	checkLoggedIn
-}
+	checkLoggedIn,
+};

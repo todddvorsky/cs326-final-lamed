@@ -46,6 +46,14 @@ router.get('/diets/recipes/:dietid', async function (req, res) {
 	res.send(recipes);
 });
 
+/*GET a specific workouts exercises
+This really belongs in the workouts route, not here
+*/
+router.get('/workouts/exercises/:workoutid', async function (req, res) {
+	const exercises = await database.handleGetWorkoutsExercises(req.params.workoutid);
+	res.send(exercises);
+});
+
 /*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function (req, res) {
   const users = await database.getUserByEmail(req.params.friendemail);
@@ -94,11 +102,64 @@ router.post('/update/:user', async function (req, res) {
 	res.send(updated);
 });
 
-/*GET a the current users profile info*/
+/*GET the current users profile info*/
 router.get('/profile/myinfo', async function (req, res) {
 	const myInfo = await database.handleGetMyProfileInfo();
 	res.send(myInfo);
 });
+
+/*GET the current users profile plan*/
+router.get('/profile/myplan', async function (req, res) {
+	const myPlan = await database.handleGetMyProfilePlan();
+	res.send(myPlan);
+});
+
+/*POST to update the profile info*/
+router.post('/profile/info/update', async function (req, res) {
+	const updated = await database.handlePostUpdateProfileInfo(req.body);
+	res.send(updated);
+});
+
+/*POST to Create the initial profile info*/
+router.post('/profile/info/create', async function (req, res) {
+	const updated = await database.handlePostCreateInitialProfile(req.body);
+	res.send(updated);
+});
+
+/*POST to Create the the days plan*/
+router.post('/profile/plan/create', async function (req, res) {
+	const updated = await database.handlePostCreateDaysPlan(req.body);
+	res.send(updated);
+});
+
+/*POST to update the profile days workout*/
+router.post('/profile/workout/update', async function (req, res) {
+	const updated = await database.handlePostUpdateDaysWorkout(req.body);
+	res.send(updated);
+});
+
+/*POST to update the profile days diet*/
+router.post('/profile/diet/update', async function (req, res) {
+	const updated = await database.handlePostUpdateDaysDiet(req.body);
+	res.send(updated);
+});
+
+/*GET to get the a day for the profile plan*/
+router.get('/profile/plan/:day', async function (req, res) {
+	const created = await database.handleGetaDaysPlan(req.params.day);
+	res.send(created);
+});
+
+/*
+router.get('/diets/mydiets', async function (req, res) {
+	const recipes = await database.handleGetDietsRecipes(req.params.dietid);
+	res.send(recipes);
+});
+
+router.get('/workouts/myworkouts', async function (req, res) {
+	const recipes = await database.handleGetDietsRecipes(req.params.dietid);
+	res.send(recipes);
+});*/
 
 /* Create a user */
 router.post('/create', function(req, res){
