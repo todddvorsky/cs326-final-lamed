@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS diets CASCADE;
 DROP TABLE IF EXISTS recipes CASCADE;
 DROP TABLE IF EXISTS profileinfo CASCADE;
 DROP TABLE IF EXISTS profileplan CASCADE;
+DROP TABLE IF EXISTS passwords CASCADE;
 
 
 CREATE TABLE users(
@@ -17,6 +18,7 @@ CREATE TABLE users(
 
 CREATE TABLE profileinfo(
     userId INT,
+    username VARCHAR(255),
     age INT,
     goalweight INT,
     country VARCHAR(255),
