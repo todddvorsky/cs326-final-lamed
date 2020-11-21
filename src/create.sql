@@ -38,41 +38,40 @@ CREATE TABLE profileplan(
 CREATE TABLE friends (
     userId INT,
     friendId INT,
-    status VARCHAR(255),
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (friendId) REFERENCES users(userId)
+    status VARCHAR(255)
+    -- FOREIGN KEY (userId) REFERENCES users(userId),
+    -- FOREIGN KEY (friendId) REFERENCES users(userId)
 );
 
 CREATE TABLE workouts (
     workoutId SERIAL PRIMARY KEY,
     userId INT,
-    workoutName VARCHAR(255),
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    workoutName VARCHAR(255) UNIQUE
+    -- FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
 CREATE TABLE exercises (
     exerciseId SERIAL PRIMARY KEY,
     workoutId INT,
-    FOREIGN KEY (workoutId) REFERENCES workouts(workoutId),
+    -- FOREIGN KEY (workoutId) REFERENCES workouts(workoutId),
     name VARCHAR(255),
     description TEXT,
     sets INT,
     reps INT,
-    time TIME,
     tag VARCHAR(255)
 );
 
 CREATE TABLE diets (
     dietId SERIAL PRIMARY KEY,
     userId INT,
-    dietName VARCHAR(255),
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    dietName VARCHAR(255)
+    -- FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
 CREATE TABLE recipes (
     recipeId SERIAL PRIMARY KEY,
     dietId INT,
-    FOREIGN KEY (dietId) REFERENCES diets(dietId),
+    -- FOREIGN KEY (dietId) REFERENCES diets(dietId),
     recipeName TEXT,
     description TEXT,
     ingredients TEXT,
@@ -81,7 +80,7 @@ CREATE TABLE recipes (
 
 CREATE TABLE passwords (
     userId INT,
-    FOREIGN KEY (userId) REFERENCES users(userId),
+    -- FOREIGN KEY (userId) REFERENCES users(userId),
     salt CHAR(32),
     hashedpwd CHAR(128) 
 );

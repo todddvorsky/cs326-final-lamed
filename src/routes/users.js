@@ -50,37 +50,38 @@ router.get('/diets/recipes/:dietid', async function (req, res) {
 This really belongs in the workouts route, not here
 */
 router.get('/workouts/exercises/:workoutid', async function (req, res) {
-	const exercises = await database.handleGetWorkoutsExercises(req.params.workoutid);
+	const exercises = await database.handleGetWorkoutsExercises(
+		req.params.workoutid
+	);
 	res.send(exercises);
 });
 
 /*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function (req, res) {
-  const users = await database.getUserByEmail(req.params.friendemail);
-  if(!users[0]){
-    res.json({msg: 'No user with that email was found'});
-  }
-  else{
-    const friendId = users[0].userid;
-    const friendStatus = await database.handlePostCheckFriend(friendId);
-    const yourStatus = await database.handlePostCheckOwnRequest(friendId);
-    if (!yourStatus[0]) {
-      if (!friendStatus[0]) {
-        await database.friendFunctions(currentUserId, friendId, 'add_pending');
-        res.json({ msg: 'friend request sent!' });
-      } else if (friendStatus[0].status === 'pending') {
-        await database.friendFunctions(currentUserId, friendId, 'change');
-        await database.friendFunctions(currentUserId, friendId, 'add_accepted');
-        res.json({ msg: 'friend request accepted!' });
-      } else if (friendStatus[0].status === 'accepted') {
-        res.json({ msg: 'friend request already accepted!' });
-      }
-    } else if (yourStatus[0].status === 'pending') {
-      res.json({ msg: 'friend request already sent!' });
-    } else if (yourStatus[0].status === 'accepted') {
-      res.json({ msg: 'This person is already your friend!' });
-    }
-  }
+	const users = await database.getUserByEmail(req.params.friendemail);
+	if (!users[0]) {
+		res.json({ msg: 'No user with that email was found' });
+	} else {
+		const friendId = users[0].userid;
+		const friendStatus = await database.handlePostCheckFriend(friendId);
+		const yourStatus = await database.handlePostCheckOwnRequest(friendId);
+		if (!yourStatus[0]) {
+			if (!friendStatus[0]) {
+				await database.friendFunctions(currentUserId, friendId, 'add_pending');
+				res.json({ msg: 'friend request sent!' });
+			} else if (friendStatus[0].status === 'pending') {
+				await database.friendFunctions(currentUserId, friendId, 'change');
+				await database.friendFunctions(currentUserId, friendId, 'add_accepted');
+				res.json({ msg: 'friend request accepted!' });
+			} else if (friendStatus[0].status === 'accepted') {
+				res.json({ msg: 'friend request already accepted!' });
+			}
+		} else if (yourStatus[0].status === 'pending') {
+			res.json({ msg: 'friend request already sent!' });
+		} else if (yourStatus[0].status === 'accepted') {
+			res.json({ msg: 'This person is already your friend!' });
+		}
+	}
 });
 
 /*GET a specific users friends*/
@@ -92,13 +93,16 @@ router.get('/friends/myfriends', async function (req, res) {
 /* DELETE the friend selected off the current users friends list */
 router.delete('/friends/delete/:friendid', async function (req, res) {
 	const updated = await database.handleDeleteFriend(req.params.friendid);
-	res.json({msg: 'User has been deleted off friends list'});
+	res.json({ msg: 'User has been deleted off friends list' });
 });
 
 /* Update a user with this id */
 router.post('/update/:user', async function (req, res) {
-  //console.log(req.body);
-	const updated = await database.handlePostUpdateUserNames_Email(req.params.user, req.body);
+	//console.log(req.body);
+	const updated = await database.handlePostUpdateUserNames_Email(
+		req.params.user,
+		req.body
+	);
 	res.send(updated);
 });
 
@@ -162,9 +166,18 @@ router.get('/workouts/myworkouts', async function (req, res) {
 });*/
 
 /* Create a user */
-router.post('/create', function(req, res){
-  //send back the name of the user created just to test the create
-  res.json({name: "created"});
+router.post('/create', async function (req, res) {
+	//send back the name of the user created just to test the create
+	res.json({ name: 'created' });
+});
+
+// GET a specific user's workouts with name
+router.get('/workouts/:user/:name', async function (req, res) {
+	const userWorkouts = await database.handleGetUserWorkoutsWithName(
+		req.params.user,
+		req.params.name
+	);
+	res.send(userWorkouts);
 });
 
 module.exports = router;
