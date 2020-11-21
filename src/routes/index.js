@@ -1,11 +1,7 @@
 'use strict';
 
 const router = require('express').Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const auth = require('./auth');
 
 /* use next middleware functions */
 router.use('/users', require('./users'));

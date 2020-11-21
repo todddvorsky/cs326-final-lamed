@@ -5,13 +5,13 @@ const express = require('express'); // express routing
 const expressSession = require('express-session'); // for managing session state
 const passport = require('passport'); // handles authentication
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
-const database = require('../db.js');
 
-// const app = express();
-const port = process.env.PORT || 3000;
+const app = require('../app');
+
 const minicrypt = require('./miniCrypt');
-
 const mc = new minicrypt();
+
+const database = require('../db');
 
 // Session configuration
 
@@ -23,17 +23,17 @@ const session = {
 
 // Passport configuration
 
-const strategy = new LocalStrategy(async (username, password, done) => {
-	if (!findUser(username)) {
+const strategy = new LocalStrategy(async (name, password, done) => {
+	const [found, id] = await findUser(name);
+	if (!found) {
 		// no such user
-		return done(null, false, { message: 'Wrong username' });
+		return done(null, false, { message: 'Invalid Username or Email' });
 	}
-	if (!validatePassword(username, password)) {
+	if (!await validatePassword(id, password)) {
 		// invalid password
-		// should disable logins after N messages
 		// delay return to rate-limit brute-force attacks
 		await new Promise((r) => setTimeout(r, 2000)); // two second delay
-		return done(null, false, { message: 'Wrong password' });
+		return done(null, false, { message: 'Invalid password' });
 	}
 	// success!
 	// should create a user object here, associated with a unique identifier
@@ -56,53 +56,44 @@ passport.deserializeUser((uid, done) => {
 	done(null, uid);
 });
 
-app.use(express.json()); // allow JSON inputs
-app.use(express.urlencoded({ extended: true })); // allow URLencoded data
-
-/////
-
-// we use an in-memory "database"; this isn't persistent but is easy
-
-console.log(mc.hash('compsci326'));
-
-// let users = { 'emery' : 'compsci326' } // default user
-let users = {
-	emery: [
-		'2401f90940e037305f71ffa15275fb0d',
-		'61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250',
-	],
-};
-
-let userMap = {};
+// Database functions
 
 // Returns true iff the user exists.
-function findUser(username) {
-	if (!users[username]) {
-		return false;
+async function findUser(input) {
+	const user = await database.handleGetSpecUser(input);
+	// TODO test this
+	console.log("Find User: " + JSON.stringify(user));
+	if (!user) {
+		return [false, null];
 	} else {
-		return true;
+		return [true, user.userId];
 	}
 }
 
-// Returns true iff the password is the one we have stored (in plaintext = bad but easy).
-function validatePassword(name, pwd) {
-	if (!findUser(name)) {
+// Returns true iff the password is the one we have stored.
+async function validatePassword(name, pwd) {
+	const [found, id] = await findUser(name);
+	if (!found) {
 		return false;
 	}
-	if (!mc.check(pwd, users[name][0], users[name][1])) {
+	const data = await database.handleGetUserPwd(id);
+	// TODO test this
+	console.log(JSON.stringify(data));
+	if (!mc.check(pwd, data.salt, data.hashedpwd)) {
 		return false;
 	}
 	return true;
 }
 
 // Add a user to the "database".
-// TODO
-function addUser(name, pwd) {
-	if (findUser(name)) {
+async function addUser(name, pwd) {
+	const [found, id] = await findUser(name);
+	if (!found) {
 		return false;
 	}
 	const [salt, hash] = mc.hash(pwd);
-	users[name] = [salt, hash];
+	// TODO test this
+	await database.handlePostNewUser(id, salt, pwd);
 	return true;
 }
 
@@ -114,12 +105,12 @@ function checkLoggedIn(req, res, next) {
 		next();
 	} else {
 		// Otherwise, redirect to the login page.
-		res.redirect('/login');
+		res.redirect('/');
 	}
 }
 
 app.get('/', checkLoggedIn, (req, res) => {
-	res.send('hello world');
+	res.render('index', { title: 'Express' });
 });
 
 // Handle post data from the login.html form.
@@ -148,10 +139,10 @@ app.get('/logout', (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 // TODO
-app.post('/register', (req, res) => {
+app.post('/register', async function (req, res) {
 	const username = req.body['username'];
 	const password = req.body['password'];
-	if (addUser(username, password)) {
+	if (await addUser(username, password)) {
 		res.redirect('/login');
 	} else {
 		res.redirect('/register');
@@ -196,5 +187,6 @@ app.get('*', (req, res) => {
 	res.send('Error');
 });
 
-// app.listen(port, () => {
-//     console.log(`App now listening at http://localhost:${port}`);
+module.exports = {
+	checkLoggedIn
+}

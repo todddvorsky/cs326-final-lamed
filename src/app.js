@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const app = express();
+const app = module.exports = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,5 +32,3 @@ app.use(function (err, req, res, next) {
 
 const port = 8080;
 app.listen(port);
-
-module.exports = app;
