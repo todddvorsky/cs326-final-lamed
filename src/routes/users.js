@@ -16,7 +16,6 @@ router.param('user', function (req, res, next) {
 router.get('/', async function (req, res, next) {
 	//send back all users & respectful info, but for now send back array of names to test
 	const data = await database.handleGetUsers();
-	console.log(data);
 	res.send(data);
 });
 
@@ -50,17 +49,13 @@ router.get('/diets/recipes/:dietid', async function (req, res) {
 /*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function (req, res) {
   const users = await database.getUserByEmail(req.params.friendemail);
-  console.log(users);
   if(!users[0]){
     res.json({msg: 'No user with that email was found'});
   }
   else{
     const friendId = users[0].userid;
-    console.log(friendId);
     const friendStatus = await database.handlePostCheckFriend(friendId);
     const yourStatus = await database.handlePostCheckOwnRequest(friendId);
-    console.log(friendStatus);
-    console.log(yourStatus);
     if (!yourStatus[0]) {
       if (!friendStatus[0]) {
         await database.friendFunctions(currentUserId, friendId, 'add_pending');
@@ -94,7 +89,7 @@ router.delete('/friends/delete/:friendid', async function (req, res) {
 
 /* Update a user with this id */
 router.post('/update/:user', async function (req, res) {
-  console.log(req.body);
+  //console.log(req.body);
 	const updated = await database.handlePostUpdateUserNames_Email(req.params.user, req.body);
 	res.send(updated);
 });

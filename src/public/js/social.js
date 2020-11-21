@@ -8,7 +8,6 @@ window.addEventListener("load", async function(){
     populateFriends();
     document.getElementById('add-friend-btn').addEventListener('click', function() {
         const email = document.getElementById('add-friend-email').value;
-        console.log(email);
         addFriend(email);
     });
     document.getElementById('delete-friend-btn').addEventListener('click', deleteUser);
@@ -26,8 +25,6 @@ async function populateFriends(){
         return;
     }
     const db = await response.json();
-    //const names = db.users;
-    console.log(db);
     for(let user of db){
         const newName = document.createElement("a");
         const resp = await fetch(`/users/${user.friendid}`);
@@ -67,9 +64,7 @@ async function populateWorkout(id){
     }
     else{
         const user_id = db[0].userid;
-        console.log(user_id);
         if(user_id === curr_friend_id){
-            console.log('in if state');
             const user_wo = db[0];
             document.getElementById('workout').innerHTML = user_wo.workoutname;
         }
@@ -104,12 +99,9 @@ async function populateDiet(id){
     else{
         const user_id = db[0].userid;
         const recipes = await getDietRecipes(db[0].dietid);
-        console.log(user_id);
         if(user_id === curr_friend_id){
-            console.log('in if state');
             const user_diet = db[0];
             document.getElementById('dietName').innerHTML = user_diet.dietname;
-            console.log(recipes);
             for(let rec of recipes){
                 if(rec.tag === 'breakfast'){
                     document.getElementById('breakfast').innerHTML = rec.recipename;
@@ -143,7 +135,6 @@ async function addFriend(friendsEmail){
             return;
         }
         const db = await response.json();
-        console.log(db);
         document.getElementById('friendalert').innerHTML = db.msg;
         document.getElementById('friendalert').style.display = "block";
     }
@@ -166,7 +157,6 @@ async function deleteUser(){
 
 /*UPDATE a users firstname lastname email - Body must contain these!*/
 async function updateUser(msgbody){
-    console.log(msgbody);
     const myInit = {
         method: 'POST',
         headers: {
@@ -180,5 +170,4 @@ async function updateUser(msgbody){
         return;
     }
     const db = await response.json();
-    console.log(db);
 }
