@@ -75,7 +75,7 @@ async function handleGetDietsRecipes(dietid) {
 // Check to see if the friend has already sent one to you
 async function handlePostCheckFriend(friendid) {
 	return connectAndRun((db) =>
-		db.any('SELECT * FROM friends WHERE friendId = $1 AND userId = $2;', [
+		db.any('SELECT * FROM friends WHERE friendid = $1 AND userid = $2;', [
 			currentUserId,
 			friendid,
 		])
@@ -83,8 +83,8 @@ async function handlePostCheckFriend(friendid) {
 }
 // Check to see if you already sent a friend request
 async function handlePostCheckOwnRequest(friendid) {
-	return connectAndRun((db) =>
-		db.any('SELECT * FROM friends WHERE friendId = $1 AND userId = $2;', [
+	return await connectAndRun((db) =>
+		db.any('SELECT * FROM friends WHERE friendid = $1 AND userid = $2;', [
 			friendid,
 			currentUserId,
 		])
@@ -128,7 +128,14 @@ async function friendFunctions(userid, friendid, action) {
 }
 async function getUserByEmail(email) {
 	return await connectAndRun(
-		(db) => db.any('SELECT * FROM users WHERE email = $1;')[email]
+		db => db.any('SELECT * FROM users WHERE email = $1;',[email])
+	);
+}
+
+//Get the current users friends
+async function handleGetMyFriends(){
+	return await connectAndRun((db) =>
+		db.any('SELECT * FROM friends WHERE userid = $1 AND status = $2;', [currentUserId, 'accepted'])
 	);
 }
 
@@ -160,6 +167,7 @@ module.exports = {
 	handleGetUserWorkouts,
 	handleGetDietsRecipes,
 	handleGetUserDiets,
+	handleGetMyFriends,
 	handlePostCheckFriend,
 	handlePostCheckOwnRequest,
 	handleDeleteFriend,
