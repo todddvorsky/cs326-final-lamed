@@ -1,4 +1,5 @@
-const currentUserId = 1;
+let currentUserId = 1;
+let currentDayClicked;
 
 window.addEventListener("load", async function(){
     //initilization
@@ -18,7 +19,6 @@ window.addEventListener("load", async function(){
     document.getElementById('save-profile-btn').addEventListener("click", function(){
         populateProfileInfo();
         const packedInfo = helpPackInfo();
-        console.log(packedInfo);
         updateProfileInfo(packedInfo);
         document.getElementById('current-profile').style.display = "block";
         document.getElementById('changing-profile').style.display = "none";
@@ -29,25 +29,39 @@ window.addEventListener("load", async function(){
 //Button events for the profile plan
 async function initiateButtonEvents(){
     document.getElementById('sunBtn').addEventListener("click", async function() {
+        currentDayClicked = 'sunday';
         document.getElementById('day_txt').innerHTML = document.getElementById('sunBtn').innerHTML;
+        thisDaysDietWorkout('sunday');
     });
     document.getElementById('monBtn').addEventListener("click", async function() {
+        currentDayClicked = 'monday';
         document.getElementById('day_txt').innerHTML = document.getElementById('monBtn').innerHTML;
+        thisDaysDietWorkout('monday');
     });
     document.getElementById('tuesBtn').addEventListener("click", async function() {
+        currentDayClicked = 'tuesday';
         document.getElementById('day_txt').innerHTML = document.getElementById('tuesBtn').innerHTML;
+        thisDaysDietWorkout('tuesday');
     });
     document.getElementById('wedBtn').addEventListener("click", async function() {
+        currentDayClicked = 'wednesday';
         document.getElementById('day_txt').innerHTML = document.getElementById('wedBtn').innerHTML;
+        thisDaysDietWorkout('wednesday');
     });
     document.getElementById('thursBtn').addEventListener("click", async function() {
+        currentDayClicked = 'thursday';
         document.getElementById('day_txt').innerHTML = document.getElementById('thursBtn').innerHTML;
+        thisDaysDietWorkout('thursday');
     });
     document.getElementById('friBtn').addEventListener("click", async function() {
+        currentDayClicked = 'friday';
         document.getElementById('day_txt').innerHTML = document.getElementById('friBtn').innerHTML;
+        thisDaysDietWorkout('friday');
     });
     document.getElementById('satBtn').addEventListener("click", async function() {
+        currentDayClicked = 'saturday';
         document.getElementById('day_txt').innerHTML = document.getElementById('satBtn').innerHTML;
+        thisDaysDietWorkout('saturday');
     });
 
 }
@@ -131,7 +145,6 @@ async function populateInitialProfileInfo(info){
         return;
     }
     const db = await response.json();
-    console.log(db);
     if(db.length === 0){
         createInitialInfo(info);
     }
@@ -173,6 +186,19 @@ async function updateProfileInfo(msgbody){
     const db = await response.json();
 }
 
+//helper function to populate the food text with recipes
+function helpPopulateFood(recipes){
+    for(let rec of recipes){
+        if(rec.tag === 'breakfast'){
+            document.getElementById('breakfast_txt').innerHTML = rec.recipename;
+        }if(rec.tag === 'lunch'){
+            document.getElementById('lunch_txt').innerHTML = rec.recipename;
+        }if(rec.tag === 'dinner'){
+            document.getElementById('dinner_txt').innerHTML = rec.recipename;
+        }
+    }
+}
+
 /*function to populate the diet list of the current users plan*/
 async function populateDietList(){
     const response = await fetch(`/users/diets/${currentUserId}`);
@@ -181,7 +207,6 @@ async function populateDietList(){
         return;
     }
     const diets = await response.json();
-    console.log(diets);
     for(let diet of diets){
         const newName = document.createElement("a");
         newName.classList.add('dropdown-item');
@@ -193,18 +218,15 @@ async function populateDietList(){
             return;
         }
         const recipes = await resp.json();
-        console.log(recipes);
-        newName.addEventListener('click', function() {
-            for(let rec of recipes){
-                if(rec.tag === 'breakfast'){
-                    document.getElementById('breakfast_txt').innerHTML = rec.recipename;
-                }if(rec.tag === 'lunch'){
-                    document.getElementById('lunch_txt').innerHTML = rec.recipename;
-                }if(rec.tag === 'dinner'){
-                    document.getElementById('dinner_txt').innerHTML = rec.recipename;
-                }
-            }
+        newName.addEventListener('click', async function() {
+            helpPopulateFood(recipes);
             document.getElementById('diet_dropdownMenuButton').innerHTML = newName.innerHTML;
+            const b = await planExists(currentDayClicked);
+            if(b){
+                updateDaysDiet(dietId, currentDayClicked);
+            }else{
+                createPlanOfDay({'userId': currentUserId, 'day':currentDayClicked, 'dietId': dietId,'workoutId':null });
+            }
         });
         document.getElementById("diet_dropdownDiv").appendChild(newName);
     }
@@ -233,59 +255,134 @@ async function populateWorkoutList(){
         newName.addEventListener('click', function() {
             document.getElementById("workout_txt").innerHTML = exercises[0].name;
             document.getElementById('WO_dropdownMenuButton').innerHTML = newName.innerHTML;
+            if(planExists(currentDayClicked)){
+                updateDaysWorkout(woid, currentDayClicked);
+            }else{
+                createPlanOfDay({'userId': currentUserId, 'day':currentDayClicked, 'dietId': null,'workoutId':woid });
+            }
         });
         document.getElementById("WO_dropdownDiv").appendChild(newName);
     }
 }
 
-/*
-async function populateInitialDietWorkout(){
-    const response = await fetch("/users/profile/myPlan");
-    if (!response.ok) {
-        console.log(response.error);
+//CREATE the days plan
+async function createPlanOfDay(plan){
+    const myInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(plan)
+    };
+    const resp = await fetch("/users/profile/plan/create", myInit);
+    if (!resp.ok) {
+        console.log(resp.error);
         return;
     }
-    const db = await response.json();
-    console.log(db);
-    if(db.length === 0){
-        createInitialInfo(info);
-    }
-    else{
-        helpPopulateInitialInfo(db);
-    }
+    const creation = await resp.json();
 }
 
-async function createInitialPlan(){
+//UPDATE the days workout
+async function updateDaysWorkout(workoutid, day){
     const myInit = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
           },
         body: JSON.stringify({
-            'userId': currentUserId,
-            'mondaydietId': 999,
-            'mondayworkoutId': 999,
-            'tuesdaydietId': 999,
-            'tuesdayworkoutId': 999,
-            'wednesdaydietId': 999,
-            'wednesdayworkoutId': 999,
-            'thursdaydietId': 999,
-            'thursdayworkoutId': 999,
-            'fridaydietId': 999,
-            'fridayworkoutId': 999,
-            'saturdaydietId': 999,
-            'saturdayworkoutId': 999,
-            'sundaydietId': 999,
-            'sundayworkoutId': 999
+            'day': day,
+            'workoutid': workoutid
         })
     };
-    const resp = await fetch("/users/profile/info/create", myInit);
-    if (!resp.ok) {
-        console.log(resp.error);
+    const response = await fetch('/users/profile/workout/update', myInit);
+    if (!response.ok) {
+        console.log(response.error);
         return;
     }
-    const creation = await resp.json();
-}*/
+    const db = await response.json();
+}
+
+//UPDATE the days diet
+async function updateDaysDiet(dietid, day){
+    const myInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({
+            'day': day,
+            'dietid': dietid
+        })
+    };
+    const response = await fetch('/users/profile/diet/update', myInit);
+    if (!response.ok) {
+        console.log(response.error);
+        return;
+    }
+    const db = await response.json();
+}
+
+//Helper to check if a plan exists for that day
+async function planExists(day){
+    const response = await fetch(`/users/profile/plan/${day}`);
+    if (!response.ok) {
+        console.log(response.error);
+        return;
+    }
+    const dbs = await response.json();
+    console.log('plan exists:');
+    console.log(dbs);
+    const db = dbs[0];
+    console.log(db);
+    if(!db){return false;}
+    else {return true};
+}
+
+//Populate the plan based on the day givenS
+async function thisDaysDietWorkout(day){
+    const response = await fetch(`/users/profile/plan/${day}`);
+    if (!response.ok) {
+        console.log(response.error);
+        return;
+    }
+    const dbs = await response.json();
+    const db = dbs[0];
+    if(!db){
+        document.getElementById('breakfast_txt').innerHTML = 'Pick a diet';
+        document.getElementById('lunch_txt').innerHTML = 'Pick a diet';
+        document.getElementById('dinner_txt').innerHTML = 'Pick a diet';
+        document.getElementById("workout_txt").innerHTML = 'Pick a workout';
+    }
+    else{
+        if(!db.dietid){
+            document.getElementById('breakfast_txt').innerHTML = 'Pick a diet';
+            document.getElementById('lunch_txt').innerHTML = 'Pick a diet';
+            document.getElementById('dinner_txt').innerHTML = 'Pick a diet';
+        }
+        else{
+            const response1 = await fetch(`/users/diets/recipes/${db.dietid}`);
+            if (!response1.ok) {
+                console.log(response1.error);
+                return;
+            }
+            const recipes = await response1.json();
+            helpPopulateFood(recipes);
+        }
+        if(!db.workoutid){
+            document.getElementById("workout_txt").innerHTML = 'Pick a workout';
+        }
+        else{
+            const response2 = await fetch(`/users/workouts/exercises/${db.workoutid}`);
+            if (!response2.ok) {
+                console.log(response2.error);
+                return;
+            }
+            const exercises = await response2.json();
+            document.getElementById("workout_txt").innerHTML = exercises[0].name;
+        }
+    }
+}
+
 /*create the diet & workout in the DB*/
 async function createDaysDietsWorkouts(){
     const response = await fetch("/users/51");
@@ -294,7 +391,6 @@ async function createDaysDietsWorkouts(){
         return;
     }
     const db = await response.json();
-    console.log(db.workout);
 }
 /*async function that populates the day buttons with their
     respective diets and workouts for a specific user - GET
@@ -320,6 +416,5 @@ async function updateCurrentUser(){
         return;
     }
     const db = await response.json();
-    console.log(db.name);
 }
 

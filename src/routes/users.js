@@ -126,9 +126,27 @@ router.post('/profile/info/create', async function (req, res) {
 	res.send(updated);
 });
 
-/*POST to Create the initial profile plan*/
+/*POST to Create the the days plan*/
 router.post('/profile/plan/create', async function (req, res) {
-	const created = await database.handlePostCreateInitialProfile(req.body);
+	const updated = await database.handlePostCreateDaysPlan(req.body);
+	res.send(updated);
+});
+
+/*POST to update the profile days workout*/
+router.post('/profile/workout/update', async function (req, res) {
+	const updated = await database.handlePostUpdateDaysWorkout(req.body);
+	res.send(updated);
+});
+
+/*POST to update the profile days diet*/
+router.post('/profile/diet/update', async function (req, res) {
+	const updated = await database.handlePostUpdateDaysDiet(req.body);
+	res.send(updated);
+});
+
+/*GET to get the a day for the profile plan*/
+router.get('/profile/plan/:day', async function (req, res) {
+	const created = await database.handleGetaDaysPlan(req.params.day);
 	res.send(created);
 });
 
