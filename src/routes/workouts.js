@@ -186,12 +186,28 @@ router.get('/exercises/:exercise', function (req, res) {
 	res.status(200);
 });
 /* Create a workout */
-router.post('/create', function (req, res) {
-	res.send('create workout');
+router.post('/create', async function (req, res) {
+	// name, userId, return workout Id
+	const workout = await database.createWorkout(
+		req.body.workoutName,
+		req.body.userId
+	);
+	console.log('jjjjj', workout);
+	res.status(200);
+	res.send(workout);
 });
-/* Create a exercise */
-router.post('/exercise/create', function (req, res) {
-	res.send('create exercise');
+/* Create an exercise */
+router.post('/exercise/create', async function (req, res) {
+	const exercise = await database.createExercise(
+		req.body.workoutId,
+		req.body.name,
+		req.body.desc,
+		req.body.reps,
+		req.body.sets,
+		req.body.tags
+	);
+	res.status(200);
+	res.send(exercise);
 });
 /* Update a workout */
 router.put('/update/:workout', function (req, res) {

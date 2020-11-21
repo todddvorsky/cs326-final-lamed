@@ -298,6 +298,39 @@ async function handlePostNewUser(userid, salt, pwd) {
 	);
 }
 
+//Get user's workouts with name
+async function handleGetUserWorkoutsWithName(userid, name) {
+	return connectAndRun((db) =>
+		db.any(
+			'SELECT workoutId FROM workouts WHERE userid = $1 AND UPPER(workoutName) = $2;',
+			[userid, name.toUpperCase()]
+		)
+	);
+}
+
+// POST - create exercise
+async function createExercise(workoutId, name, description, sets, reps, tag) {
+	return connectAndRun((db) =>
+		db.none(
+			'INSERT INTO exercises(workoutId, name, description, sets, reps, tag) VALUES($1,$2,$3,$4,$5,$6);',
+			[workoutId, name, description, sets, reps, tag]
+		)
+	);
+}
+
+// POST - create workout
+async function createWorkout(name, userId) {
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO workouts(workoutName, userId) VALUES($1,$2) RETURNING workoutId;',
+			[name, userId]
+		)
+	);
+	// return connectAndRun((db) =>
+	// 	db.any('SELECT * from users WHERE userid =$1;', [userid])
+	// );
+}
+
 module.exports = {
 	connectAndRun,
 	handleGetUsers,
@@ -324,4 +357,7 @@ module.exports = {
 	handlePostCreateInitialProfile,
 	friendFunctions,
 	getUserByEmail,
+	handleGetUserWorkoutsWithName,
+	createExercise,
+	createWorkout,
 };
