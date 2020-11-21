@@ -4,17 +4,18 @@ DROP TABLE IF EXISTS workouts CASCADE;
 DROP TABLE IF EXISTS exercises CASCADE;
 DROP TABLE IF EXISTS diets CASCADE;
 DROP TABLE IF EXISTS recipes CASCADE;
-DROP TABLE IF EXISTS profile CASCADE;
+DROP TABLE IF EXISTS profileinfo CASCADE;
+DROP TABLE IF EXISTS profileplan CASCADE;
 
 
-CREATE TABLE users (
+CREATE TABLE users(
     userId SERIAL PRIMARY KEY,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     email VARCHAR(255),
 );
 
-CREATE TABLE profile (
+CREATE TABLE profileinfo(
     userID INT,
     age INT,
     goalweight INT,
@@ -22,7 +23,24 @@ CREATE TABLE profile (
     about VARCHAR(255),
     favgym VARCHAR(255),
     favworkout VARCHAR(255),
-    favrecipe VARCHAR(255)
+    favrecipe VARCHAR(255),
+);
+
+CREATE TABLE profileplan(
+    mondaydietid INT,
+    mondayworkoutid INT,
+    tuesdaydietid INT,
+    tuesdayworkoutid INT,
+    wednesdaydietid INT,
+    wednesdayworkoutid INT,
+    thursdaydietid INT,
+    thursdayworkoutid INT,
+    fridaydietid INT,
+    fridayworkoutid INT,
+    saturdaydietid INT,
+    saturdayworkoutid INT,
+    sundaydietid INT,
+    sundayworkoutid INT
 );
 
 CREATE TABLE friends (
