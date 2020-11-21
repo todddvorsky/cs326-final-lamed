@@ -175,6 +175,16 @@ async function handleGetMyProfileInfo(){
 	);
 }
 
+//POST a new user in both the user table and password table
+//TODO update to also post to user table
+async function handlePostNewUser(userid, salt, pwd) {
+	return connectAndRun((db) => 
+		db.none(
+			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);', [userid, salt, pwd]
+		)
+	);
+}
+
 module.exports = {
 	connectAndRun,
 	handleGetUsers,
@@ -185,6 +195,7 @@ module.exports = {
 	handleGetUserDiets,
 	handleGetMyFriends,
 	handlePostCheckFriend,
+	handlePostNewUser,
 	handlePostCheckOwnRequest,
 	handleDeleteFriend,
 	handlePostUpdateUserNames_Email,

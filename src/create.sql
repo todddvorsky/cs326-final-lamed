@@ -11,9 +11,9 @@ DROP TABLE IF EXISTS passwords CASCADE;
 
 CREATE TABLE users(
     userId SERIAL PRIMARY KEY,
-    firstName VARCHAR(255),
-    lastName VARCHAR(255),
-    email VARCHAR(255)
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE profileinfo(
