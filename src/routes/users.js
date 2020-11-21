@@ -126,9 +126,9 @@ router.post('/profile/info/create', async function (req, res) {
 	res.send(updated);
 });
 
-/*POST to Create the initial profile plan*/
-router.post('/profile/plan/create', async function (req, res) {
-	const created = await database.handlePostCreateInitialProfile(req.body);
+/*GET to get the a day for the profile plan*/
+router.get('/profile/plan/:day', async function (req, res) {
+	const created = await database.handleGetaDaysPlan(req.params.day);
 	res.send(created);
 });
 

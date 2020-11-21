@@ -211,6 +211,13 @@ async function handlePostCreateInitialProfilePlan(info) {
 	);
 }
 
+//GET a specific day's diet and workout for the profile page
+async function handleGetaDaysPlan(day){
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM profileplan WHERE userId = $1 AND day= $2;', [currentUserId, day])
+	);
+}
+
 //UPDATE the profile info with whatever is inputed into the html
 async function handlePostUpdateProfileInfo(info) {
 	return connectAndRun((db) =>
@@ -248,6 +255,7 @@ module.exports = {
 	handleDeleteFriend,
 	handlePostUpdateUserNames_Email,
 	handleGetMyProfileInfo,
+	handleGetaDaysPlan,
 	handlePostCreateInitialProfilePlan,
 	handleGetMyProfilePlan,
 	handlePostUpdateProfileInfo,

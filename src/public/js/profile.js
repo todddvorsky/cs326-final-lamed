@@ -36,6 +36,7 @@ async function initiateButtonEvents(){
     });
     document.getElementById('tuesBtn').addEventListener("click", async function() {
         document.getElementById('day_txt').innerHTML = document.getElementById('tuesBtn').innerHTML;
+        thisDaysDietWorkout('tuesday');
     });
     document.getElementById('wedBtn').addEventListener("click", async function() {
         document.getElementById('day_txt').innerHTML = document.getElementById('wedBtn').innerHTML;
@@ -238,6 +239,15 @@ async function populateWorkoutList(){
     }
 }
 
+async function thisDaysDietWorkout(day){
+    const response = await fetch(`/users/profile/plan/${day}`);
+    if (!response.ok) {
+        console.log(response.error);
+        return;
+    }
+    const db = await response.json();
+    console.log(db);
+}
 /*
 async function populateInitialDietWorkout(){
     const response = await fetch("/users/profile/myPlan");
