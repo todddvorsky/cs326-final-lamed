@@ -1,3 +1,4 @@
+const currentUserId = 1;
 
 window.addEventListener("load", async function(){
    
@@ -23,13 +24,51 @@ window.addEventListener("load", async function(){
         document.getElementById('changing-plan').style.display = "none";
     });
 
+    populateProfileInfo();
     getDiets_workouts();
     updateCurrentUser();
     createNewUser();
 });
 
+function helpPopulateInfo(information){
+    const info = information[0];
+    if(info.username){
+        document.getElementById('pro_username').innerHTML = info.username;
+    }
+    if(info.age){
+        document.getElementById('pro_age').innerHTML = info.age;
+    }
+    if(info.country){
+        document.getElementById('pro_country').innerHTML = info.country;
+    }
+    if(info.goalweight){
+        document.getElementById('pro_goalweight').innerHTML = info.goalweight;
+    }
+    if(info.about){
+        document.getElementById('about_me').innerHTML = info.about;
+    }
+    if(info.favgym){
+        document.getElementById('pro_gym').innerHTML = info.favgym;
+    }
+    if(info.favworkout){
+        document.getElementById('pro_workout').innerHTML = info.favworkout;
+    }
+    if(info.favrecipe){
+        document.getElementById('pro_recipe').innerHTML = info.favrecipe;
+    }
+}
 
-
+/*gets the profile info for the current user to populate the html page*/
+async function populateProfileInfo(){
+    const response = await fetch("/users/profile/myinfo");
+    if (!response.ok) {
+        console.log(response.error);
+        return;
+    }
+    const db = await response.json();
+    console.log(db);
+    helpPopulateInfo(db);
+}
 
 /*async function that populates the day buttons with their
     respective diets and workouts for a specific user - GET*/
