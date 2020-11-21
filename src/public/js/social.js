@@ -14,7 +14,7 @@ window.addEventListener("load", async function(){
     document.getElementById('delete-friend-btn').addEventListener('click', deleteUser);
     document.getElementById('friendalert').style.display = "none";
     const updateBody = {firstname: 'Bob', lastname: 'Hansen', email: 'bob@bob.com'};
-    updateUser(updateBody);
+    //updateUser(updateBody);
 });
 
 /*Populate the friends list with the current users friends.
@@ -132,15 +132,21 @@ async function addFriend(friendsEmail){
     const myInit = {
         method: 'POST',
     };
-    const response = await fetch(`/users/addfriend/${friendsEmail}`, myInit);
-    if (!response.ok) {
-        console.log(response.error);
-        return;
+    if(!friendsEmail){
+        document.getElementById('friendalert').innerHTML = 'No email was given';
+        document.getElementById('friendalert').style.display = "block";
     }
-    const db = await response.json();
-    console.log(db);
-    document.getElementById('friendalert').innerHTML = db.msg;
-    document.getElementById('friendalert').style.display = "block";
+    else{
+        const response = await fetch(`/users/addfriend/${friendsEmail}`, myInit);
+        if (!response.ok) {
+            console.log(response.error);
+            return;
+        }
+        const db = await response.json();
+        console.log(db);
+        document.getElementById('friendalert').innerHTML = db.msg;
+        document.getElementById('friendalert').style.display = "block";
+    }
 }
 
 /*delete the friend whose profile you're looking at*/
