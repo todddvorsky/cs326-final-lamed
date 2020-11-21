@@ -89,7 +89,7 @@ CREATE TABLE recipes (
 
 CREATE TABLE passwords (
     userId INT,
-    FOREIGN KEY (userId) REFERENCES users(userId)
+    FOREIGN KEY (userId) REFERENCES users(userId),
     salt CHAR(32),
     hashedpwd CHAR(128) 
 );
