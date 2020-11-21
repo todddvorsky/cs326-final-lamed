@@ -211,6 +211,16 @@ async function handlePostCreateInitialProfilePlan(info) {
 	);
 }
 
+//CREATE the profile plan with initial values in DB
+async function handlePostCreateDaysPlan(info) {
+	console.log(info);
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO profileplan(userId, day, dietId, workoutId) VALUES($1,$2,$3,$4);',
+			[info.userId, info.day, info.dietId, info.workoutId])
+	);
+}
+
 //GET a specific day's diet and workout for the profile page
 async function handleGetaDaysPlan(day){
 	return connectAndRun((db) =>
@@ -226,6 +236,24 @@ async function handlePostUpdateProfileInfo(info) {
 			[info.username, info.age, info.goalweight, info.country, info.about, 
 			info.favgym, info.favworkout, info.favrecipe, currentUserId]
 		)
+	);
+}
+
+//UPDATE the profile workout for the day given in info
+async function handlePostUpdateDaysWorkout(info) {
+	return connectAndRun((db) =>
+		db.any(
+			'UPDATE profileplan SET workoutId = $1 WHERE userId = $2 AND day = $3;',
+			[info.workoutid, currentUserId, info.day])
+	);
+}
+
+//UPDATE the profile diet for the day given in info
+async function handlePostUpdateDaysDiet(info) {
+	return connectAndRun((db) =>
+		db.any(
+			'UPDATE profileplan SET dietId = $1 WHERE userId = $2 AND day = $3;',
+			[info.dietid, currentUserId, info.day])
 	);
 }
 
@@ -252,6 +280,8 @@ module.exports = {
 	handlePostCheckFriend,
 	handlePostNewUser,
 	handlePostCheckOwnRequest,
+	handlePostUpdateDaysDiet,
+	handlePostUpdateDaysWorkout,
 	handleDeleteFriend,
 	handlePostUpdateUserNames_Email,
 	handleGetMyProfileInfo,
@@ -259,6 +289,7 @@ module.exports = {
 	handlePostCreateInitialProfilePlan,
 	handleGetMyProfilePlan,
 	handlePostUpdateProfileInfo,
+	handlePostCreateDaysPlan,
 	handlePostCreateInitialProfile,
 	friendFunctions,
 	getUserByEmail,
