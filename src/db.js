@@ -88,7 +88,7 @@ async function handlePostCheckFriend(friendid) {
 }
 // Check to see if you already sent a friend request
 async function handlePostCheckOwnRequest(friendid) {
-	return await connectAndRun((db) =>
+	return connectAndRun((db) =>
 		db.any('SELECT * FROM friends WHERE friendid = $1 AND userid = $2;', [
 			friendid,
 			currentUserId,
@@ -132,15 +132,18 @@ async function friendFunctions(userid, friendid, action) {
 	}
 }
 async function getUserByEmail(email) {
-	return await connectAndRun(
-		db => db.any('SELECT * FROM users WHERE email = $1;',[email])
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM users WHERE email = $1;', [email])
 	);
 }
 
 //Get the current users friends
-async function handleGetMyFriends(){
-	return await connectAndRun((db) =>
-		db.any('SELECT * FROM friends WHERE userid = $1 AND status = $2;', [currentUserId, 'accepted'])
+async function handleGetMyFriends() {
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM friends WHERE userid = $1 AND status = $2;', [
+			currentUserId,
+			'accepted',
+		])
 	);
 }
 
@@ -174,15 +177,15 @@ async function handlePostUpdateUserNames_Email(userid, body) {
 }
 
 //Get the profile info for the current user
-async function handleGetMyProfileInfo(){
-	return await connectAndRun((db) =>
+async function handleGetMyProfileInfo() {
+	return connectAndRun((db) =>
 		db.any('SELECT * FROM profileinfo WHERE userId = $1;', [currentUserId])
 	);
 }
 
 //Get the profile plan for the current user
-async function handleGetMyProfilePlan(){
-	return await connectAndRun((db) =>
+async function handleGetMyProfilePlan() {
+	return connectAndRun((db) =>
 		db.any('SELECT * FROM profileplan WHERE userId = $1;', [currentUserId])
 	);
 }
@@ -193,8 +196,17 @@ async function handlePostCreateInitialProfile(info) {
 	return connectAndRun((db) =>
 		db.any(
 			'INSERT INTO profileinfo(userId,username,age,goalweight,country,about,favgym,favworkout,favrecipe) VALUES($1,$2, $3, $4,$5, $6, $7, $8, $9);',
-			[currentUserId, info.username, info.age, info.goalweight, info.country, info.about, 
-			info.favgym, info.favworkout, info.favrecipe]
+			[
+				currentUserId,
+				info.username,
+				info.age,
+				info.goalweight,
+				info.country,
+				info.about,
+				info.favgym,
+				info.favworkout,
+				info.favrecipe,
+			]
 		)
 	);
 }
@@ -205,8 +217,17 @@ async function handlePostCreateInitialProfilePlan(info) {
 	return connectAndRun((db) =>
 		db.any(
 			'INSERT INTO profileplan(userId,username,age,goalweight,country,about,favgym,favworkout,favrecipe) VALUES($1,$2, $3, $4,$5, $6, $7, $8, $9);',
-			[currentUserId, info.username, info.age, info.goalweight, info.country, info.about, 
-			info.favgym, info.favworkout, info.favrecipe]
+			[
+				currentUserId,
+				info.username,
+				info.age,
+				info.goalweight,
+				info.country,
+				info.about,
+				info.favgym,
+				info.favworkout,
+				info.favrecipe,
+			]
 		)
 	);
 }
@@ -216,8 +237,17 @@ async function handlePostUpdateProfileInfo(info) {
 	return connectAndRun((db) =>
 		db.any(
 			'UPDATE profileinfo SET username = $1, age=$2, goalweight = $3, country = $4, about = $5, favgym = $6, favworkout = $7, favrecipe = $8 WHERE userId = $9;',
-			[info.username, info.age, info.goalweight, info.country, info.about, 
-			info.favgym, info.favworkout, info.favrecipe, currentUserId]
+			[
+				info.username,
+				info.age,
+				info.goalweight,
+				info.country,
+				info.about,
+				info.favgym,
+				info.favworkout,
+				info.favrecipe,
+				currentUserId,
+			]
 		)
 	);
 }
@@ -225,9 +255,10 @@ async function handlePostUpdateProfileInfo(info) {
 //POST a new user in both the user table and password table
 //TODO update to also post to user table
 async function handlePostNewUser(userid, salt, pwd) {
-	return connectAndRun((db) => 
+	return connectAndRun((db) =>
 		db.none(
-			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);', [userid, salt, pwd]
+			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);',
+			[userid, salt, pwd]
 		)
 	);
 }
