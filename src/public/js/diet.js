@@ -1,0 +1,1 @@
+const currentUserID = 2;

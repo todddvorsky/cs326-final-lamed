@@ -21,9 +21,8 @@ document.getElementById('submit').addEventListener('click', async () => {
 	// workoutId = await workoutId.json().workoutId;
 	workoutId = await workoutId.json();
 	if (workoutId.length) workoutId = workoutId[0].workoutid;
-	console.log(workoutId);
-	if (!workoutId) {
-		console.log('hhhh');
+	console.log('1', workoutId);
+	if (!workoutId.length) {
 		workoutId = await fetch('workouts/create', {
 			// make sure the fetchs return id
 			headers: {
@@ -37,7 +36,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 		});
 		workoutId = await workoutId.json();
 		workoutId = workoutId[0].workoutid;
-		console.log('hh', workoutId);
+		console.log('2', workoutId);
 	}
 
 	await fetch('workouts/exercise/create', {
