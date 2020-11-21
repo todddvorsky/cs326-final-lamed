@@ -11,7 +11,7 @@ const pgp = require('pg-promise')({
 	},
 });
 
-let currentUserId = 2; // temp
+let currentUserId = 1; // temp
 
 let secrets;
 let password;
@@ -168,6 +168,13 @@ async function handlePostUpdateUserNames_Email(userid, body) {
 	);
 }
 
+//Get the profile info for the current user
+async function handleGetMyProfileInfo(){
+	return await connectAndRun((db) =>
+		db.any('SELECT * FROM profileinfo WHERE userId = $1;', [currentUserId])
+	);
+}
+
 module.exports = {
 	connectAndRun,
 	handleGetUsers,
@@ -181,6 +188,7 @@ module.exports = {
 	handlePostCheckOwnRequest,
 	handleDeleteFriend,
 	handlePostUpdateUserNames_Email,
+	handleGetMyProfileInfo,
 	friendFunctions,
 	getUserByEmail,
 };

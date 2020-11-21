@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const database = require('../db.js');
 
-let currentUserId = 2;
+let currentUserId = 1;
 
 /* set params */
 router.param('user', function (req, res, next) {
@@ -92,6 +92,12 @@ router.post('/update/:user', async function (req, res) {
   //console.log(req.body);
 	const updated = await database.handlePostUpdateUserNames_Email(req.params.user, req.body);
 	res.send(updated);
+});
+
+/*GET a the current users profile info*/
+router.get('/profile/myinfo', async function (req, res) {
+	const myInfo = await database.handleGetMyProfileInfo();
+	res.send(myInfo);
 });
 
 /* Create a user */

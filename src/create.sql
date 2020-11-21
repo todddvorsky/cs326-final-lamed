@@ -28,6 +28,7 @@ CREATE TABLE profileinfo(
 
 CREATE TABLE profileplan(
     userId INT,
+    username VARCHAR(255),
     mondaydietId INT,
     mondayworkoutId INT,
     tuesdaydietId INT,
