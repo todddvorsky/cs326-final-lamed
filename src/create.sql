@@ -12,41 +12,42 @@ CREATE TABLE users(
     userId SERIAL PRIMARY KEY,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255)
 );
 
 CREATE TABLE profileinfo(
-    userID INT,
+    userId INT,
     age INT,
     goalweight INT,
     country VARCHAR(255),
     about VARCHAR(255),
     favgym VARCHAR(255),
     favworkout VARCHAR(255),
-    favrecipe VARCHAR(255),
+    favrecipe VARCHAR(255)
 );
 
 CREATE TABLE profileplan(
-    mondaydietid INT,
-    mondayworkoutid INT,
-    tuesdaydietid INT,
-    tuesdayworkoutid INT,
-    wednesdaydietid INT,
-    wednesdayworkoutid INT,
-    thursdaydietid INT,
-    thursdayworkoutid INT,
-    fridaydietid INT,
-    fridayworkoutid INT,
-    saturdaydietid INT,
-    saturdayworkoutid INT,
-    sundaydietid INT,
-    sundayworkoutid INT
+    userId INT,
+    mondaydietId INT,
+    mondayworkoutId INT,
+    tuesdaydietId INT,
+    tuesdayworkoutId INT,
+    wednesdaydietId INT,
+    wednesdayworkoutId INT,
+    thursdaydietId INT,
+    thursdayworkoutId INT,
+    fridaydietId INT,
+    fridayworkoutId INT,
+    saturdaydietId INT,
+    saturdayworkoutId INT,
+    sundaydietId INT,
+    sundayworkoutId INT
 );
 
 CREATE TABLE friends (
     userId INT,
     friendId INT,
-    status VARCHAR(255)
+    status VARCHAR(255),
     FOREIGN KEY (userId) REFERENCES users(userId),
     FOREIGN KEY (friendId) REFERENCES users(userId)
 );
