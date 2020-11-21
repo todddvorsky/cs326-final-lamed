@@ -72,6 +72,11 @@ async function handleGetDietsRecipes(dietid) {
 		db.any('SELECT * FROM recipes WHERE dietid = $1;', [dietid])
 	);
 }
+async function handleGetWorkoutsExercises(workoutid) {
+	return connectAndRun((db) =>
+		db.any('SELECT * FROM exercises WHERE workoutid = $1;', [workoutid])
+	);
+}
 // Check to see if the friend has already sent one to you
 async function handlePostCheckFriend(friendid) {
 	return connectAndRun((db) =>
@@ -175,6 +180,48 @@ async function handleGetMyProfileInfo(){
 	);
 }
 
+//Get the profile plan for the current user
+async function handleGetMyProfilePlan(){
+	return await connectAndRun((db) =>
+		db.any('SELECT * FROM profileplan WHERE userId = $1;', [currentUserId])
+	);
+}
+
+//CREATE the profile info with initial values in DB
+async function handlePostCreateInitialProfile(info) {
+	console.log(info);
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO profileinfo(userId,username,age,goalweight,country,about,favgym,favworkout,favrecipe) VALUES($1,$2, $3, $4,$5, $6, $7, $8, $9);',
+			[currentUserId, info.username, info.age, info.goalweight, info.country, info.about, 
+			info.favgym, info.favworkout, info.favrecipe]
+		)
+	);
+}
+
+//CREATE the profile plan with initial values in DB
+async function handlePostCreateInitialProfilePlan(info) {
+	console.log(info);
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO profileplan(userId,username,age,goalweight,country,about,favgym,favworkout,favrecipe) VALUES($1,$2, $3, $4,$5, $6, $7, $8, $9);',
+			[currentUserId, info.username, info.age, info.goalweight, info.country, info.about, 
+			info.favgym, info.favworkout, info.favrecipe]
+		)
+	);
+}
+
+//UPDATE the profile info with whatever is inputed into the html
+async function handlePostUpdateProfileInfo(info) {
+	return connectAndRun((db) =>
+		db.any(
+			'UPDATE profileinfo SET username = $1, age=$2, goalweight = $3, country = $4, about = $5, favgym = $6, favworkout = $7, favrecipe = $8 WHERE userId = $9;',
+			[info.username, info.age, info.goalweight, info.country, info.about, 
+			info.favgym, info.favworkout, info.favrecipe, currentUserId]
+		)
+	);
+}
+
 //POST a new user in both the user table and password table
 //TODO update to also post to user table
 async function handlePostNewUser(userid, salt, pwd) {
@@ -192,6 +239,7 @@ module.exports = {
 	handleGetUserPwd,
 	handleGetUserWorkouts,
 	handleGetDietsRecipes,
+	handleGetWorkoutsExercises,
 	handleGetUserDiets,
 	handleGetMyFriends,
 	handlePostCheckFriend,
@@ -200,6 +248,10 @@ module.exports = {
 	handleDeleteFriend,
 	handlePostUpdateUserNames_Email,
 	handleGetMyProfileInfo,
+	handlePostCreateInitialProfilePlan,
+	handleGetMyProfilePlan,
+	handlePostUpdateProfileInfo,
+	handlePostCreateInitialProfile,
 	friendFunctions,
 	getUserByEmail,
 };

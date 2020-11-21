@@ -30,20 +30,9 @@ CREATE TABLE profileinfo(
 
 CREATE TABLE profileplan(
     userId INT,
-    mondaydietId INT,
-    mondayworkoutId INT,
-    tuesdaydietId INT,
-    tuesdayworkoutId INT,
-    wednesdaydietId INT,
-    wednesdayworkoutId INT,
-    thursdaydietId INT,
-    thursdayworkoutId INT,
-    fridaydietId INT,
-    fridayworkoutId INT,
-    saturdaydietId INT,
-    saturdayworkoutId INT,
-    sundaydietId INT,
-    sundayworkoutId INT
+    day VARCHAR(255),
+    dietId INT,
+    workoutId INT
 );
 
 CREATE TABLE friends (
