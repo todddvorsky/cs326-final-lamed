@@ -6,13 +6,12 @@ const expressSession = require('express-session'); // for managing session state
 const passport = require('passport'); // handles authentication
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 
-const app = express();
-const port = process.env.PORT || 3000;
+const app = require('../app');
 
 const minicrypt = require('./miniCrypt');
 const mc = new minicrypt();
 
-const database = require('../db.js');
+const database = require('../db');
 
 // Session configuration
 
@@ -25,12 +24,12 @@ const session = {
 // Passport configuration
 
 const strategy = new LocalStrategy(async (name, password, done) => {
-	const found, id = findUser(name);
+	const [found, id] = await findUser(name);
 	if (!found) {
 		// no such user
 		return done(null, false, { message: 'Invalid Username or Email' });
 	}
-	if (!validatePassword(id, password)) {
+	if (!await validatePassword(id, password)) {
 		// invalid password
 		// delay return to rate-limit brute-force attacks
 		await new Promise((r) => setTimeout(r, 2000)); // two second delay
@@ -57,28 +56,23 @@ passport.deserializeUser((uid, done) => {
 	done(null, uid);
 });
 
-app.use(express.json()); // allow JSON inputs
-app.use(express.urlencoded({ extended: true })); // allow URLencoded data
-
-
 // Database functions
 
 // Returns true iff the user exists.
-//TODO add support for finding users by email (make this method return a tuple, boolean and userid)
-function findUser(input) {
+async function findUser(input) {
 	const user = await database.handleGetSpecUser(input);
 	// TODO test this
 	console.log("Find User: " + JSON.stringify(user));
 	if (!user) {
-		return false, null;
+		return [false, null];
 	} else {
-		return true, user.userId;
+		return [true, user.userId];
 	}
 }
 
 // Returns true iff the password is the one we have stored.
-function validatePassword(name, pwd) {
-	const found, id = findUser(name);
+async function validatePassword(name, pwd) {
+	const [found, id] = await findUser(name);
 	if (!found) {
 		return false;
 	}
@@ -92,8 +86,8 @@ function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-function addUser(name, pwd) {
-	const found, id = findUser(name);
+async function addUser(name, pwd) {
+	const [found, id] = await findUser(name);
 	if (!found) {
 		return false;
 	}
@@ -111,12 +105,12 @@ function checkLoggedIn(req, res, next) {
 		next();
 	} else {
 		// Otherwise, redirect to the login page.
-		res.redirect('/login');
+		res.redirect('/');
 	}
 }
 
 app.get('/', checkLoggedIn, (req, res) => {
-	res.send('hello world');
+	res.render('index', { title: 'Express' });
 });
 
 // Handle post data from the login.html form.
@@ -145,10 +139,10 @@ app.get('/logout', (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 // TODO
-app.post('/register', (req, res) => {
+app.post('/register', async function (req, res) {
 	const username = req.body['username'];
 	const password = req.body['password'];
-	if (addUser(username, password)) {
+	if (await addUser(username, password)) {
 		res.redirect('/login');
 	} else {
 		res.redirect('/register');
@@ -193,5 +187,6 @@ app.get('*', (req, res) => {
 	res.send('Error');
 });
 
-// app.listen(port, () => {
-//     console.log(`App now listening at http://localhost:${port}`);
+module.exports = {
+	checkLoggedIn
+}
