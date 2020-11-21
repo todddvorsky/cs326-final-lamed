@@ -100,16 +100,18 @@ async function addUser(name, pwd) {
 // Routes
 
 function checkLoggedIn(req, res, next) {
+	console.log('in check loggedin');
 	if (req.isAuthenticated()) {
 		// If we are authenticated, run the next route.
 		next();
 	} else {
 		// Otherwise, redirect to the login page.
-		res.redirect('/');
+		res.sendFile('index');
+		console.log('hit');
 	}
 }
 
-app.get('/', checkLoggedIn, (req, res) => {
+app.get('/login', checkLoggedIn, (req, res) => {
 	res.render('index', { title: 'Express' });
 });
 
@@ -143,7 +145,7 @@ app.post('/register', async function (req, res) {
 	const username = req.body['username'];
 	const password = req.body['password'];
 	if (await addUser(username, password)) {
-		res.redirect('/login');
+		res.redirect('/home');
 	} else {
 		res.redirect('/register');
 	}
