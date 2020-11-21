@@ -52,7 +52,7 @@ async function handleGetSpecUser(userid) {
 		db.any('SELECT * FROM users WHERE userid = $1;', [userid])
 	);
 }
-async function handleGetUserPwd(userid){
+async function handleGetUserPwd(userid) {
 	return connectAndRun((db) =>
 		db.any('SELECT salt, hashedpwd FROM passwords WHERE userId = $1;', [userid])
 	);
@@ -141,23 +141,32 @@ async function handleGetMyFriends(){
 
 //DELETE to delete the selected friend from the current users friends list
 async function handleDeleteFriend(friendsid) {
-	await connectAndRun(
-		db => db.none('DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;', 
-					[currentUserId, friendsid, 'accepted'])
-		);
-	return await connectAndRun(db => db.none('DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;', 
-											[friendsid, currentUserId, 'accepted'])
-		);
-};
+	await connectAndRun((db) =>
+		db.none(
+			'DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;',
+			[currentUserId, friendsid, 'accepted']
+		)
+	);
+	return connectAndRun((db) =>
+		db.none(
+			'DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;',
+			[friendsid, currentUserId, 'accepted']
+		)
+	);
+}
 
 //UPDATE the specified fields for a user, Body must contain firstname,lastname,email
 async function handlePostUpdateUserNames_Email(userid, body) {
-	await connectAndRun(
-		db => db.any('UPDATE users SET firstname = $1, lastname = $2, email=$3 WHERE userid = $4;', 
-					[body.firstname, body.lastname, body.email, userid])
-		);
-	return await connectAndRun(db => db.any('SELECT * from users WHERE userid =$1;',[userid]));
-};
+	await connectAndRun((db) =>
+		db.any(
+			'UPDATE users SET firstname = $1, lastname = $2, email=$3 WHERE userid = $4;',
+			[body.firstname, body.lastname, body.email, userid]
+		)
+	);
+	return connectAndRun((db) =>
+		db.any('SELECT * from users WHERE userid =$1;', [userid])
+	);
+}
 
 module.exports = {
 	connectAndRun,
