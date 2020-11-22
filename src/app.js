@@ -34,7 +34,7 @@ const strategy = new LocalStrategy(async (email, password, done) => {
 		return done(null, false, { message: 'Invalid Email' });
 	}
 	console.log("running validate password");
-	const valPass = await validatePassword(id, password);
+	const valPass = await validatePassword(email, password);
 	console.log("Validate password Response: " + valPass)
 	if (!valPass) {
 		console.log("bad valpass");
@@ -61,60 +61,47 @@ passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// passport.serializeUser((user, done) => {
-// 	console.log(user);
-// 	console.log(user.email);
-// 	console.log(user.userId);
-// 	done(null, user.userId);
-// });
-
-// passport.deserializeUser(async (email, done) => {
-// 	const user = await database.getUserByEmail(email);
-// 	if(!user) {
-// 		return done(new Error('user not found'));
-// 	}
-// 	done(null, user.userId);
-// });
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
-	done(null, user.userId);
+	console.log("serializing");
+	done(null, user);
+	console.log("done serializing");
 });
 
 // Convert a unique identifier to a user object.
-passport.deserializeUser(async (uid, done) => {
-	try {
-		let user = await database.handleGetSpecUser(uid);
-		if (!user) {
-			return done(new Error('user not found'));
-		}
-		done(null, user);
-	} catch (e) {
-		done(e);
-	}
+passport.deserializeUser(async (email, done) => {
+	console.log("deserializing");
+	done(null, email);
+	console.log("done deserializing");
 });
 
 // Database functions
 
 // Returns true iff the user exists.
 async function findUser(email) {
-	const user = await database.getUserByEmail(email);
+	const q = await database.getUserByEmail(email);
+	const user = q[0];
 	if (!user) {
+		console.log("user not found");
 		return [false, null];
 	} else {
-		return [true, user.userId];
+		console.log("user found:");
+		console.log(user);
+		return [true, user.userid];
 	}
 }
 
 // Returns true iff the password is the one we have stored.
-async function validatePassword(sid, pwd) {
-	const [found, id] = await findUser(sid);
+async function validatePassword(email, pwd) {
+	const [found, id] = await findUser(email);
 	if (!found) {
 		return false;
 	}
-	const data = await database.handleGetUserPwd(id);
+	const q = await database.handleGetUserPwd(id);
+	const data = q[0];
 	// TODO test this
 	console.log(data);
+	console.log(id);
 	if (!mc.check(pwd, data.salt, data.hashedpwd)) {
 		return false;
 	}
@@ -124,7 +111,7 @@ async function validatePassword(sid, pwd) {
 // Add a user to the database.
 async function addUser(email, fname, lname, pwd) {
 	const [found, id] = await findUser(email);
-	if (!found) {
+	if (found) {
 		return false;
 	}
 	const [salt, hash] = mc.hash(pwd);
@@ -141,34 +128,13 @@ function checkLoggedIn(req, res, next) {
 		next();
 	} else {
 		// Otherwise, redirect to the login page.
-		res.redirect('/login');
+		res.redirect('../login');
 	}
 }
 
 app.get('/', checkLoggedIn, async (req, res) => {
-	res.redirect('/home');
+	res.redirect('../home');
 });
-
-// Handle the URL /login.
-app.get('/login', async (req, res) =>
-	res.sendFile(path.join(__dirname, 'public/index.html'))
-	//res.render(path.join(__dirname, 'public/index'))
-);
-
-// Go to home page
-app.get('/home', checkLoggedIn, async (req, res) => {
-	// Go to the user's page.
-	res.sendFile(path.join(__dirname, 'public/home.html'));
-	//res.render('home');
-}
-);
-
-// Handle logging out (takes us back to the login page).
-app.get('/logout', async (req, res) => {
-	req.logout(); // Logs us out!
-	res.redirect('/login'); // back to login
-});
-
 
 // Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
@@ -176,7 +142,7 @@ app.get('/logout', async (req, res) => {
 // Use res.redirect to change URLs.
 // TODO
 app.post('/register', async function (req, res, next) {
-	const email = req.body['email'];
+	const email = req.body['username'];
 	const password = req.body['password'];
 	const fname = req.body['fname'];
 	const lname = req.body['lname'];
@@ -187,36 +153,34 @@ app.post('/register', async function (req, res, next) {
 		console.log("failed to add user ", email);
 		res.end();
 	}
-	}, passport.authenticate('local', { // use username/password authentication
-		'successRedirect' : '/home', // when we login, go to /home
-		'failureRedirect' : '/login', // otherwise, back to login
+	}, passport.authenticate('local', { // use email/password authentication
+		'successRedirect' : '/home', // if we login, go to /home
 	})
 );
 
-// Handle post data from the login.html form.
+// Handle post data from the index.html form.
 app.post('/login',
-	passport.authenticate('local', { // use username/password authentication
-		'successRedirect' : '/home', // when we login, go to /home
-		'failureRedirect' : '/login', // otherwise, back to login
+	passport.authenticate('local', { // use email/password authentication
+		'successRedirect' : 'http://localhost:8080/home', // if we login, go to /home
 	})
 );
 
-// // A dummy page for the user.
-// app.get(
-// 	'/private/:userID/',
-// 	checkLoggedIn, // We also protect this route: authenticated...
-// 	(req, res) => {
-// 		// Verify this is the right user.
-// 		if (req.params.userID === req.user) {
-// 			res.writeHead(200, { 'Content-Type': 'text/html' });
-// 			res.write('<H1>HELLO ' + req.params.userID + '</H1>');
-// 			res.write('<br/><a href="/logout">click here to logout</a>');
-// 			res.end();
-// 		} else {
-// 			res.redirect('/private/');
-// 		}
-// 	}
-// );
+// Handle the URL /login.
+app.get('/login', async (req, res) => {
+	res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+// Go to home page
+app.get('/home', checkLoggedIn, async (req, res) => {
+	// Go to the home page.
+	res.sendFile(path.join(__dirname, 'public/home.html'));
+});
+
+// Handle logging out (takes us back to the login page).
+app.get('/logout', async (req, res) => {
+	req.logout(); // Logs us out!
+	res.redirect('../login'); // back to login
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./routes'));
@@ -237,5 +201,4 @@ app.use(function (err, req, res, next) {
 	res.render('error');
 });
 
-const port = 8080;
-app.listen(port);
+app.listen(process.env.PORT || 8080);
