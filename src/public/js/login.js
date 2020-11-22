@@ -5,22 +5,21 @@ window.addEventListener("load", () =>{
         console.log("logging in...");
 
         const data = {
-            email: event.target.email.value,
+            username: event.target.email.value,
             password: event.target.pwd.value           
         }
 
-        await fetch('/login', {
+        const res = await fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
-        // if(res.ok){
-        //     console.log(res);
-        //     const html = await res.text();
-        //     document.body.innerHTML = html;
-        // }
+        if(res.ok){
+            const html = await res.text();
+            document.body.innerHTML = html;
+        }
     });
     
     document.getElementById('register-form').addEventListener('submit', async function(event) {
@@ -31,11 +30,11 @@ window.addEventListener("load", () =>{
         const data = {
             fname: event.target.fname.value,
             lname: event.target.lname.value,
-            email: event.target.email.value,
+            username: event.target.email.value,
             password: event.target.pwd.value            
         }
 
-        await fetch('/register', {
+        const res = await fetch('/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,11 +42,10 @@ window.addEventListener("load", () =>{
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
 
-        // if(res.ok){
-        //     console.log(res);
-        //     const html = await res.text();
-        //     document.body.innerHTML = html;
-        // }
-        
+        if(res.ok){
+            const html = await res.text();
+            document.body.innerHTML = html;
+        }
+  
     });
 });
