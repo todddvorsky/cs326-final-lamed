@@ -78,13 +78,13 @@ app.use(passport.session());
 // });
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
-	done(null, user.email);
+	done(null, user.userId);
 });
 
 // Convert a unique identifier to a user object.
-passport.deserializeUser(async (email, done) => {
+passport.deserializeUser(async (uid, done) => {
 	try {
-		let user = await database.getUserByEmail(email);
+		let user = await database.handleGetSpecUser(uid);
 		if (!user) {
 			return done(new Error('user not found'));
 		}
@@ -188,16 +188,16 @@ app.post('/register', async function (req, res, next) {
 		res.end();
 	}
 	}, passport.authenticate('local', { // use username/password authentication
-		successRedirect: '/home', // when we login, go to /home
-		failureRedirect: '/login', // otherwise, back to login
+		'successRedirect' : '/home', // when we login, go to /home
+		'failureRedirect' : '/login', // otherwise, back to login
 	})
 );
 
 // Handle post data from the login.html form.
 app.post('/login',
 	passport.authenticate('local', { // use username/password authentication
-		successRedirect: '/home', // when we login, go to /home
-		failureRedirect: '/login', // otherwise, back to login
+		'successRedirect' : '/home', // when we login, go to /home
+		'failureRedirect' : '/login', // otherwise, back to login
 	})
 );
 
