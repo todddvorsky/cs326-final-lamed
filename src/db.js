@@ -298,16 +298,18 @@ async function handlePostUpdateDaysDiet(info) {
 async function handlePostNewUser(email, fname, lname, salt, hpwd) {
 	await connectAndRun((db) =>
 		db.none(
-			'INSERT INTO users(email, firsName, lastName) VALUES($1,$2,$3);',
+			'INSERT INTO users(email, firstName, lastName) VALUES($1,$2,$3);',
 			[email, fname, lname]
 		)
 	);
-	const id = await connectAndRun((db) =>
+	const r = await connectAndRun((db) =>
 		db.one(
 			'SELECT userId FROM users WHERE email = $1;',
-			[userid, salt, pwd]
+			[email]
 		)
 	);
+	const id = r.userid;
+	console.log("Created user with id " + id);
 	return connectAndRun((db) =>
 		db.none(
 			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);',
