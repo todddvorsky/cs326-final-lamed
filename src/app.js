@@ -61,13 +61,37 @@ passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// passport.serializeUser((user, done) => {
+// 	console.log(user);
+// 	console.log(user.email);
+// 	console.log(user.userId);
+// 	done(null, user.userId);
+// });
+
+// passport.deserializeUser(async (email, done) => {
+// 	const user = await database.getUserByEmail(email);
+// 	if(!user) {
+// 		return done(new Error('user not found'));
+// 	}
+// 	done(null, user.userId);
+// });
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
-	done(null, user);
+	done(null, user.email);
 });
+
 // Convert a unique identifier to a user object.
-passport.deserializeUser((uid, done) => {
-	done(null, uid);
+passport.deserializeUser(async (email, done) => {
+	try {
+		let user = await database.getUserByEmail(email);
+		if (!user) {
+			return done(new Error('user not found'));
+		}
+		done(null, user);
+	} catch (e) {
+		done(e);
+	}
 });
 
 // Database functions
@@ -121,18 +145,18 @@ function checkLoggedIn(req, res, next) {
 	}
 }
 
-app.get('/', checkLoggedIn, (req, res) => {
+app.get('/', checkLoggedIn, async (req, res) => {
 	res.redirect('/home');
 });
 
 // Handle the URL /login.
-app.get('/login', (req, res) =>
+app.get('/login', async (req, res) =>
 	res.sendFile(path.join(__dirname, 'public/index.html'))
 	//res.render(path.join(__dirname, 'public/index'))
 );
 
 // Go to home page
-app.get('/home', checkLoggedIn, (req, res) => {
+app.get('/home', checkLoggedIn, async (req, res) => {
 	// Go to the user's page.
 	res.sendFile(path.join(__dirname, 'public/home.html'));
 	//res.render('home');
@@ -140,7 +164,7 @@ app.get('/home', checkLoggedIn, (req, res) => {
 );
 
 // Handle logging out (takes us back to the login page).
-app.get('/logout', (req, res) => {
+app.get('/logout', async (req, res) => {
 	req.logout(); // Logs us out!
 	res.redirect('/login'); // back to login
 });
