@@ -2,9 +2,9 @@ const router = require('express').Router();
 const database = require('../db.js');
 
 /* set params */
-router.param('diet', function (req, res, next) {
-	//TODO
-	req.diet = 'Diet.';
+router.param('diet', async function (req, res, next) {
+	const q = await database.handleGetSpecDiet(id);
+	req.diet = q[0];
 
 	next();
 });
@@ -46,11 +46,7 @@ router.get('/recipes', function (req, res) {
 });
 /* GET a specific diet. */
 router.get('/:diet', function (req, res) {
-	res.json({
-		dietId: '639',
-		dietName: 'my diet 2',
-		recipes: ['435', '123'],
-	});
+	res.json(req.diet);
 	res.status(200);
 });
 /* GET a specific recipe. */

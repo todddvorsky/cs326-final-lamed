@@ -57,7 +57,6 @@ async function itemClickEvent(element){
     }
     else{
         const wo = workoutMap[element.innerText];
-
         
         const q = await fetch('/users/'+wo['userid']);
         const c = await q.json();

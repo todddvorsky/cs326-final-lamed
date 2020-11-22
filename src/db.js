@@ -393,6 +393,11 @@ async function handleGetSpecWorkout(id) {
 	return connectAndRun((db) => db.one( 'SELECT * FROM workouts WHERE workoutId = $1;', [id]));
 }
 
+// GET - specific diet by id
+async function handleGetSpecDiet(id) {
+	return connectAndRun((db) => db.one( 'SELECT * FROM diets WHERE dietId = $1;', [id]));
+}
+
 module.exports = {
 	connectAndRun,
 	handleGetUsers,
