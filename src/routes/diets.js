@@ -18,59 +18,10 @@ router.param('recipe', function (req, res, next) {
 /* ENDPOINTS -- These are strictly suggestions, feel free to modify */
 
 /* GET all diets. */
-router.get('/allDiets', function (req, res, next) {
-	res.json([
-		{
-			dietId: '551',
-			dietName: 'my diet',
-			recipes: ['123', '1414', '4', '15'],
-		},
-		{
-			dietId: '639',
-			dietName: 'my diet 2',
-			recipes: ['435', '123'],
-		},
-		{
-			dietId: '593',
-			dietName: 'Todds diet',
-			recipes: ['123', '1414', '4', '15'],
-		},
-		{
-			dietId: '234',
-			dietName: 'Patricks diet',
-			recipes: ['435', '123'],
-		},
-		{
-			dietId: '071',
-			dietName: 'Jasons diet',
-			recipes: ['123', '1414', '4', '15'],
-		},
-		{
-			dietId: '790',
-			dietName: 'Emerys diet',
-			recipes: ['435', '123'],
-		},
-		{
-			dietId: '105',
-			dietName: 'Nicolas diet',
-			recipes: ['123', '1414', '4', '15'],
-		},
-		{
-			dietId: '900',
-			dietName: 'Joesephs diet',
-			recipes: ['435', '123'],
-		},
-		{
-			dietId: '114',
-			dietName: 'Moms diet',
-			recipes: ['123', '1414', '4', '15'],
-		},
-		{
-			dietId: '444',
-			dietName: 'Dads diet',
-			recipes: ['435', '123'],
-		},
-	]);
+router.get('/allDiets', async function (req, res) {
+	const diets = await database.getAllDiets();
+	res.status(200);
+	res.send(diets);
 	res.status(200);
 });
 /* GET all recipes. */
