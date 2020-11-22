@@ -67,6 +67,7 @@ async function populateWorkout(id){
         if(user_id === curr_friend_id){
             const user_wo = db[0];
             document.getElementById('workout').innerHTML = user_wo.workoutname;
+            document.getElementById('workout_desc').innerHTML = user_wo.description;
         }
     }
 }
@@ -105,12 +106,15 @@ async function populateDiet(id){
             for(let rec of recipes){
                 if(rec.tag === 'breakfast'){
                     document.getElementById('breakfast').innerHTML = rec.recipename;
+                    document.getElementById('breakfast_desc').innerHTML = rec.description;
                 }
                 if(rec.tag === 'lunch'){
                     document.getElementById('lunch').innerHTML = rec.recipename;
+                    document.getElementById('lunch_desc').innerHTML = rec.description;
                 }
                 if(rec.tag === 'dinner'){
                     document.getElementById('dinner').innerHTML = rec.recipename;
+                    document.getElementById('dinner_desc').innerHTML = rec.description;
                 }
             }
         }

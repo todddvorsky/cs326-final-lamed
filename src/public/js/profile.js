@@ -191,10 +191,13 @@ function helpPopulateFood(recipes){
     for(let rec of recipes){
         if(rec.tag === 'breakfast'){
             document.getElementById('breakfast_txt').innerHTML = rec.recipename;
+            document.getElementById('breakfast_desc').innerHTML = rec.description;
         }if(rec.tag === 'lunch'){
             document.getElementById('lunch_txt').innerHTML = rec.recipename;
+            document.getElementById('lunch_desc').innerHTML = rec.description;
         }if(rec.tag === 'dinner'){
             document.getElementById('dinner_txt').innerHTML = rec.recipename;
+            document.getElementById('dinner_desc').innerHTML = rec.description;
         }
     }
 }
@@ -254,6 +257,7 @@ async function populateWorkoutList(){
         const exercises = await resp.json();
         newName.addEventListener('click', function() {
             document.getElementById("workout_txt").innerHTML = exercises[0].name;
+            document.getElementById("workout_desc").innerHTML = exercises[0].description;
             document.getElementById('WO_dropdownMenuButton').innerHTML = newName.innerHTML;
             if(planExists(currentDayClicked)){
                 updateDaysWorkout(woid, currentDayClicked);
@@ -349,15 +353,22 @@ async function thisDaysDietWorkout(day){
     const db = dbs[0];
     if(!db){
         document.getElementById('breakfast_txt').innerHTML = 'Pick a diet';
+        document.getElementById('breakfast_desc').innerHTML = '';
         document.getElementById('lunch_txt').innerHTML = 'Pick a diet';
+        document.getElementById('lunch_desc').innerHTML = '';
         document.getElementById('dinner_txt').innerHTML = 'Pick a diet';
+        document.getElementById('dinner_desc').innerHTML = '';
         document.getElementById("workout_txt").innerHTML = 'Pick a workout';
+        document.getElementById("workout_desc").innerHTML = '';
     }
     else{
         if(!db.dietid){
             document.getElementById('breakfast_txt').innerHTML = 'Pick a diet';
+            document.getElementById('breakfast_desc').innerHTML = '';
             document.getElementById('lunch_txt').innerHTML = 'Pick a diet';
+            document.getElementById('lunch_desc').innerHTML = '';
             document.getElementById('dinner_txt').innerHTML = 'Pick a diet';
+            document.getElementById('dinner_desc').innerHTML = '';
         }
         else{
             const response1 = await fetch(`/users/diets/recipes/${db.dietid}`);
@@ -370,6 +381,7 @@ async function thisDaysDietWorkout(day){
         }
         if(!db.workoutid){
             document.getElementById("workout_txt").innerHTML = 'Pick a workout';
+            document.getElementById("workout_desc").innerHTML = '';
         }
         else{
             const response2 = await fetch(`/users/workouts/exercises/${db.workoutid}`);
@@ -379,6 +391,7 @@ async function thisDaysDietWorkout(day){
             }
             const exercises = await response2.json();
             document.getElementById("workout_txt").innerHTML = exercises[0].name;
+            document.getElementById("workout_desc").innerHTML = exercises[0].description;
         }
     }
 }
