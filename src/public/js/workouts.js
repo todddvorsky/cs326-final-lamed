@@ -3,67 +3,45 @@ window.addEventListener("load", function() {
     loadRecs(document.getElementById("recs-container"));
 });
 
+const workoutMap = {};
 
 async function loadUserWorkouts(element){
     element.innerHTML='';
 
     const workouts = await (await fetch('/workouts/allWorkouts')).json();
-    if(workouts.length !== 0){
-        if(workouts.length>=5){
-            for(let i=0; i<5; i++){
-                const a = document.createElement('a');
-                a.href = '#'; //TODO
-                a.classList.add('list-group-item', 'list-group-item-action');
-                a.innerText = workouts[i].workoutName;
+    let i=0;
+    while(i<5 && i<workouts.length){
+        const a = document.createElement('a');
+        a.href = '#'; //TODO
+        a.classList.add('list-group-item', 'list-group-item-action');
+        a.innerText = workouts[i].workoutname;
 
-                a.addEventListener("click", () => {itemClickEvent(a)});
+        workoutMap[workouts[i]['workoutname']] = workouts[i]['workoutid'];
 
-                element.appendChild(a);
-            }
-        }
-        else{
-            for(let i=0; i<workouts.length; i++){
-                const a = document.createElement('a');
-                a.href = '#'; //TODO
-                a.classList.add('list-group-item', 'list-group-item-action');
-                a.innerText = workouts[i].workoutName;
+        a.addEventListener("click", () => {itemClickEvent(a)});
 
-                a.addEventListener("click", () => {itemClickEvent(a)});
+        element.appendChild(a);
 
-                element.appendChild(a);
-            }
-        }
+        i++;
     }
 }
 async function loadRecs(element){
     const workouts = await (await fetch('/workouts/allWorkouts')).json();
-    console.log(JSON.stringify(workouts));
 
-    if(workouts.length !== 0){
-        if(workouts.length >=10){
-            for(let i=5; i<10; i++){
-                const a = document.createElement('a');
-                a.href = '#'; //TODO
-                a.classList.add('list-group-item', 'list-group-item-action');
-                a.innerText = workouts[i].workoutName;
+    let i=0;
+    while(i<5 && i<workouts.length){
+        const a = document.createElement('a');
+        a.href = '#'; //TODO
+        a.classList.add('list-group-item', 'list-group-item-action');
+        a.innerText = workouts[i]['workoutname'];
 
-                a.addEventListener("click", () => {itemClickEvent(a)});
+        workoutMap[workouts[i]['workoutname']] = workouts[i];
 
-                element.appendChild(a);
-            }
-        }
-        else if(workouts.length >5){
-            for(let i=5; i<workouts.length; i++){
-                const a = document.createElement('a');
-                a.href = '#'; //TODO
-                a.classList.add('list-group-item', 'list-group-item-action');
-                a.innerText = workouts[i].workoutName;
+        a.addEventListener("click", () => {itemClickEvent(a)});
 
-                a.addEventListener("click", () => {itemClickEvent(a)});
+        element.appendChild(a);
 
-                element.appendChild(a);
-            }
-        }
+        i++;
     }
 }
 
@@ -78,13 +56,18 @@ async function itemClickEvent(element){
         left.classList.remove("col-5");
     }
     else{
-        const workout = await (await fetch('/workouts/id')).json();
+        const wo = workoutMap[element.innerText];
+
+        
+        const q = await fetch('/users/'+wo['userid']);
+        const c = await q.json();
+        const creator = c[0];
 
         left.classList.add("col-5");
 
         const right = document.createElement("div");
         right.classList.add("col-7", "container");
-        right.innerText = element.innerText + ":\nID: " + workout.workoutId + "\nExercises IDs: " + JSON.stringify(workout.exercises);
+        right.innerText = element.innerText + ":\nID: " + wo['workoutid'] + "\nCreator: " + creator.firstname + " " + creator.lastname;
         right.id = "readmore";
         document.getElementById("container-a").appendChild(right);
     }

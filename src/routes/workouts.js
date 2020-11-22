@@ -2,9 +2,9 @@ const router = require('express').Router();
 const database = require('../db.js');
 
 /* set params */
-router.param('workout', function (req, res, next) {
-	//TODO
-	req.workout = 'Workout.';
+router.param('workout', async function (req, res, next, id) {
+	const q = await database.handleGetSpecWorkout(id);
+	req.workout = q[0];
 
 	next();
 });
@@ -116,11 +116,7 @@ router.get('/exercises', function (req, res) {
 });
 /* GET a specific workout. */
 router.get('/:workout', function (req, res) {
-	res.json({
-		workoutId: '235',
-		workoutName: 'my favs',
-		exercises: ['557', '77'],
-	});
+	res.json(req.workout);
 	res.status(200);
 });
 /* GET a specific exercise. */
