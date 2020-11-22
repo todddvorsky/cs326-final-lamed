@@ -364,6 +364,11 @@ async function createDiet(name, userId) {
 	);
 }
 
+// GET - all workouts
+async function getAllWorkouts() {
+	return connectAndRun((db) => db.any('SELECT * FROM workouts;'));
+}
+
 module.exports = {
 	connectAndRun,
 	handleGetUsers,
@@ -396,4 +401,5 @@ module.exports = {
 	handleGetUserDietsWithName,
 	createRecipe,
 	createDiet,
+	getAllWorkouts,
 };
