@@ -8,30 +8,60 @@ async function loadUserWorkouts(element){
     element.innerHTML='';
 
     const diets = await (await fetch('/diets/allDiets')).json();
+    if(diets.length != 0){
+        if(diets.length >= 5){
+            for(let i=0; i<5; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = diets[i].dietName;
 
-    for(let i=0; i<5; i++){
-        const a = document.createElement('a');
-        a.href = '#'; //TODO
-        a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = diets[i].dietName;
+                a.addEventListener("click", () => {itemClickEvent(a)});
 
-        a.addEventListener("click", () => {itemClickEvent(a)});
+                element.appendChild(a);
+            }
+        }
+        else{
+            for(let i=0; i<diets.length; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = diets[i].dietName;
 
-        element.appendChild(a);
+                a.addEventListener("click", () => {itemClickEvent(a)});
+
+                element.appendChild(a);
+            }
+        }
     }
 }
 async function loadRecs(element){
     const diets = await (await fetch('/diets/allDiets')).json();
+    if(diets.length !== 0){
+        if(diets.length >=10){
+            for(let i=5; i<10; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = diets[i].dietName;
 
-    for(let i=5; i<10; i++){
-        const a = document.createElement('a');
-        a.href = '#'; //TODO
-        a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = diets[i].dietName;
+                a.addEventListener("click", () => {itemClickEvent(a)});
 
-        a.addEventListener("click", () => {itemClickEvent(a)});
+                element.appendChild(a);
+            }
+        }
+        else if(diets.length > 5){
+            for(let i=5; i<diets.length; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = diets[i].dietName;
 
-        element.appendChild(a);
+                a.addEventListener("click", () => {itemClickEvent(a)});
+
+                element.appendChild(a);
+            }
+        }
     }
 }
 

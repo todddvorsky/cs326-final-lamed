@@ -8,31 +8,62 @@ async function loadUserWorkouts(element){
     element.innerHTML='';
 
     const workouts = await (await fetch('/workouts/allWorkouts')).json();
+    if(workouts.length !== 0){
+        if(workouts.length>=5){
+            for(let i=0; i<5; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = workouts[i].workoutName;
 
-    for(let i=0; i<5; i++){
-        const a = document.createElement('a');
-        a.href = '#'; //TODO
-        a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = workouts[i].workoutName;
+                a.addEventListener("click", () => {itemClickEvent(a)});
 
-        a.addEventListener("click", () => {itemClickEvent(a)});
+                element.appendChild(a);
+            }
+        }
+        else{
+            for(let i=0; i<workouts.length; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = workouts[i].workoutName;
 
-        element.appendChild(a);
+                a.addEventListener("click", () => {itemClickEvent(a)});
+
+                element.appendChild(a);
+            }
+        }
     }
 }
 async function loadRecs(element){
     const workouts = await (await fetch('/workouts/allWorkouts')).json();
     console.log(JSON.stringify(workouts));
 
-    for(let i=5; i<10; i++){
-        const a = document.createElement('a');
-        a.href = '#'; //TODO
-        a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = workouts[i].workoutName;
+    if(workouts.length !== 0){
+        if(workouts.length >=10){
+            for(let i=5; i<10; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = workouts[i].workoutName;
 
-        a.addEventListener("click", () => {itemClickEvent(a)});
+                a.addEventListener("click", () => {itemClickEvent(a)});
 
-        element.appendChild(a);
+                element.appendChild(a);
+            }
+        }
+        else if(workouts.length >5){
+            for(let i=5; i<workouts.length; i++){
+                const a = document.createElement('a');
+                a.href = '#'; //TODO
+                a.classList.add('list-group-item', 'list-group-item-action');
+                a.innerText = workouts[i].workoutName;
+
+                a.addEventListener("click", () => {itemClickEvent(a)});
+
+                element.appendChild(a);
+            }
+        }
     }
 }
 
