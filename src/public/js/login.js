@@ -18,7 +18,11 @@ window.addEventListener("load", () =>{
             },
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
-        
+        // if(res.ok){
+        //     console.log(res);
+        //     const html = await res.text();
+        //     document.body.innerHTML = html;
+        // }
     });
     
     document.getElementById('register-form').addEventListener('submit', async function (event) {
@@ -40,6 +44,12 @@ window.addEventListener("load", () =>{
             },
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
+
+        // if(res.ok){
+        //     console.log(res);
+        //     const html = await res.text();
+        //     document.body.innerHTML = html;
+        // }
         
     });
 });

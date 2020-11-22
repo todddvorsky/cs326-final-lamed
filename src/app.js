@@ -12,6 +12,7 @@ const minicrypt = require('./public/js/miniCrypt');
 const mc = new minicrypt();
 
 const database = require('./db');
+const { join } = require('path');
 
 const app = module.exports = express();
 
@@ -29,12 +30,17 @@ const strategy = new LocalStrategy(async (name, password, done) => {
 	const [found, id] = await findUser(name);
 	if (!found) {
 		// no such user
+		console.log("Name: " + name + " not found");
 		return done(null, false, { message: 'Invalid Username or Email' });
 	}
-	if (!(await validatePassword(id, password))) {
+	console.log("running validate password");
+	const valPass = await validatePassword(id, password);
+	console.log("Validate password Response: " + valPass)
+	if (!valPass) {
+		console.log("bad valpass");
 		// invalid password
 		// delay return to rate-limit brute-force attacks
-		await new Promise((r) => setTimeout(r, 2000)); // two second delay
+		//await new Promise((r) => setTimeout(r, 2000)); // two second delay
 		return done(null, false, { message: 'Invalid password' });
 	}
 	// success!
@@ -68,8 +74,6 @@ passport.deserializeUser((uid, done) => {
 // Returns true iff the user exists.
 async function findUser(input) {
 	const user = await database.handleGetSpecUser(input);
-	// TODO test this
-	console.log('Find User: ' + JSON.stringify(user));
 	if (!user) {
 		return [false, null];
 	} else {
@@ -112,26 +116,26 @@ function checkLoggedIn(req, res, next) {
 		next();
 	} else {
 		// Otherwise, redirect to the login page.
-		res.sendFile(path.join(__dirname, 'public/index.html'));
+		res.redirect('/login');
 	}
 }
 
 app.get('/', checkLoggedIn, (req, res) => {
-	res.sendFile(path.join(__dirname, 'public/index.html'));
+	res.redirect('/home');
 });
-
-// Handle post data from the login.html form.
-app.post(
-	'/login',
-	passport.authenticate('local', { // use username/password authentication
-		successRedirect: '/home', // when we login, go to /home
-		failureRedirect: '/login', // otherwise, back to login
-	})
-);
 
 // Handle the URL /login.
 app.get('/login', (req, res) =>
 	res.sendFile(path.join(__dirname, 'public/index.html'))
+	//res.render(path.join(__dirname, 'public/index'))
+);
+
+// Go to home page
+app.get('/home', checkLoggedIn, (req, res) => {
+	// Go to the user's page.
+	res.sendFile(path.join(__dirname, 'public/home.html'));
+	//res.render('home');
+}
 );
 
 // Handle logging out (takes us back to the login page).
@@ -139,6 +143,7 @@ app.get('/logout', (req, res) => {
 	req.logout(); // Logs us out!
 	res.redirect('/login'); // back to login
 });
+
 
 // Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
@@ -152,19 +157,25 @@ app.post('/register', async function (req, res) {
 	const fname = JSON.stringify(req.body['fname']);
 	const lname = JSON.stringify(req.body['lname']);
 	if (await addUser(username, password)) {
+		console.log("added user!");
 		res.redirect('/home');
 	} else {
-		res.redirect('/login');
+		console.log("failed to add user");
+		res.redirect(passport.authenticate(strategy, { // use username/password authentication
+			successRedirect: '/home', // when we login, go to /home
+			failureRedirect: '/login', // otherwise, back to login
+		}));
 	}
 });
 
-// Go to home page
-app.get(
-	'/home',
-	checkLoggedIn, // If we are logged in (notice the comma!)...
-	(req, res) => {
-		// Go to the user's page.
-		res.sendFile(path.join(__dirname, 'public/home.html'));
+// Handle post data from the login.html form.
+app.post('/login',
+	passport.authenticate(strategy, { // use username/password authentication
+		successRedirect: '/home', // when we login, go to /home
+		failureRedirect: '/login', // otherwise, back to login
+	}),
+	async function (req, res) {
+		
 	}
 );
 
