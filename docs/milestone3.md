@@ -18,6 +18,20 @@ MD milestone description
 
 ## Database Description
 
+### List of relations
+  |    Name     | Type  |           
+  |-------------|-------|
+  | diets       | table | 
+  | exercises   | table | 
+  | friends     | table | 
+  | passwords   | table | 
+  | profile     | table | 
+  | profileinfo | table | 
+  | profileplan | table | 
+  | recipes     | table | 
+  | users       | table | 
+  | workouts    | table | 
+
 Users Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
