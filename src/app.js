@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const expressSession = require('express-session'); // for managing session state
+const cookieSession = require('cookie-session'); // for managing session state
 const passport = require('passport'); // handles authentication
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 
@@ -18,25 +18,29 @@ const app = (module.exports = express());
 
 // Session configuration
 
-const session = {
-	secret: process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
-	resave: false,
-	saveUninitialized: false,
-};
-
-const MemoryStore = require('memorystore')(expressSession);
-
-app.use(
-	expressSession({
-		cookie: { maxAge: 86400000 },
-		store: new MemoryStore({
-			checkPeriod: 86400000, // prune expired entries every 24h
-		}),
-		resave: false,
-		secret: process.env.SECRET || 'SECRET',
-		saveUninitialized: true,
-	})
-);
+// const session = {
+// 	secret: process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+// 	resave: false,
+// 	saveUninitialized: false,
+// };
+app.use(cookieSession({
+	name: 'session',
+	secret: process.env.SECRET || 'SECRET',
+  
+	// Cookie Options
+	maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+// app.use(
+// 	expressSession({
+// 		cookie: { maxAge: 86400000 },
+// 		store: new MemoryStore({
+// 			checkPeriod: 86400000, // prune expired entries every 24h
+// 		}),
+// 		resave: false,
+// 		secret: process.env.SECRET || 'SECRET',
+// 		saveUninitialized: true,
+// 	})
+// );
 // Passport configuration
 
 const strategy = new LocalStrategy(async (email, password, done) => {
@@ -69,7 +73,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(expressSession(session));
+// app.use(expressSession(session));
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
