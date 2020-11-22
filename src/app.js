@@ -14,7 +14,7 @@ const mc = new minicrypt();
 const database = require('./db');
 const { join } = require('path');
 
-const app = module.exports = express();
+const app = (module.exports = express());
 
 // Session configuration
 
@@ -24,20 +24,33 @@ const session = {
 	saveUninitialized: false,
 };
 
+const MemoryStore = require('memorystore')(expressSession);
+
+app.use(
+	expressSession({
+		cookie: { maxAge: 86400000 },
+		store: new MemoryStore({
+			checkPeriod: 86400000, // prune expired entries every 24h
+		}),
+		resave: false,
+		secret: process.env.SECRET || 'SECRET',
+		saveUninitialized: true,
+	})
+);
 // Passport configuration
 
 const strategy = new LocalStrategy(async (email, password, done) => {
 	const [found, id] = await findUser(email);
 	if (!found) {
 		// no such user
-		console.log("User: " + email + " not found");
+		console.log('User: ' + email + ' not found');
 		return done(null, false, { message: 'Invalid Email' });
 	}
-	console.log("running validate password");
+	console.log('running validate password');
 	const valPass = await validatePassword(email, password);
-	console.log("Validate password Response: " + valPass)
+	console.log('Validate password Response: ' + valPass);
 	if (!valPass) {
-		console.log("bad valpass");
+		console.log('bad valpass');
 		// invalid password
 		// delay return to rate-limit brute-force attacks
 		//await new Promise((r) => setTimeout(r, 2000)); // two second delay
@@ -63,16 +76,16 @@ app.use(passport.session());
 
 // Convert user object to a unique identifier.
 passport.serializeUser((user, done) => {
-	console.log("serializing");
+	console.log('serializing');
 	done(null, user);
-	console.log("done serializing");
+	console.log('done serializing');
 });
 
 // Convert a unique identifier to a user object.
 passport.deserializeUser(async (email, done) => {
-	console.log("deserializing");
+	console.log('deserializing');
 	done(null, email);
-	console.log("done deserializing");
+	console.log('done deserializing');
 });
 
 // Database functions
@@ -82,10 +95,10 @@ async function findUser(email) {
 	const q = await database.getUserByEmail(email);
 	const user = q[0];
 	if (!user) {
-		console.log("user not found");
+		console.log('user not found');
 		return [false, null];
 	} else {
-		console.log("user found:");
+		console.log('user found:');
 		console.log(user);
 		return [true, user.userid];
 	}
@@ -141,27 +154,33 @@ app.get('/', checkLoggedIn, async (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 // TODO
-app.post('/register', async function (req, res, next) {
-	const email = req.body['username'];
-	const password = req.body['password'];
-	const fname = req.body['fname'];
-	const lname = req.body['lname'];
-	if (await addUser(email, fname, lname, password)) {
-		console.log("added user!");
-		next();
-	} else {
-		console.log("failed to add user ", email);
-		res.end();
-	}
-	}, passport.authenticate('local', { // use email/password authentication
-		'successRedirect' : '/home', // if we login, go to /home
+app.post(
+	'/register',
+	async function (req, res, next) {
+		const email = req.body['username'];
+		const password = req.body['password'];
+		const fname = req.body['fname'];
+		const lname = req.body['lname'];
+		if (await addUser(email, fname, lname, password)) {
+			console.log('added user!');
+			next();
+		} else {
+			console.log('failed to add user ', email);
+			res.end();
+		}
+	},
+	passport.authenticate('local', {
+		// use email/password authentication
+		successRedirect: '/home', // if we login, go to /home
 	})
 );
 
 // Handle post data from the index.html form.
-app.post('/login',
-	passport.authenticate('local', { // use email/password authentication
-		'successRedirect' : 'http://localhost:8080/home', // if we login, go to /home
+app.post(
+	'/login',
+	passport.authenticate('local', {
+		// use email/password authentication
+		successRedirect: 'http://localhost:8080/home', // if we login, go to /home
 	})
 );
 
