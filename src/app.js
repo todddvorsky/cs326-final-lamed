@@ -146,11 +146,11 @@ app.get('/logout', (req, res) => {
 // Use res.redirect to change URLs.
 // TODO
 app.post('/register', async function (req, res) {
-	const username = req.body['username'];
-	const password = req.body['password'];
-	const email = req.body['email'];
-	const fname = req.body['fname'];
-	const lname = req.body['lname'];
+	const username = JSON.stringify(req.body['username']);
+	const password = JSON.stringify(req.body['password']);
+	const email = JSON.stringify(req.body['email']);
+	const fname = JSON.stringify(req.body['fname']);
+	const lname = JSON.stringify(req.body['lname']);
 	if (await addUser(username, password)) {
 		res.redirect('/home');
 	} else {
