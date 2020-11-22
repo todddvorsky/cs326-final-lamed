@@ -1,5 +1,5 @@
 //global id's to track
-let curr_user_id = 1;
+let curr_user_id = 2;
 let curr_friend_id;
 
 window.addEventListener("load", async function(){

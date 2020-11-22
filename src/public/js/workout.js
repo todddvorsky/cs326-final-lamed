@@ -1,4 +1,4 @@
-const currentUserID = 2;
+const currentUserID = 1;
 
 document.getElementById('submit').addEventListener('click', async () => {
 	if (
