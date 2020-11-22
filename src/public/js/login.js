@@ -1,5 +1,5 @@
 window.addEventListener("load", () =>{
-    document.getElementById('login-form').addEventListener('submit', (event) =>{
+    document.getElementById('login-form').addEventListener('submit', async function(event) {
         event.preventDefault();
         //TODO
         console.log("logging in...");
@@ -26,7 +26,7 @@ window.addEventListener("load", () =>{
         // }
     });
     
-    document.getElementById('register-form').addEventListener('submit', (event) =>{
+    document.getElementById('register-form').addEventListener('submit', async function(event) {
         event.preventDefault();
         //TODO
         console.log("registering...");
