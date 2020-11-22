@@ -26,12 +26,12 @@ const session = {
 
 // Passport configuration
 
-const strategy = new LocalStrategy(async (name, password, done) => {
-	const [found, id] = await findUser(name);
+const strategy = new LocalStrategy(async (email, password, done) => {
+	const [found, id] = await findUser(email);
 	if (!found) {
 		// no such user
-		console.log("Name: " + name + " not found");
-		return done(null, false, { message: 'Invalid Username or Email' });
+		console.log("User: " + email + " not found");
+		return done(null, false, { message: 'Invalid Email' });
 	}
 	console.log("running validate password");
 	const valPass = await validatePassword(id, password);
@@ -45,7 +45,7 @@ const strategy = new LocalStrategy(async (name, password, done) => {
 	}
 	// success!
 	// should create a user object here, associated with a unique identifier
-	return done(null, username);
+	return done(null, id);
 });
 
 // App configuration
@@ -83,8 +83,8 @@ async function findUser(input) {
 }
 
 // Returns true iff the password is the one we have stored.
-async function validatePassword(name, pwd) {
-	const [found, id] = await findUser(name);
+async function validatePassword(id, pwd) {
+	const [found, id] = await findUser(id);
 	if (!found) {
 		return false;
 	}
@@ -97,9 +97,9 @@ async function validatePassword(name, pwd) {
 	return true;
 }
 
-// Add a user to the "database".
-async function addUser(name, pwd) {
-	const [found, id] = await findUser(name);
+// Add a user to the database.
+async function addUser(email, pwd) {
+	const [found, id] = await findUser(email);
 	if (!found) {
 		return false;
 	}
@@ -152,16 +152,15 @@ app.get('/logout', (req, res) => {
 // Use res.redirect to change URLs.
 // TODO
 app.post('/register', async function (req, res, next) {
-	const username = req.body['username'];
-	const password = req.body['password'];
 	const email = req.body['email'];
+	const password = req.body['password'];
 	const fname = req.body['fname'];
 	const lname = req.body['lname'];
-	if (await addUser(username, password)) {
+	if (await addUser(email, password)) {
 		console.log("added user!");
 		next();
 	} else {
-		console.log("failed to add user ", username);
+		console.log("failed to add user ", email);
 		res.end();
 	}
 	}, passport.authenticate(strategy, { // use username/password authentication

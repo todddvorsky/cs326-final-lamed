@@ -5,7 +5,7 @@ window.addEventListener("load", () =>{
         console.log("logging in...");
 
         const data = {
-            username: event.target.email.value,
+            email: event.target.email.value,
             password: event.target.pwd.value           
         }
 
@@ -29,7 +29,6 @@ window.addEventListener("load", () =>{
         console.log("registering...");
 
         const data = {
-            username: event.target.username.value,
             fname: event.target.fname.value,
             lname: event.target.lname.value,
             email: event.target.email.value,
