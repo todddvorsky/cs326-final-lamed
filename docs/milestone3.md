@@ -18,6 +18,20 @@ MD milestone description
 
 ## Database Description
 
+### List of relations
+  |    Name     | Type  |           
+  |-------------|-------|
+  | diets       | table | 
+  | exercises   | table | 
+  | friends     | table | 
+  | passwords   | table | 
+  | profile     | table | 
+  | profileinfo | table | 
+  | profileplan | table | 
+  | recipes     | table | 
+  | users       | table | 
+  | workouts    | table | 
+
 Users Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
@@ -40,72 +54,61 @@ profileInfo Table
 |    favworkout | VARCHAR(255) | name of this user's favorite workout |
 |    favrecipe | VARCHAR(255) | name of this user's favorite recipe |
 
+profilePlan Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| userId | INT | the ID of the user who's profile it is |
+| day | VARCHAR(255) | Day of the week associated with the following diet & workout |
+| dietId | INT | ID of the associated diet |
+| workoutId | INT | ID of the associated workout |
 
-CREATE TABLE profileinfo(
-    userId INT,
-    username VARCHAR(255),
-    age INT,
-    goalweight INT,
-    country VARCHAR(255),
-    about VARCHAR(255),
-    favgym VARCHAR(255),
-    favworkout VARCHAR(255),
-    favrecipe VARCHAR(255)
-);
+friends Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| userId | INT | ID for identifying the user |
+| friendId | INT | ID for identifying another user  |
+| status | VARCHAR(255) | The status of the friend request (pending or accepted) |
 
-CREATE TABLE profileplan(
-    userId INT,
-    day VARCHAR(255),
-    dietId INT,
-    workoutId INT
-);
+workouts Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| workoutID | INT | ID for this specific workout |
+| userId | INT | ID of a user to associate this workout with  |
+| workoutName | VARCHAR(255) | A unique name for this specific workout |
 
-CREATE TABLE friends (
-    userId INT,
-    friendId INT,
-    status VARCHAR(255)
-    -- FOREIGN KEY (userId) REFERENCES users(userId),
-    -- FOREIGN KEY (friendId) REFERENCES users(userId)
-);
 
-CREATE TABLE workouts (
-    workoutId SERIAL PRIMARY KEY,
-    userId INT,
-    workoutName VARCHAR(255) UNIQUE
-    -- FOREIGN KEY (userId) REFERENCES users(userId)
-);
+exercises Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| exerciseId | INT | Unique serial ID for this specific exercise |
+| workoutId | INT | ID of the workout to associate this exercise with |
+| name | VARCHAR(255) | name of this specific exercise |
+| description | TEXT | A description for this exercise |
+| sets | INT | number of sets to do for this exercise |
+| reps | INT | number of reps to do for this exercise |
+| tag | VARCHAR(255) | a tag to associate with this exercise |
 
-CREATE TABLE exercises (
-    exerciseId SERIAL PRIMARY KEY,
-    workoutId INT,
-    -- FOREIGN KEY (workoutId) REFERENCES workouts(workoutId),
-    name VARCHAR(255),
-    description TEXT,
-    sets INT,
-    reps INT,
-    tag VARCHAR(255)
-);
+diets Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| dietId | INT | ID for this specific diet |
+| userId | INT | ID of a user to associate this diet with  |
+| dietName | VARCHAR(255) | A unique name for this specific diet |
 
-CREATE TABLE diets (
-    dietId SERIAL PRIMARY KEY,
-    userId INT,
-    dietName VARCHAR(255) UNIQUE
-    -- FOREIGN KEY (userId) REFERENCES users(userId)
-);
+recipes Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| recipeId | INT | Unique serial ID for this specific recipe |
+| dietId | INT | ID of the diet to associate this recipe with |
+| recipeName | TEXT | name of this specific recipe |
+| description | TEXT | A description for this recipe |
+| ingredients | TEXT | List of ingredients for this recipe |
+| tag | TEXT | a tag to associate with this recipe (breakfast, lunch, or dinner) |
 
-CREATE TABLE recipes (
-    recipeId SERIAL PRIMARY KEY,
-    dietId INT,
-    -- FOREIGN KEY (dietId) REFERENCES diets(dietId),
-    recipeName TEXT,
-    description TEXT,
-    ingredients TEXT,
-    tag VARCHAR(255)
-);
-
-CREATE TABLE passwords (
-    userId INT,
-    -- FOREIGN KEY (userId) REFERENCES users(userId),
-    salt CHAR(32),
-    hashedpwd CHAR(128) 
-);
+passwords Table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| userId | INT | ID of the user to associate with the password |
+| salt | CHAR(32) | the salt to encrypt this users password with |
+| recipeName | TEXT | name of this specific recipe |
+| hashedpwd | CHAR(128) | The hashed password for this user |
