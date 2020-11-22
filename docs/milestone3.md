@@ -18,6 +18,20 @@ MD milestone description
 
 ## Database Description
 
+### List of relations
+  |    Name     | Type  |           
+  |-------------|-------|
+  | diets       | table | 
+  | exercises   | table | 
+  | friends     | table | 
+  | passwords   | table | 
+  | profile     | table | 
+  | profileinfo | table | 
+  | profileplan | table | 
+  | recipes     | table | 
+  | users       | table | 
+  | workouts    | table | 
+
 Users Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
@@ -40,6 +54,14 @@ profileInfo Table
 |    favworkout | VARCHAR(255) | name of this user's favorite workout |
 |    favrecipe | VARCHAR(255) | name of this user's favorite recipe |
 
+
+  
+### diets table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| UserId       | INT       | User's Unique identifier |
+| dietId       | SERIAL    | Unique identifier  |
+| dietName     | String    | The name of the diet |
 
 CREATE TABLE profileinfo(
     userId INT,
