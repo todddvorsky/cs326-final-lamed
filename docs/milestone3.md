@@ -17,3 +17,9 @@ MD milestone description
 
 
 ## Database Description
+
+counter table
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| countername  | String    | The name of the counter  |
+| countervalue | integer   | The value of the counter |
