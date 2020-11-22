@@ -46,7 +46,7 @@ CREATE TABLE friends (
 CREATE TABLE workouts (
     workoutId SERIAL PRIMARY KEY,
     userId INT,
-    workoutName VARCHAR(255) UNIQUE
+    workoutName VARCHAR(255)  -- UNIQUE
     -- FOREIGN KEY (userId) REFERENCES users(userId)
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE exercises (
 CREATE TABLE diets (
     dietId SERIAL PRIMARY KEY,
     userId INT,
-    dietName VARCHAR(255) UNIQUE
+    dietName VARCHAR(255) -- UNIQUE
     -- FOREIGN KEY (userId) REFERENCES users(userId)
 );
 

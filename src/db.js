@@ -295,11 +295,23 @@ async function handlePostUpdateDaysDiet(info) {
 
 //POST a new user in both the user table and password table
 //TODO update to also post to user table
-async function handlePostNewUser(userid, salt, pwd) {
+async function handlePostNewUser(email, fname, lname, salt, hpwd) {
+	await connectAndRun((db) =>
+		db.none(
+			'INSERT INTO users(email, firsName, lastName) VALUES($1,$2,$3);',
+			[email, fname, lname]
+		)
+	);
+	const id = await connectAndRun((db) =>
+		db.one(
+			'SELECT userId FROM users WHERE email = $1;',
+			[userid, salt, pwd]
+		)
+	);
 	return connectAndRun((db) =>
 		db.none(
 			'INSERT INTO passwords(userId, salt, hashedpwd) VALUES($1,$2,$3);',
-			[userid, salt, pwd]
+			[id, salt, hpwd]
 		)
 	);
 }
@@ -364,6 +376,16 @@ async function createDiet(name, userId) {
 	);
 }
 
+// GET - all workouts
+async function getAllWorkouts() {
+	return connectAndRun((db) => db.any('SELECT * FROM workouts;'));
+}
+
+// GET - all diets
+async function getAllDiets() {
+	return connectAndRun((db) => db.any('SELECT * FROM diets;'));
+}
+
 module.exports = {
 	connectAndRun,
 	handleGetUsers,
@@ -396,4 +418,6 @@ module.exports = {
 	handleGetUserDietsWithName,
 	createRecipe,
 	createDiet,
+	getAllWorkouts,
+	getAllDiets,
 };
