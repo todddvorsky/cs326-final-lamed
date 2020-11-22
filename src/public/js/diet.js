@@ -1,12 +1,22 @@
-const currentUserID = 2;
+const currentUserID = 1;
 
+let tag;
+document.getElementById('breakfast').addEventListener('click', async () => {
+	tag = 'breakfast';
+});
+document.getElementById('lunch').addEventListener('click', async () => {
+	tag = 'lunch';
+});
+document.getElementById('dinner').addEventListener('click', async () => {
+	tag = 'dinner';
+});
 document.getElementById('submit').addEventListener('click', async () => {
 	if (
 		!(
 			document.getElementById('inputNameRecipe').value &&
 			document.getElementById('inputDescRecipe').value &&
 			document.getElementById('dietName').value &&
-			document.getElementById('tagName').value &&
+			tag &&
 			document.getElementById('ingredients').value
 		)
 	) {
@@ -42,10 +52,11 @@ document.getElementById('submit').addEventListener('click', async () => {
 				name: document.getElementById('inputNameRecipe').value,
 				desc: document.getElementById('inputDescRecipe').value,
 				ingredients: document.getElementById('ingredients').value,
-				tags: document.getElementById('tagName').value,
+				tags: tag,
 			}),
 		});
 
 		document.getElementById('forms').reset();
+		tag = '';
 	}
 });
