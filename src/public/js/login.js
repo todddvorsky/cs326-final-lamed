@@ -5,9 +5,6 @@ window.addEventListener("load", () =>{
         console.log("logging in...");
 
         const data = {
-            username: event.target.username,
-            firstName: event.target.fname,
-            lastName: event.target.lname,
             email: event.target.email,
             password: event.target.pwd            
         }
