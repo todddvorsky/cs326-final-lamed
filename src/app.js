@@ -73,8 +73,8 @@ passport.deserializeUser((uid, done) => {
 // Database functions
 
 // Returns true iff the user exists.
-async function findUser(input) {
-	const user = await database.handleGetSpecUser(input);
+async function findUser(email) {
+	const user = await database.getUserByEmail(email);
 	if (!user) {
 		return [false, null];
 	} else {
@@ -83,8 +83,8 @@ async function findUser(input) {
 }
 
 // Returns true iff the password is the one we have stored.
-async function validatePassword(id, pwd) {
-	const [found, id] = await findUser(id);
+async function validatePassword(sid, pwd) {
+	const [found, id] = await findUser(sid);
 	if (!found) {
 		return false;
 	}
@@ -98,14 +98,14 @@ async function validatePassword(id, pwd) {
 }
 
 // Add a user to the database.
-async function addUser(email, pwd) {
+async function addUser(email, fname, lname, pwd) {
 	const [found, id] = await findUser(email);
 	if (!found) {
 		return false;
 	}
 	const [salt, hash] = mc.hash(pwd);
 	// TODO test this
-	await database.handlePostNewUser(id, salt, pwd);
+	await database.handlePostNewUser(email, fname, lname, salt, hash);
 	return true;
 }
 
@@ -156,7 +156,7 @@ app.post('/register', async function (req, res, next) {
 	const password = req.body['password'];
 	const fname = req.body['fname'];
 	const lname = req.body['lname'];
-	if (await addUser(email, password)) {
+	if (await addUser(email, fname, lname, password)) {
 		console.log("added user!");
 		next();
 	} else {
