@@ -16,14 +16,11 @@ document.getElementById('submit').addEventListener('click', async () => {
 		const workoutName = document.getElementById('workoutName').value;
 		let workoutId = await fetch(
 			`/users/workouts/${currentUserID}/${workoutName}`
-		); // use req.params to get curr_user and workoutname
-		// workoutId = await workoutId.json().workoutId;
+		);
 		workoutId = await workoutId.json();
 		if (workoutId.length) workoutId = workoutId[0].workoutid;
-		console.log('1', workoutId);
-		if (!workoutId.length) {
+		if (workoutId.constructor === Array) {
 			workoutId = await fetch('workouts/create', {
-				// make sure the fetchs return id
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -35,7 +32,6 @@ document.getElementById('submit').addEventListener('click', async () => {
 			});
 			workoutId = await workoutId.json();
 			workoutId = workoutId[0].workoutid;
-			console.log('2', workoutId);
 		}
 
 		await fetch('workouts/exercise/create', {

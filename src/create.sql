@@ -64,7 +64,7 @@ CREATE TABLE exercises (
 CREATE TABLE diets (
     dietId SERIAL PRIMARY KEY,
     userId INT,
-    dietName VARCHAR(255)
+    dietName VARCHAR(255) UNIQUE
     -- FOREIGN KEY (userId) REFERENCES users(userId)
 );
 

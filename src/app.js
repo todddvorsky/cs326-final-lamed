@@ -14,7 +14,7 @@ const mc = new minicrypt();
 const database = require('./db');
 const { join } = require('path');
 
-const app = module.exports = express();
+const app = (module.exports = express());
 
 // Session configuration
 
@@ -54,6 +54,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public'), { index: 'home.html' }));
 
 app.use(expressSession(session));
 passport.use(strategy);
@@ -205,14 +206,15 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.get("*", function (err, req, res, next) {
+app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 	// render the error page
 	res.status(err.status || 500);
-	res.json({ error: err })
+	res.render('error');
 });
 
-app.listen(process.env.PORT || 8080);
+const port = 8080;
+app.listen(port);
