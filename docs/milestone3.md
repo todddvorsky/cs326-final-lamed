@@ -3,18 +3,34 @@
 ## Division of Labor
 
 ### Todd Dvorsky
+- Create Workout Page  
+- Create Diet Page  
+- SQL Script / Database setup  
+- Diet DB logic  
+- Workout DB logic  
+- Diet Route  
+- Workout Route  
+- Heroku
+
+
+
 
 ### Patrick Kelley
 
-- Social page,
-Profile page,
-Users route,
-Users endpoints,
-Users DB function/handling
-MD milestone description
+- Social page
+- Profile page
+- Users route
+- Users endpoints
+- Users DB function/handling
+- MD milestone description
 
 ### Jason Bolton
-
+- Authentication 
+- Session
+- Browse Workouts
+- Browse Diets
+- Diet Route  
+- Workout Route  
 
 ## Database Description
 
