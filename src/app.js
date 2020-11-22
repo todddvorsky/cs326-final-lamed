@@ -163,7 +163,7 @@ app.post('/register', async function (req, res, next) {
 		console.log("failed to add user ", email);
 		res.end();
 	}
-	}, passport.authenticate(strategy, { // use username/password authentication
+	}, passport.authenticate('local', { // use username/password authentication
 		successRedirect: '/home', // when we login, go to /home
 		failureRedirect: '/login', // otherwise, back to login
 	})
@@ -171,7 +171,7 @@ app.post('/register', async function (req, res, next) {
 
 // Handle post data from the login.html form.
 app.post('/login',
-	passport.authenticate(strategy, { // use username/password authentication
+	passport.authenticate('local', { // use username/password authentication
 		successRedirect: '/home', // when we login, go to /home
 		failureRedirect: '/login', // otherwise, back to login
 	})
