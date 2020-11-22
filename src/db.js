@@ -238,14 +238,18 @@ async function handlePostCreateDaysPlan(info) {
 	return connectAndRun((db) =>
 		db.any(
 			'INSERT INTO profileplan(userId, day, dietId, workoutId) VALUES($1,$2,$3,$4);',
-			[info.userId, info.day, info.dietId, info.workoutId])
+			[info.userId, info.day, info.dietId, info.workoutId]
+		)
 	);
 }
 
 //GET a specific day's diet and workout for the profile page
-async function handleGetaDaysPlan(day){
+async function handleGetaDaysPlan(day) {
 	return connectAndRun((db) =>
-		db.any('SELECT * FROM profileplan WHERE userId = $1 AND day= $2;', [currentUserId, day])
+		db.any('SELECT * FROM profileplan WHERE userId = $1 AND day= $2;', [
+			currentUserId,
+			day,
+		])
 	);
 }
 
@@ -274,7 +278,8 @@ async function handlePostUpdateDaysWorkout(info) {
 	return connectAndRun((db) =>
 		db.any(
 			'UPDATE profileplan SET workoutId = $1 WHERE userId = $2 AND day = $3;',
-			[info.workoutid, currentUserId, info.day])
+			[info.workoutid, currentUserId, info.day]
+		)
 	);
 }
 
@@ -283,7 +288,8 @@ async function handlePostUpdateDaysDiet(info) {
 	return connectAndRun((db) =>
 		db.any(
 			'UPDATE profileplan SET dietId = $1 WHERE userId = $2 AND day = $3;',
-			[info.dietid, currentUserId, info.day])
+			[info.dietid, currentUserId, info.day]
+		)
 	);
 }
 
@@ -298,7 +304,7 @@ async function handlePostNewUser(userid, salt, pwd) {
 	);
 }
 
-//Get user's workouts with name
+// Get user's workouts with name
 async function handleGetUserWorkoutsWithName(userid, name) {
 	return connectAndRun((db) =>
 		db.any(
@@ -326,9 +332,36 @@ async function createWorkout(name, userId) {
 			[name, userId]
 		)
 	);
-	// return connectAndRun((db) =>
-	// 	db.any('SELECT * from users WHERE userid =$1;', [userid])
-	// );
+}
+
+// Get user's diets with name
+async function handleGetUserDietsWithName(userid, name) {
+	return connectAndRun((db) =>
+		db.any(
+			'SELECT dietId FROM diets WHERE userid = $1 AND UPPER(dietName) = $2;',
+			[userid, name.toUpperCase()]
+		)
+	);
+}
+
+// POST - create recipe
+async function createRecipe(dietId, name, description, ingredients, tag) {
+	return connectAndRun((db) =>
+		db.none(
+			'INSERT INTO recipes(dietId, recipeName, description, ingredients, tag) VALUES($1,$2,$3,$4,$5);',
+			[dietId, name, description, ingredients, tag]
+		)
+	);
+}
+
+// POST - create diet
+async function createDiet(name, userId) {
+	return connectAndRun((db) =>
+		db.any(
+			'INSERT INTO diets(dietName, userId) VALUES($1,$2) RETURNING dietId;',
+			[name, userId]
+		)
+	);
 }
 
 module.exports = {
@@ -360,4 +393,7 @@ module.exports = {
 	handleGetUserWorkoutsWithName,
 	createExercise,
 	createWorkout,
+	handleGetUserDietsWithName,
+	createRecipe,
+	createDiet,
 };

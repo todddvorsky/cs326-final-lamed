@@ -106,14 +106,27 @@ router.get('/:diet', function (req, res) {
 router.get('/recipes/:recipe', function (req, res) {
 	res.send('get recipe: ' + req.recipe);
 });
+
 /* Create a diet */
-router.post('/create', function (req, res) {
-	res.send('create diet');
+router.post('/create', async function (req, res) {
+	const diet = await database.createDiet(req.body.dietName, req.body.userId);
+	console.log('jjjjj', diet);
+	res.status(200);
+	res.send(diet);
 });
 /* Create a recipe */
-router.post('/recipe/create', function (req, res) {
-	res.send('create recipe');
+router.post('/recipe/create', async function (req, res) {
+	const recipe = await database.createRecipe(
+		req.body.dietId,
+		req.body.name,
+		req.body.desc,
+		req.body.ingredients,
+		req.body.tags
+	);
+	res.status(200);
+	res.send(recipe);
 });
+
 /* Update a diet */
 router.put('/update/:diet', function (req, res) {
 	res.send('update diet: ' + req.diet);

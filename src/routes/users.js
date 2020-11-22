@@ -180,4 +180,13 @@ router.get('/workouts/:user/:name', async function (req, res) {
 	res.send(userWorkouts);
 });
 
+// GET a specific user's diets with name
+router.get('/diets/:user/:name', async function (req, res) {
+	const userDiets = await database.handleGetUserDietsWithName(
+		req.params.user,
+		req.params.name
+	);
+	res.send(userDiets);
+});
+
 module.exports = router;
