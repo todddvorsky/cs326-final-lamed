@@ -90,7 +90,7 @@ async function validatePassword(name, pwd) {
 	}
 	const data = await database.handleGetUserPwd(id);
 	// TODO test this
-	console.log(JSON.stringify(data));
+	console.log(data);
 	if (!mc.check(pwd, data.salt, data.hashedpwd)) {
 		return false;
 	}
@@ -151,33 +151,31 @@ app.get('/logout', (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 // TODO
-app.post('/register', async function (req, res) {
-	const username = JSON.stringify(req.body['username']);
-	const password = JSON.stringify(req.body['password']);
-	const email = JSON.stringify(req.body['email']);
-	const fname = JSON.stringify(req.body['fname']);
-	const lname = JSON.stringify(req.body['lname']);
+app.post('/register', async function (req, res, next) {
+	const username = req.body['username'];
+	const password = req.body['password'];
+	const email = req.body['email'];
+	const fname = req.body['fname'];
+	const lname = req.body['lname'];
 	if (await addUser(username, password)) {
 		console.log("added user!");
-		res.redirect('/home');
+		next();
 	} else {
-		console.log("failed to add user");
-		res.redirect(passport.authenticate(strategy, { // use username/password authentication
-			successRedirect: '/home', // when we login, go to /home
-			failureRedirect: '/login', // otherwise, back to login
-		}));
+		console.log("failed to add user ", username);
+		res.end();
 	}
-});
+	}, passport.authenticate(strategy, { // use username/password authentication
+		successRedirect: '/home', // when we login, go to /home
+		failureRedirect: '/login', // otherwise, back to login
+	})
+);
 
 // Handle post data from the login.html form.
 app.post('/login',
 	passport.authenticate(strategy, { // use username/password authentication
 		successRedirect: '/home', // when we login, go to /home
 		failureRedirect: '/login', // otherwise, back to login
-	}),
-	async function (req, res) {
-		
-	}
+	})
 );
 
 // // A dummy page for the user.
