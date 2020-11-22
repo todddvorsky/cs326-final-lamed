@@ -5,8 +5,8 @@ window.addEventListener("load", () =>{
         console.log("logging in...");
 
         const data = {
-            email: event.target.email,
-            password: event.target.pwd            
+            username: event.target.email.value,
+            password: event.target.pwd.value           
         }
 
         await fetch('/login', {
@@ -29,11 +29,11 @@ window.addEventListener("load", () =>{
         console.log("registering...");
 
         const data = {
-            userId: event.target.username,
-            firstName: event.target.fname,
-            lastName: event.target.lname,
-            email: event.target.email,
-            password: event.target.pwd            
+            username: event.target.username.value,
+            fname: event.target.fname.value,
+            lname: event.target.lname.value,
+            email: event.target.email.value,
+            password: event.target.pwd.value            
         }
 
         await fetch('/register', {
