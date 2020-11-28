@@ -49,7 +49,7 @@ async function handleGetUsers() {
 }
 async function handleGetSpecUser(userid) {
 	return connectAndRun((db) =>
-		db.any('SELECT * FROM users WHERE userid = $1;', [userid])
+		db.one('SELECT * FROM users WHERE userid = $1;', [userid])
 	);
 }
 async function handleGetUserPwd(userid) {

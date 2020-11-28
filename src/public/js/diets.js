@@ -60,8 +60,7 @@ async function itemClickEvent(element){
         const di = dietMap[element.innerText];
         
         const q = await fetch('/users/'+di['userid']);
-        const c = await q.json();
-        const creator = c[0];
+        const creator = await q.json();
 
         left.classList.add("col-5");
 

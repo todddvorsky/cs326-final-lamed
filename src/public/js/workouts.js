@@ -59,8 +59,7 @@ async function itemClickEvent(element){
         const wo = workoutMap[element.innerText];
         
         const q = await fetch('/users/'+wo['userid']);
-        const c = await q.json();
-        const creator = c[0];
+        const creator = await q.json();
 
         left.classList.add("col-5");
 
