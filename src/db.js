@@ -54,7 +54,7 @@ async function handleGetSpecUser(userid) {
 }
 async function handleGetUserPwd(userid) {
 	return connectAndRun((db) =>
-		db.any('SELECT salt, hashedpwd FROM passwords WHERE userId = $1;', [userid])
+		db.one('SELECT salt, hashedpwd FROM passwords WHERE userId = $1;', [userid])
 	);
 }
 async function handleGetUserWorkouts(userid) {

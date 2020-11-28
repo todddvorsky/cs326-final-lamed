@@ -113,8 +113,7 @@ async function validatePassword(email, pwd) {
 	if (!found) {
 		return false;
 	}
-	const q = await database.handleGetUserPwd(id);
-	const data = q[0];
+	const data = await database.handleGetUserPwd(id);
 	// TODO test this
 	console.log(data);
 	console.log(id);
