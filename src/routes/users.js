@@ -58,11 +58,11 @@ router.get('/workouts/exercises/:workoutid', async function (req, res) {
 
 /*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function (req, res) {
-	const users = await database.getUserByEmail(req.params.friendemail);
-	if (!users[0]) {
+	const user = await database.getUserByEmail(req.params.friendemail);
+	if (!user) {
 		res.json({ msg: 'No user with that email was found' });
 	} else {
-		const friendId = users[0].userid;
+		const friendId = user.userid;
 		const friendStatus = await database.handlePostCheckFriend(friendId);
 		const yourStatus = await database.handlePostCheckOwnRequest(friendId);
 		if (!yourStatus[0]) {

@@ -96,8 +96,7 @@ passport.deserializeUser(async (email, done) => {
 
 // Returns true iff the user exists.
 async function findUser(email) {
-	const q = await database.getUserByEmail(email);
-	const user = q[0];
+	const user = await database.getUserByEmail(email);
 	if (!user) {
 		console.log('user not found');
 		return [false, null];

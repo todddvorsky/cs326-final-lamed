@@ -133,7 +133,7 @@ async function friendFunctions(userid, friendid, action) {
 }
 async function getUserByEmail(email) {
 	return connectAndRun((db) =>
-		db.any('SELECT * FROM users WHERE email = $1;', [email])
+		db.one('SELECT * FROM users WHERE email = $1;', [email])
 	);
 }
 
