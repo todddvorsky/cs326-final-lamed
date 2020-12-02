@@ -96,14 +96,19 @@ passport.deserializeUser(async (email, done) => {
 
 // Returns true iff the user exists.
 async function findUser(email) {
-	const user = await database.getUserByEmail(email);
-	if (!user) {
+	try{
+		const user = await database.getUserByEmail(email);
+		if (!user) {
+			console.log('user not found');
+			return [false, null];
+		} else {
+			console.log("user found");
+			return [true, user.userid];
+		}
+	}
+	catch(err){
 		console.log('user not found');
 		return [false, null];
-	} else {
-		console.log('user found:');
-		console.log(user);
-		return [true, user.userid];
 	}
 }
 
@@ -114,9 +119,7 @@ async function validatePassword(email, pwd) {
 		return false;
 	}
 	const data = await database.handleGetUserPwd(id);
-	// TODO test this
-	console.log(data);
-	console.log(id);
+
 	if (!mc.check(pwd, data.salt, data.hashedpwd)) {
 		return false;
 	}
@@ -130,7 +133,7 @@ async function addUser(email, fname, lname, pwd) {
 		return false;
 	}
 	const [salt, hash] = mc.hash(pwd);
-	// TODO test this
+	
 	await database.handlePostNewUser(email, fname, lname, salt, hash);
 	return true;
 }
