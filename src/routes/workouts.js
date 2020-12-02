@@ -2,15 +2,8 @@ const router = require('express').Router();
 const database = require('../db.js');
 
 /* set params */
-router.param('workout', async function (req, res, next, id) {
-	const q = await database.handleGetSpecWorkout(id);
-	req.workout = q[0];
-
-	next();
-});
-router.param('exercise', function (req, res, next) {
-	//TODO
-	req.exercise = 'Exercise.';
+router.param('workout', async function (req, res, next, wo) {
+	req.workout = await database.handleGetSpecWorkout(wo);
 
 	next();
 });
@@ -23,112 +16,15 @@ router.get('/allWorkouts', async function (req, res) {
 	res.status(200);
 	res.send(workouts);
 });
-/* GET all exercises. */
-router.get('/exercises', function (req, res) {
-	res.json([
-		{
-			exerciseId: '557',
-			name: 'run',
-			desc: 'qfnweisjkdhgfbaawilkjdfoq',
-			sets: '0',
-			reps: '0',
-			time: '0',
-			tags: ['cardio', 'intense'],
-		},
-		{
-			exerciseId: '77',
-			name: 'push up',
-			desc: 'up down up down',
-			sets: '5',
-			reps: '100',
-			tags: ['easy', 'muscle building'],
-		},
-		{
-			exerciseId: '557',
-			name: 'deadlift',
-			desc: 'qfnweisjkdhgfbaawilkjdfoq',
-			sets: '0',
-			reps: '0',
-			time: '0',
-			tags: ['cardio', 'intense'],
-		},
-		{
-			exerciseId: '77',
-			name: 'jumping jacks',
-			desc: 'up down up down',
-			sets: '5',
-			reps: '100',
-			tags: ['easy', 'muscle building'],
-		},
-		{
-			exerciseId: '557',
-			name: 'sit up',
-			desc: 'qfnweisjkdhgfbaawilkjdfoq',
-			sets: '0',
-			reps: '0',
-			time: '0',
-			tags: ['cardio', 'intense'],
-		},
-		{
-			exerciseId: '77',
-			name: 'bench press',
-			desc: 'up down up down',
-			sets: '5',
-			reps: '100',
-			tags: ['easy', 'muscle building'],
-		},
-		{
-			exerciseId: '557',
-			name: 'squat',
-			desc: 'qfnweisjkdhgfbaawilkjdfoq',
-			sets: '0',
-			reps: '0',
-			time: '0',
-			tags: ['cardio', 'intense'],
-		},
-		{
-			exerciseId: '77',
-			name: 'mason twist',
-			desc: 'up down up down',
-			sets: '5',
-			reps: '100',
-			tags: ['easy', 'muscle building'],
-		},
-		{
-			exerciseId: '557',
-			name: 'lounge',
-			desc: 'qfnweisjkdhgfbaawilkjdfoq',
-			sets: '0',
-			reps: '0',
-			time: '0',
-			tags: ['cardio', 'intense'],
-		},
-		{
-			exerciseId: '77',
-			name: 'curls',
-			desc: 'up down up down',
-			sets: '5',
-			reps: '100',
-			tags: ['easy', 'muscle building'],
-		},
-	]);
-	res.status(200);
-});
 /* GET a specific workout. */
-router.get('/:workout', function (req, res) {
+router.get('/:workout', async function (req, res) {
 	res.json(req.workout);
 	res.status(200);
 });
-/* GET a specific exercise. */
-router.get('/exercises/:exercise', function (req, res) {
-	res.json({
-		exerciseId: '77',
-		name: 'push up',
-		desc: 'up down up down',
-		sets: '5',
-		reps: '100',
-		tags: ['easy', 'muscle building'],
-	});
+/* GET a specific workout's exercises. */
+router.get('/:workout/exercises', async function (req, res) {
+	const exers = await database.handleGetWorkoutsExercises(req.workout.workoutid);
+	res.json(exers);
 	res.status(200);
 });
 /* Create a workout */

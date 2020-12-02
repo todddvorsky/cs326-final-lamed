@@ -58,14 +58,31 @@ async function itemClickEvent(element){
     else{
         const wo = workoutMap[element.innerText];
         
-        const q = await fetch('/users/'+wo['userid']);
-        const creator = await q.json();
+        const q1 = await fetch('/users/'+wo['userid']);
+        const creator = await q1.json();
+
+        const q2 = await fetch('/workouts/' + wo.workoutid + '/exercises');
+        const exercises = await q2.json();
 
         left.classList.add("col-5");
 
         const right = document.createElement("div");
         right.classList.add("col-7", "container");
-        right.innerText = element.innerText + ":\nID: " + wo['workoutid'] + "\nCreator: " + creator.firstname + " " + creator.lastname;
+        
+        let html = "";
+        html += "<h2><u>" + element.innerText + "</u></h2>";
+        html += "<p><i>By " + creator.firstname + " " + creator.lastname + "</i></p>";
+        html += "<h4>Exercises:<h4>";
+        for(let i=0; i< exercises.length; i++){
+            html += "<hr class=\"dotted\">";
+            const e =  exercises[i];
+            html += "<p><b>" + e.name + "</b></p>";
+            html += "<p>" + e.description + "</p>";
+            html += "<p><u>Sets:</u> " + e.sets + ", <u>Reps:</u> " + e.reps + "</p>";
+            html += "<p><u>Tag:</u><br/>" + e.tag + "</p>";
+        }
+
+        right.innerHTML = html;
         right.id = "readmore";
         document.getElementById("container-a").appendChild(right);
     }
