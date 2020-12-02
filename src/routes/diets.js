@@ -2,15 +2,8 @@ const router = require('express').Router();
 const database = require('../db.js');
 
 /* set params */
-router.param('diet', async function (req, res, next) {
-	const q = await database.handleGetSpecDiet(id);
-	req.diet = q[0];
-
-	next();
-});
-router.param('recipe', function (req, res, next) {
-	//TODO
-	req.recipe = 'Recipe.';
+router.param('diet', async function (req, res, next, diet) {
+	req.diet = await database.handleGetSpecDiet(diet);
 
 	next();
 });
@@ -24,40 +17,21 @@ router.get('/allDiets', async function (req, res) {
 	res.send(diets);
 	res.status(200);
 });
-/* GET all recipes. */
-router.get('/recipes', function (req, res) {
-	res.json([
-		{
-			recipeId: '435',
-			name: 'sandwich',
-			desc: 'dswrgjawinrjq',
-			ingredients: 'bread, cheese, meat, lettuce, tomato',
-			tags: ['protein', 'easy'],
-		},
-		{
-			recipeId: '123',
-			name: 'pizza',
-			desc: 'pepperoni :)',
-			ingredients: 'dough, cheese, sauce',
-			tags: ['vegetarian', 'vegan'],
-		},
-	]);
-	res.status(200);
-});
 /* GET a specific diet. */
-router.get('/:diet', function (req, res) {
+router.get('/:diet', async function (req, res) {
 	res.json(req.diet);
 	res.status(200);
 });
-/* GET a specific recipe. */
-router.get('/recipes/:recipe', function (req, res) {
-	res.send('get recipe: ' + req.recipe);
+/* GET a specific diet's recipes. */
+router.get('/:diet/recipes', async function (req, res) {
+	const recipes = await database.handleGetDietsRecipes(req.diet.dietid);
+	res.json(recipes);
+	res.status(200);
 });
 
 /* Create a diet */
 router.post('/create', async function (req, res) {
 	const diet = await database.createDiet(req.body.dietName, req.body.userId);
-	console.log('jjjjj', diet);
 	res.status(200);
 	res.send(diet);
 });

@@ -432,5 +432,6 @@ module.exports = {
 	createDiet,
 	getAllWorkouts,
 	getAllDiets,
-	handleGetSpecWorkout
+	handleGetSpecWorkout,
+	handleGetSpecDiet
 };

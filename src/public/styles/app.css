@@ -8,3 +8,13 @@
 .browse {
 	text-align: center;
 }
+
+/* Rounded border */
+hr.rounded {
+	border-top: 8px solid #bbb;
+	border-radius: 5px;
+  }
+/* Dotted border */
+hr.dotted {
+	border-top: 3px dotted #bbb;
+  }

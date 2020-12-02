@@ -59,14 +59,33 @@ async function itemClickEvent(element){
     else{
         const di = dietMap[element.innerText];
         
-        const q = await fetch('/users/'+di['userid']);
-        const creator = await q.json();
+        const q1 = await fetch('/users/'+di['userid']);
+        const creator = await q1.json();
+
+        const q2 = await fetch('/diets/' + di.dietid + '/recipes');
+        const recipes = await q2.json();
 
         left.classList.add("col-5");
 
         const right = document.createElement("div");
         right.classList.add("col-7", "container");
-        right.innerText = element.innerText + ":\nID: " + di['dietid'] + "\nCreator: " + creator.firstname + " " + creator.lastname;
+        
+        let html = "";
+        html += "<h2><u>" + element.innerText + "</u></h2>";
+        html += "<p><i>By " + creator.firstname + " " + creator.lastname + "</i></p>";
+        html += "<h4>Recipes:<h4>";
+        for(let i=0; i<recipes.length; i++){
+            html += "<hr class=\"dotted\">";
+            const r = recipes[i];
+            html += "<p><b>" + r.recipename + "</b></p>";
+            html += "<p>" + r.description + "</p>";
+            html += "<p><u>Ingredients:</u><br/>" + r.ingredients + "</p>";
+            html += "<p><u>Tag:</u><br/>" + r.tag + "</p>";
+        }
+
+
+        right.innerHTML = html;
+        //right.innerText = element.innerText + ":\nID: " + di['dietid'] + "\nCreator: " + creator.firstname + " " + creator.lastname;
         right.id = "readmore";
         document.getElementById("container-a").appendChild(right);
     }
