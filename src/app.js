@@ -182,7 +182,7 @@ app.post(
 	'/login',
 	passport.authenticate('local', {
 		// use email/password authentication
-		successRedirect: 'http://localhost:8080/home', // if we login, go to /home
+		successRedirect: '/home', // if we login, go to /home
 	})
 );
 
