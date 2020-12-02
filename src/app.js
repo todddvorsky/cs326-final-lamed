@@ -221,5 +221,3 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.json({error: err});
 });
-
-app.listen(process.env.PORT || 8080);
