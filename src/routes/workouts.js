@@ -16,6 +16,12 @@ router.get('/allWorkouts', async function (req, res) {
 	res.status(200);
 	res.send(workouts);
 });
+/* GET a user's workouts. */
+router.get('/userWorkouts', async function (req, res) {
+	const workouts = await database.handleGetUserWorkouts(req.user);
+	res.send(workouts);
+	res.status(200);
+});
 /* GET a specific workout. */
 router.get('/:workout', async function (req, res) {
 	res.json(req.workout);

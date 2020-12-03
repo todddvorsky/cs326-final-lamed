@@ -13,7 +13,12 @@ router.param('diet', async function (req, res, next, diet) {
 /* GET all diets. */
 router.get('/allDiets', async function (req, res) {
 	const diets = await database.getAllDiets();
+	res.send(diets);
 	res.status(200);
+});
+/* GET a user's diets. */
+router.get('/userDiets', async function (req, res) {
+	const diets = await database.handleGetUserDiets(req.user);
 	res.send(diets);
 	res.status(200);
 });
