@@ -8,7 +8,13 @@ const dietMap = {};
 async function loadUserWorkouts(element){
     element.innerHTML='';
 
-    const diets = await (await fetch('/diets/allDiets')).json();
+    //get the users posted diets
+    const diets = await (await fetch('/diets/userDiets')).json();
+
+    if(!diets || diets.length === 0){
+        element.innerHTML = "<i>You have not posted any diets</i>";
+        return;
+    }
 
     let i=0;
     while(i<5 && i<diets.length){

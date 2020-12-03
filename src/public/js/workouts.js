@@ -8,7 +8,14 @@ const workoutMap = {};
 async function loadUserWorkouts(element){
     element.innerHTML='';
 
-    const workouts = await (await fetch('/workouts/allWorkouts')).json();
+    //get the current user's workouts
+    const workouts = await (await fetch('/workouts/userWorkouts')).json();
+
+    if(!workouts || workouts.length === 0){
+        element.innerHTML = "<i>You have not posted any workouts</i>";
+        return;
+    }
+
     let i=0;
     while(i<5 && i<workouts.length){
         const a = document.createElement('a');
