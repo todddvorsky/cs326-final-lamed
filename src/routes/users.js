@@ -165,11 +165,6 @@ router.get('/workouts/myworkouts', async function (req, res) {
 	res.send(recipes);
 });*/
 
-/* Create a user */
-router.post('/create', async function (req, res) {
-	//send back the name of the user created just to test the create
-	res.json({ name: 'created' });
-});
 
 // GET a specific user's workouts with name
 router.get('/workouts/:user/:name', async function (req, res) {
