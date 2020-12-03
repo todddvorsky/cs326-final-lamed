@@ -237,6 +237,9 @@ passwords Table
 
 
 ## Authentication/Authorization
+To authenticate users we had our express app use passport with a local strategy. 
+We do not have any special permissions, except that a user must first log in before they can access the home page.
+Once a user is logged in, their session is used throughout the site in order to indentify who the current user is.
 
 ## Division of Labor:
 
