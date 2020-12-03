@@ -38,9 +38,7 @@ This is just a welcome page and just has a list of all of the other pages you ca
 go to as well.
 
 ## Diet
-Here you can view all of the diets that you have saved. You will be able to see all
-of the contents for each diet as well. You can also decide to add a diet to the list
-of diets to browse from.
+Here you can create a new diet to show up in the "browse diets" page. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
 
 ## Browse Diets
 This page allows you to browse diets inputed from other users and to actually save
@@ -48,12 +46,11 @@ these diets for own page. You will see the contents of the diet when you click t
 diet to get a better sense of whether it fits yourself.
 
 ## Workout
-Just like the diet page, this is a page to see the workouts that you have saved, as
-well as the option to create a new workout for others to browse for.
+Here you can create a new workout to show up in the "browse workouts" page. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
 
 ## Browse Workouts
 Again like the browse diets page, this is a page to browse diets from other users and
-save them as your own to use in your own profile.
+save them as your own to use in your own profile. Click the workout to get more information about it.
 
 ## Social
 This is a page to see what your friends are up to. You can add a friend by inputing
