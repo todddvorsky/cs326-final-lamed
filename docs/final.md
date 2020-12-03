@@ -16,7 +16,7 @@ recipes and exercises with other users on the app. Within the app, you can frien
 of the app, see their current week's workout and diet, and curate your own profile with the 
 specific week's workout and diet that you'd like to focus on. Not only is Fit4Fun a great way
 to keep track of living a healthy lifestyle, it innovatively combines the social world with
-the healthy living world to motivate friends and draw inspiration for your coming weeks
+the healthy living world to motivate friends and draw inspiration for your coming week's
 lifestyle!!
 
 ## Team Members:
@@ -27,8 +27,8 @@ Jason Bolton - BoltyDawg
 ## User Interface:
 
 ## Login
-Here the user can log into their existing account, or if they don't have one, can
-make one on the left! If you try to log in without an existing account, you will
+Here, the user can log into their existing account, or, if they don't have one, can
+make one on the left! If you try to login without an existing account, you will
 stay on the login screen and be told there is no account with that info. You cannot
 get to any other page by changing the URL either, so you are forced to make an
 account and log in with that account.
@@ -38,28 +38,28 @@ This is just a welcome page and just has a list of all of the other pages you ca
 go to as well.
 
 ## Diet
-Here you can create a new diet to show up in the "browse diets" page. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
+Here you can create a new diet to show up in the "browse diets" page and add to your profile. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
 
 ## Browse Diets
-This page allows you to browse diets inputed from other users and to actually save
+This page allows you to browse diets input by other users and to save
 these diets for own page. You will see the contents of the diet when you click the
 diet to get a better sense of whether it fits yourself.
 
 ## Workout
-Here you can create a new workout to show up in the "browse workouts" page. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
+Here you can create a new workout to show up in the "browse workouts" page and add to your profile. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
 
 ## Browse Workouts
 Again like the browse diets page, this is a page to browse diets from other users and
 save them as your own to use in your own profile. Click the workout to get more information about it.
 
 ## Social
-This is a page to see what your friends are up to. You can add a friend by inputing
+This is a page to see what your friends are up to. You can add a friend by inputting
 their email. Both users have to input each others email in order to become friends.
 When you input your friend's email, you will receive a notification saying whether 
 the request was sent, if a request has already been sent, if the friend request is
 accepted, or if no user is found with that email. After you become friends, they
 will show up in the drop down menu labeled "friends list" and you can see a workout
-and diet that they have saved. You can also delete friends by clicking them in the
+and diet that they have saved. You can also delete friends by clicking on them in the
 friends list and then pressing the "delete friend" button on the bottom of the page.
 
 ## Profile
@@ -73,7 +73,7 @@ have to select, it will save and you can view it for reference whenever you'd li
 You can also change them whenever you'd like.
 
 ## About
-A simple about page for why we made this proj and who made it.
+A simple about page for how we made this project and who made it.
 
 
 ## APIs:
@@ -240,6 +240,7 @@ Once a user is logged in, their session is used throughout the site in order to 
 
 ## Division of Labor:
 
+
 #### Patrick Kelley
 - all of the user endpoints and functionality
 - design of the social page
@@ -247,6 +248,16 @@ Once a user is logged in, their session is used throughout the site in order to 
 - JS implementation of the social page
 - JS implementation of the profile page
 - Milestone and final markdown write-ups
+
+### Todd Dvorsky
+- design of the navigation bar, home page, login page, workout page, diet page, and about page
+- JS implementation of the workout page
+- JS implementation of the diet page
+- diet and workout endpoints/DB logic of the API
+- created the express app
+- designed the database
+- deployed app on heroku
+- Docs
 
 ## Conclusion:
 Overall, this project was a great learning tool, and very fun to do. It has definitely made
