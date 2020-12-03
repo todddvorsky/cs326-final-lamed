@@ -31,7 +31,7 @@
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="index.html">FitnessApp</a>
+			<a class="navbar-brand" href="index.html">Fit4Fun</a>
 			<button
 				class="navbar-toggler"
 				type="button"
@@ -109,14 +109,22 @@
 							aria-describedby="inputGroup-sizing-sm"
 						/>
 					</div>
-					<div id = 'friendalert' class="alert alert-warning alert-dismissible fade show" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						  <span aria-hidden="true">&times;</span>
+					<div
+						id="friendalert"
+						class="alert alert-warning alert-dismissible fade show"
+						role="alert"
+					>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="alert"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 				</div>
 			</div>
-			
 
 			<div class="jumbotron" width="500" id="friend_updates">
 				<h1 class="display-4">Friend Updates</h1>
@@ -124,64 +132,62 @@
 					See what recipes your friends are cooking and what workouts they're
 					doing today!
 				</p>
-				<div class = 'row'>
-					<h3 id = "friends-name"></h3>
+				<div class="row">
+					<h3 id="friends-name"></h3>
 					<h3>'s Current Diet & Workout</h3>
 				</div>
 				<hr class="my-4" />
 				<div class="container">
 					<div class="row text-center">
-						<h4>Diet Name: </h4> 
-						<h4 id = "dietName">Diet</h4>
+						<h4>Diet Name:</h4>
+						<h4 id="dietName">Diet</h4>
 					</div>
 					<div class="row">
 						<div class="col" id="breakfast-col">
 							<h5>Breakfast</h5>
-							<p id = "breakfast">Your friend's breakfast</p>
+							<p id="breakfast">Your friend's breakfast</p>
 							<img
 								class="img-thumbnail"
 								src="./images/breakfast.jpg"
 								width="200"
 								height="150"
 							/>
-							<p id ="breakfast_desc"></p>
+							<p id="breakfast_desc"></p>
 						</div>
 						<div class="col" id="lunch-col">
 							<h5>Lunch</h5>
-							<p id = 'lunch'>Your friend's lunch</p>
+							<p id="lunch">Your friend's lunch</p>
 							<img
 								class="img-thumbnail"
 								src="./images/lunch.png"
 								width="200"
 								height="150"
 							/>
-							<p id = "lunch_desc"></p>
+							<p id="lunch_desc"></p>
 						</div>
 						<div class="col" id="dinner-col">
 							<h5>Dinner</h5>
-							<p id = "dinner">Your friend's dinner</p>
+							<p id="dinner">Your friend's dinner</p>
 							<img
 								class="img-thumbnail"
 								src="./images/dinner.jpg"
 								width="200"
 								height="150"
 							/>
-							<p id ="dinner_desc"></p>
+							<p id="dinner_desc"></p>
 						</div>
 					</div>
 					<div class="row text-center">
 						<div class="col" id="workout-col">
 							<h4 class="text-center">Workout</h4>
-							<p id = 'workout'>
-								Your friend's workout
-							</p>
+							<p id="workout">Your friend's workout</p>
 							<img
 								class="img-thumbnail"
 								src="./images/workout.png"
 								width="300"
 								height="200"
 							/>
-							<p id ="workout_desc"></p>
+							<p id="workout_desc"></p>
 						</div>
 					</div>
 					<div class="row">
