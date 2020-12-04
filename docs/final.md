@@ -249,7 +249,7 @@ Once a user is logged in, their session is used throughout the site in order to 
 - JS implementation of the profile page
 - Milestone and final markdown write-ups
 
-### Todd Dvorsky
+#### Todd Dvorsky
 - design of the navigation bar, home page, login page, workout page, diet page, and about page
 - JS implementation of the workout page
 - JS implementation of the diet page
@@ -258,6 +258,15 @@ Once a user is logged in, their session is used throughout the site in order to 
 - designed the database
 - deployed app on heroku
 - Docs
+
+#### Jason Bolton
+- setup Express routers
+- account registration/login functions and DB logic
+- full implementation of authentication
+- Passport serialization and strategy design
+- diets and workouts endpoints/DB logic of the API
+- JS implementation and styling of the browse pages
+- JS implementation of login page
 
 ## Conclusion:
 Overall, this project was a great learning tool, and very fun to do. It has definitely made
