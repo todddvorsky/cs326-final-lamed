@@ -268,6 +268,8 @@ Once a user is logged in, their session is used throughout the site in order to 
 
 ## Division of Labor:
 
+https://trello.com/b/VGpL7hCq/fit4fun
+
 #### Patrick Kelley
 - all of the user endpoints and functionality
 - design of the social page
