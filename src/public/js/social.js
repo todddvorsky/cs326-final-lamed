@@ -40,8 +40,8 @@ async function populateFriends(){
         newName.classList.add('dropdown-item');
         newName.addEventListener('click', function() {
             document.getElementById("friends-name").innerHTML = newName.innerHTML;
-            populateDiet(id);
-            populateWorkout(id);
+            await populateDiet(id);
+            await populateWorkout(id);
             curr_friend_id = id;
         });
         document.getElementById("dropdownDiv").appendChild(newName);
@@ -58,6 +58,7 @@ async function populateWorkout(userid){
         return;
     }
     const db = await response.json();
+    console.log('db');
     if(!db[0]){
         document.getElementById('workout').innerHTML = 'This friend has not yet picked a workout!';
     }
