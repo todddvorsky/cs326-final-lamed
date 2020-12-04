@@ -49,6 +49,9 @@ window.addEventListener("load", () =>{
             const html = await res.text();
             document.body.innerHTML = html;
         }
+        else{
+            alert('Failed to register');
+        }
   
     });
 });
