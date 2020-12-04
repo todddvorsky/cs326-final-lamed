@@ -38,7 +38,7 @@ async function populateFriends(){
         newName.innerHTML = f_Upcase+friend.firstname.slice(1)+' '+l_Upcase+friend.lastname.slice(1);
         const id = friend.userid;
         newName.classList.add('dropdown-item');
-        newName.addEventListener('click', function() {
+        newName.addEventListener('click', async function() {
             document.getElementById("friends-name").innerHTML = newName.innerHTML;
             await populateDiet(id);
             await populateWorkout(id);
@@ -58,16 +58,17 @@ async function populateWorkout(userid){
         return;
     }
     const db = await response.json();
-    console.log('db');
     if(!db[0]){
         document.getElementById('workout').innerHTML = 'This friend has not yet picked a workout!';
     }
     else{
         const user_id = db[0].userid;
-        if(user_id === curr_friend_id){
+        const ex = await fetch(`/workouts/${db[0].workoutid}/exercises`);
+        const exercises = await ex.json();
+        if(true){
             const user_wo = db[0];
             document.getElementById('workout').innerHTML = user_wo.workoutname;
-            document.getElementById('workout_desc').innerHTML = user_wo.description;
+            document.getElementById('workout_desc').innerHTML = exercises[0].description;
         }
     }
 }
@@ -100,7 +101,7 @@ async function populateDiet(userid){
     else{
         const user_id = db[0].userid;
         const recipes = await getDietRecipes(db[0].dietid);
-        if(user_id === curr_friend_id){
+        if(true){
             const user_diet = db[0];
             document.getElementById('dietName').innerHTML = user_diet.dietname;
             for(let rec of recipes){
