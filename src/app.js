@@ -9,33 +9,35 @@ const passport = require('passport'); // handles authentication
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 
 const minicrypt = require('./public/js/miniCrypt');
+
 const mc = new minicrypt();
 
 const database = require('./db');
-const { join } = require('path');
 
 const app = (module.exports = express());
 
 // Session configuration
 
-app.use(cookieSession({
-	name: 'session',
-	secret: process.env.SECRET || 'SECRET',
-  
-	// Cookie Options
-	maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}));
+app.use(
+	cookieSession({
+		name: 'session',
+		secret: process.env.SECRET || 'SECRET',
+
+		// Cookie Options
+		maxAge: 24 * 60 * 60 * 1000, // 24 hours
+	})
+);
 
 const strategy = new LocalStrategy(async (email, password, done) => {
 	const [found, id] = await findUser(email);
 	if (!found) {
 		// no such user
-		console.log('User: ' + email + ' not found');
+		console.log(`User: ${email} not found`);
 		return done(null, false, { message: 'Invalid Email' });
 	}
 	console.log('running validate password');
 	const valPass = await validatePassword(email, password);
-	console.log('Validate password Response: ' + valPass);
+	console.log(`Validate password Response: ${valPass}`);
 	if (!valPass) {
 		console.log('bad valpass');
 		// invalid password
@@ -77,17 +79,15 @@ passport.deserializeUser(async (email, done) => {
 
 // Returns true iff the user exists.
 async function findUser(email) {
-	try{
+	try {
 		const user = await database.getUserByEmail(email);
 		if (!user) {
 			console.log('user not found');
 			return [false, null];
-		} else {
-			console.log("user found");
-			return [true, user.userid];
 		}
-	}
-	catch(err){
+		console.log('user found');
+		return [true, user.userid];
+	} catch (err) {
 		console.log('user not found');
 		return [false, null];
 	}
@@ -109,12 +109,12 @@ async function validatePassword(email, pwd) {
 
 // Add a user to the database.
 async function addUser(email, fname, lname, pwd) {
-	const [found, id] = await findUser(email);
+	const [found] = await findUser(email);
 	if (found) {
 		return false;
 	}
 	const [salt, hash] = mc.hash(pwd);
-	
+
 	await database.handlePostNewUser(email, fname, lname, salt, hash);
 	return true;
 }
@@ -142,10 +142,10 @@ app.get('/', checkLoggedIn, async (req, res) => {
 app.post(
 	'/register',
 	async function (req, res, next) {
-		const email = req.body['username'];
-		const password = req.body['password'];
-		const fname = req.body['fname'];
-		const lname = req.body['lname'];
+		const email = req.body.username;
+		const { password } = req.body;
+		const { fname } = req.body;
+		const { lname } = req.body;
 		if (await addUser(email, fname, lname, password)) {
 			console.log('added user!');
 			next();
@@ -195,12 +195,12 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 	// render the error page
 	res.status(err.status || 500);
-	res.json({error: err});
+	res.json({ error: err });
 });

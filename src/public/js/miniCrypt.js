@@ -27,10 +27,10 @@ module.exports = (function () {
     @desc Hash a user password.
    */
 	MiniCrypt.prototype.hash = function (pw) {
-		const salt = crypto.randomBytes(this.saltL).toString('hex'), // get our new salt for this pw
-			hash = crypto
-				.pbkdf2Sync(pw, salt, this.its, this.keyL, this.digest)
-				.toString('hex'); // hash the pw
+		const salt = crypto.randomBytes(this.saltL).toString('hex'); // get our new salt for this pw
+		const hash = crypto
+			.pbkdf2Sync(pw, salt, this.its, this.keyL, this.digest)
+			.toString('hex'); // hash the pw
 		return [salt, hash]; // return the pair for safe storage
 	};
 

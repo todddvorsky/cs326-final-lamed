@@ -4,7 +4,7 @@ const database = require('../db.js');
 /* ENDPOINTS */
 
 /* GET all users */
-router.get('/', async function (req, res, next) {
+router.get('/', async function (req, res) {
 	const data = await database.handleGetUsers();
 	res.send(data);
 });
@@ -34,8 +34,14 @@ router.post('/addfriend/:friendemail', async function (req, res) {
 		res.json({ msg: 'No user with that email was found' });
 	} else {
 		const friendId = user.userid;
-		const friendStatus = await database.handlePostCheckFriend(friendId, req.user);
-		const yourStatus = await database.handlePostCheckOwnRequest(friendId, req.user);
+		const friendStatus = await database.handlePostCheckFriend(
+			friendId,
+			req.user
+		);
+		const yourStatus = await database.handlePostCheckOwnRequest(
+			friendId,
+			req.user
+		);
 		if (!yourStatus[0]) {
 			if (!friendStatus[0]) {
 				await database.friendFunctions(req.user, friendId, 'add_pending');
@@ -63,7 +69,10 @@ router.get('/friends/myfriends', async function (req, res) {
 
 /* DELETE the friend selected off the current users friends list */
 router.delete('/friends/delete/:friendid', async function (req, res) {
-	const updated = await database.handleDeleteFriend(req.params.friendid, req.user);
+	const updated = await database.handleDeleteFriend(
+		req.params.friendid,
+		req.user
+	);
 	res.json({ msg: 'User has been deleted off friends list' });
 });
 
@@ -84,27 +93,36 @@ router.get('/profile/myinfo', async function (req, res) {
 
 /*POST to update the profile info*/
 router.post('/profile/info/update', async function (req, res) {
-	const updated = await database.handlePostUpdateProfileInfo(req.body, req.user);
+	const updated = await database.handlePostUpdateProfileInfo(
+		req.body,
+		req.user
+	);
 	res.send(updated);
 });
 
 /*POST to Create the initial profile info*/
 router.post('/profile/info/create', async function (req, res) {
-	const updated = await database.handlePostCreateInitialProfile(req.body, req.user);
+	const updated = await database.handlePostCreateInitialProfile(
+		req.body,
+		req.user
+	);
 	res.send(updated);
 });
 
 /*POST to Create the the days plan*/
 router.post('/profile/plan/create', async function (req, res) {
 	const newBody = req.body;
-	newBody['userId'] = req.user;
+	newBody.userId = req.user;
 	const updated = await database.handlePostCreateDaysPlan(newBody);
 	res.send(updated);
 });
 
 /*POST to update the profile days workout*/
 router.post('/profile/workout/update', async function (req, res) {
-	const updated = await database.handlePostUpdateDaysWorkout(req.body, req.user);
+	const updated = await database.handlePostUpdateDaysWorkout(
+		req.body,
+		req.user
+	);
 	res.send(updated);
 });
 
@@ -140,17 +158,13 @@ router.get('/diets/:name', async function (req, res) {
 
 // GET a specific user's diets with the userid
 router.get('/user/diets/:userid', async function (req, res) {
-	const userDiets = await database.handleGetUserDiets(
-		req.params.userid
-	);
+	const userDiets = await database.handleGetUserDiets(req.params.userid);
 	res.send(userDiets);
 });
 
 // GET a specific user's workouts with the userid
 router.get('/user/workouts/:userid', async function (req, res) {
-	const userWorkouts = await database.handleGetUserWorkouts(
-		req.params.userid
-	);
+	const userWorkouts = await database.handleGetUserWorkouts(req.params.userid);
 	res.send(userWorkouts);
 });
 
