@@ -130,7 +130,7 @@ async function itemClickEvent(element, type){
                 else{
                     alert("failed to add diet, sorry!");
                 }
-                //newDiet = await newDiet.json();
+                location.reload();
             });
         }
         else{
@@ -143,11 +143,13 @@ async function itemClickEvent(element, type){
                     },
                     method: 'DELETE'
                 });
-                if(res.ok)
+                if(res.ok) {
                     alert("Diet deleted!");
-                else
+                }
+                else {
                     alert("failed to delete diet, sorry!");
-                //res = await res.json();
+                }
+                location.reload();
             });
         }
 

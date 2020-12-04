@@ -130,7 +130,7 @@ async function itemClickEvent(element, type){
                 else{
                     alert("failed to add workout, sorry!");
                 }
-                //newWorkout = await newWorkout.json();
+                location.reload();
             });
         }
         else{
@@ -143,10 +143,13 @@ async function itemClickEvent(element, type){
                     },
                     method: 'DELETE'
                 });
-                if(res.ok)
+                if(res.ok) {
                     alert("Workout deleted!");
-                else
+                }
+                else {
                     alert("failed to delete workout, sorry!");
+                }
+                location.reload();
             });
         }
 
