@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const database = require('../db.js');
 
-let currentUserId = 1;
 
 /* set params */
 router.param('user', function (req, res, next) {
@@ -27,14 +26,14 @@ router.get('/:user', async function (req, res) {
 });
 
 /*GET a specific users workouts*/
-router.get('/workouts/:user', async function (req, res) {
-	const userWorkouts = await database.handleGetUserWorkouts(req.params.user);
+router.get('/workouts/currentUser', async function (req, res) {
+	const userWorkouts = await database.handleGetUserWorkouts(req.user);
 	res.send(userWorkouts);
 });
 
 /*GET a specific users diets*/
-router.get('/diets/:user', async function (req, res) {
-	const userDiets = await database.handleGetUserDiets(req.params.user);
+router.get('/diets/currentUser', async function (req, res) {
+	const userDiets = await database.handleGetUserDiets(req.user);
 	res.send(userDiets);
 });
 
@@ -67,11 +66,11 @@ router.post('/addfriend/:friendemail', async function (req, res) {
 		const yourStatus = await database.handlePostCheckOwnRequest(friendId);
 		if (!yourStatus[0]) {
 			if (!friendStatus[0]) {
-				await database.friendFunctions(currentUserId, friendId, 'add_pending');
+				await database.friendFunctions(req.user, friendId, 'add_pending');
 				res.json({ msg: 'friend request sent!' });
 			} else if (friendStatus[0].status === 'pending') {
-				await database.friendFunctions(currentUserId, friendId, 'change');
-				await database.friendFunctions(currentUserId, friendId, 'add_accepted');
+				await database.friendFunctions(req.user, friendId, 'change');
+				await database.friendFunctions(req.user, friendId, 'add_accepted');
 				res.json({ msg: 'friend request accepted!' });
 			} else if (friendStatus[0].status === 'accepted') {
 				res.json({ msg: 'friend request already accepted!' });
@@ -97,10 +96,10 @@ router.delete('/friends/delete/:friendid', async function (req, res) {
 });
 
 /* Update a user with this id */
-router.post('/update/:user', async function (req, res) {
+router.post('/update/current', async function (req, res) {
 	//console.log(req.body);
 	const updated = await database.handlePostUpdateUserNames_Email(
-		req.params.user,
+		req.user,
 		req.body
 	);
 	res.send(updated);
@@ -133,6 +132,7 @@ router.post('/profile/info/create', async function (req, res) {
 /*POST to Create the the days plan*/
 router.post('/profile/plan/create', async function (req, res) {
 	const updated = await database.handlePostCreateDaysPlan(req.body);
+	updated['userId'] = req.user;
 	res.send(updated);
 });
 
