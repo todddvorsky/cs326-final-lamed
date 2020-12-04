@@ -1,12 +1,15 @@
 let tag;
 document.getElementById('breakfast').addEventListener('click', async () => {
 	tag = 'breakfast';
+	document.getElementById('dropdownMenuLink').innerHTML = 'Breakfast';
 });
 document.getElementById('lunch').addEventListener('click', async () => {
 	tag = 'lunch';
+	document.getElementById('dropdownMenuLink').innerHTML = 'Lunch';
 });
 document.getElementById('dinner').addEventListener('click', async () => {
 	tag = 'dinner';
+	document.getElementById('dropdownMenuLink').innerHTML = 'Dinner';
 });
 document.getElementById('submit').addEventListener('click', async () => {
 	if (
