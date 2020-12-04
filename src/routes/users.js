@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const database = require('../db.js');
 
-
 /* set params */
 router.param('user', function (req, res, next) {
 	//TODO
@@ -165,20 +164,19 @@ router.get('/workouts/myworkouts', async function (req, res) {
 	res.send(recipes);
 });*/
 
-
 // GET a specific user's workouts with name
-router.get('/workouts/:user/:name', async function (req, res) {
+router.get('/workouts/:name', async function (req, res) {
 	const userWorkouts = await database.handleGetUserWorkoutsWithName(
-		req.params.user,
+		req.user,
 		req.params.name
 	);
 	res.send(userWorkouts);
 });
 
 // GET a specific user's diets with name
-router.get('/diets/:user/:name', async function (req, res) {
+router.get('/diets/:name', async function (req, res) {
 	const userDiets = await database.handleGetUserDietsWithName(
-		req.params.user,
+		req.user,
 		req.params.name
 	);
 	res.send(userDiets);
