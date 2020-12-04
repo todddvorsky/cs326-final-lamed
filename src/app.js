@@ -8,7 +8,6 @@ const cookieSession = require('cookie-session'); // for managing session state
 const passport = require('passport'); // handles authentication
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
 
-const { join } = require('path');
 const minicrypt = require('./public/js/miniCrypt');
 
 const mc = new minicrypt();
