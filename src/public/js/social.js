@@ -22,7 +22,6 @@ async function populateFriends(){
         return;
     }
     const db = await response.json();
-    console.log(db);
     for(let user of db){
         const newName = document.createElement("a");
         const resp = await fetch(`/users/${user.friendid}`);
@@ -31,7 +30,6 @@ async function populateFriends(){
             return;
         }
         const friendz = await resp.json();
-        console.log(friendz);
         const friend = friendz;
         const f_Upcase = friend.firstname.charAt(0).toUpperCase();
         const l_Upcase = friend.lastname.charAt(0).toUpperCase();

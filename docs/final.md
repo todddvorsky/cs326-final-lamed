@@ -152,6 +152,7 @@ A simple about page for how we made this project and who made it.
 
 
 #### exercises Table
+##### This is a table for unique exercises across the app
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | exerciseId | INT | Unique serial ID for this specific exercise |
@@ -163,11 +164,28 @@ A simple about page for how we made this project and who made it.
 | tag | VARCHAR(255) | a tag to associate with this exercise |
 
 #### diets Table
+##### This is a table for unique diets across the app
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | dietId | INT | ID for this specific diet |
 | userId | INT | ID of a user to associate this diet with  |
 | dietName | VARCHAR(255) | A unique name for this specific diet |
+
+#### usersDiets Table
+##### This is a table for all the diets saved by users
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| dietId | INT | ID for this specific diet |
+| userId | INT | ID of a user to associate this diet with  |
+| dietName | VARCHAR(255) | A name for this specific diet |
+
+#### usersWorkouts Table
+##### This is a table for all the workouts saves by users
+| Column       | Data Type | Description              |
+|--------------|-----------|--------------------------|
+| workoutId | INT | ID for this specific workout |
+| userId | INT | ID of a user to associate this workout with  |
+| workoutName | VARCHAR(255) | name for this specific workout |
 
 #### recipes Table
 | Column       | Data Type | Description              |
@@ -226,8 +244,6 @@ A simple about page for how we made this project and who made it.
 | users/:user | GET| Get a user with the specified userID |
 | users/workouts/currentuser | GET| Get the workouts associated with the current user|
 | users/diets/currentUser | GET| Get the diets associated with the current user |
-| users/diets/recipes/:dietid | GET| Get the recipes associated with a specific diet|
-| users/workouts/exercises/:workoutid | GET| Get the exercises associated with a specific workout |
 | users/addfriend/:friendemail | POST| Add to this user's friends with the given friend's email |
 | users/friends/myfriends | GET| Get this users accepted friends from the DB |
 | users/friends/delete/:friendid | DELETE| Delete the current chosen friend from this users friends list |
@@ -241,6 +257,8 @@ A simple about page for how we made this project and who made it.
 | users/profile/plan/:day | GET| Get the profile's plan for the specified day given |
 | users/diets/:name | GET| Get dietId associated with the named diet given |
 | users/workouts/:name | GET| Get the workoutID associated with the named workout given |
+| users/user/workouts/:userid | GET| Get the workouts associated with this user |
+| users/user/diets/:userid | GET| Get the diets associated with this user |
 
 
 ## Authentication/Authorization
@@ -250,7 +268,6 @@ Once a user is logged in, their session is used throughout the site in order to 
 
 ## Division of Labor:
 
-
 #### Patrick Kelley
 - all of the user endpoints and functionality
 - design of the social page
@@ -259,6 +276,8 @@ Once a user is logged in, their session is used throughout the site in order to 
 - JS implementation of the profile page
 - Milestone and final markdown write-ups
 - DB design/implementation
+- Diet/workout pages bugs/testing
+- Social/profile pages bugs/testing
 
 #### Todd Dvorsky
 - design of the navigation bar, home page, login page, workout page, diet page, and about page
@@ -284,7 +303,9 @@ Overall, this project was a great learning tool, and very fun to do. It has defi
 us realize that we should start projects early on instead of waiting to the last minute and
 sacrificing a lot of sleep! It's also made us realize how much goes into making a fully
 functional web application, from the HTML to the JS to the CSS to all of the routing and
-API functionality. It makes us appreciate other websites a lot more now! We also learned it's
+API functionality. It makes us appreciate other websites a lot more now! Connecting all of the
+pages and the info from the DB is very intricate, especially with a lot of features like our
+application  has. It was a big learning curve but we prevailed. We also learned it's
 okay to have changes along the design and implementation road, because you may find out an
 easier or more efficient way to solve a problem or streamline fucntionality for the user.
 Before starting the project, we would have liked to have a better idea of the project as a
