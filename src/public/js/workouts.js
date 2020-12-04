@@ -26,7 +26,7 @@ async function loadUserWorkouts(element){
 
         workoutMap[workouts[i]['workoutname']] = workouts[i]['workoutid'];
 
-        a.addEventListener("click", () => {itemClickEvent(a)});
+        a.addEventListener("click", () => {itemClickEvent(a, "user")});
 
         element.appendChild(a);
 
@@ -45,7 +45,7 @@ async function loadRecs(element){
 
         workoutMap[workouts[i]['workoutname']] = workouts[i];
 
-        a.addEventListener("click", () => {itemClickEvent(a)});
+        a.addEventListener("click", () => {itemClickEvent(a, "rec")});
 
         element.appendChild(a);
 
@@ -53,7 +53,7 @@ async function loadRecs(element){
     }
 }
 
-async function itemClickEvent(element){
+async function itemClickEvent(element, type){
     const left = document.getElementById("container-b");
     let right = document.getElementById("readmore");
 
@@ -98,7 +98,38 @@ async function itemClickEvent(element){
 
         right.innerHTML = html;
         right.id = "readmore";
-        
+
+        const btn = document.createElement("button");
+        if(type === "rec"){
+            btn.type = "button";
+            btn.classList.add("btn", "btn-success");
+            btn.innerText = "Add This Workout";
+            btn.addEventListener("click", async () => {
+                // TODO fix this route
+                const res = await fetch('/');
+                if(res.ok){
+                    alert("Workout added!");
+                }
+                else{
+                    alert("failed to add workout, sorry!");
+                }
+            });
+        }
+        else{
+            btn.classList.add("btn", "btn-danger");
+            btn.innerText = "Delete Workout"
+            btn.addEventListener("click", async () => {
+                //TODO fix this route
+                const res = await fetch('/');
+                if(res.ok)
+                    alert("Workout deleted!");
+                else
+                    alert("failed to delete workout, sorry!");
+            });
+        }
+
+        right.appendChild(btn);
+
         document.getElementById("container-a").appendChild(right);
     }
 }

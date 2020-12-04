@@ -18,3 +18,8 @@ hr.dotted {
 	background-color: lightgoldenrodyellow;
 	border-style: double;
 }
+
+.btn {
+	width: 160px;
+	height: 30px;
+}
