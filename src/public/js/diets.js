@@ -1,10 +1,11 @@
-window.addEventListener("load", function() {
-    loadUserWorkouts(document.getElementById("users-container"));
+window.addEventListener("load", async function() {
+    await loadUserWorkouts(document.getElementById("users-container"));
     loadRecs(document.getElementById("recs-container"));
 });
 
 const dietMap = {};
 let curSelection = null;
+let curUserId = null;
 
 async function loadUserWorkouts(element){
     element.innerHTML='';
@@ -17,8 +18,9 @@ async function loadUserWorkouts(element){
         return;
     }
 
-    let i=0;
-    while(i<5 && i<diets.length){
+    curUserId = diets[0]['userid'];
+
+    for(let i=0; i<5 && i<diets.length; i++){
         const a = document.createElement('a');
         a.href = '#'; //TODO
         a.classList.add('list-group-item', 'list-group-item-action');
@@ -29,30 +31,28 @@ async function loadUserWorkouts(element){
         a.addEventListener("click", () => {itemClickEvent(a, "user")});
 
         element.appendChild(a);
-
-        i++;
     }
 }
 async function loadRecs(element){
     const diets = await (await fetch('/diets/allDiets')).json();
     
-    let i=0;
-    while(i<5 && i<diets.length){
-        //Need this to filter out the diets from the current user
-        //if(diets[i]['userid'] !== CURRENT USER ID){
-        const a = document.createElement('a');
-        a.href = '#'; //TODO
-        a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = diets[i]['dietname'];
+    let count = 5;
+    for(let i=0; i<count && i<diets.length; i++){
+        if(diets[i]['userid'] !== curUserId){
+            const a = document.createElement('a');
+            a.href = '#'; //TODO
+            a.classList.add('list-group-item', 'list-group-item-action');
+            a.innerText = diets[i]['dietname'];
 
-        dietMap[diets[i]['dietname']] = diets[i];
+            dietMap[diets[i]['dietname']] = diets[i];
 
-        a.addEventListener("click", () => {itemClickEvent(a, "rec")});
+            a.addEventListener("click", () => {itemClickEvent(a, "rec")});
 
-        element.appendChild(a);
-
-        i++;
-        //}
+            element.appendChild(a);
+        }
+        else{
+            count++;
+        }
     }
 }
 

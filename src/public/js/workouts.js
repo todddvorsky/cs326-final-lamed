@@ -1,10 +1,11 @@
-window.addEventListener("load", function() {
-    loadUserWorkouts(document.getElementById("users-container"));
+window.addEventListener("load", async function() {
+    await loadUserWorkouts(document.getElementById("users-container"));
     loadRecs(document.getElementById("recs-container"));
 });
 
 const workoutMap = {};
 let curSelection = null;
+let curUserId = null;
 
 async function loadUserWorkouts(element){
     element.innerHTML='';
@@ -17,42 +18,41 @@ async function loadUserWorkouts(element){
         return;
     }
 
-    let i=0;
-    while(i<5 && i<workouts.length){
+    curUserId = workouts[0]['userid'];
+
+    for(let i=0; i<5 && i<workouts.length; i++){
         const a = document.createElement('a');
         a.href = '#'; //TODO
         a.classList.add('list-group-item', 'list-group-item-action');
         a.innerText = workouts[i].workoutname;
 
-        workoutMap[workouts[i]['workoutname']] = workouts[i]['workoutid'];
+        workoutMap[workouts[i]['workoutname']] = workouts[i];
 
         a.addEventListener("click", () => {itemClickEvent(a, "user")});
 
         element.appendChild(a);
-
-        i++;
     }
 }
 async function loadRecs(element){
     const workouts = await (await fetch('/workouts/allWorkouts')).json();
 
-    let i=0;
-    while(i<5 && i<workouts.length){
-        //Need this to filter out the workouts from the current user
-        //if(workouts[i]['userid'] !== CURRENT USER ID){
-        const a = document.createElement('a');
-        a.href = '#'; //TODO
-        a.classList.add('list-group-item', 'list-group-item-action');
-        a.innerText = workouts[i]['workoutname'];
+    let count = 5;
+    for(let i=0; i<count && i<workouts.length; i++){
+        if(workouts[i]['userid'] !== curUserId){
+            const a = document.createElement('a');
+            a.href = '#'; //TODO
+            a.classList.add('list-group-item', 'list-group-item-action');
+            a.innerText = workouts[i]['workoutname'];
 
-        workoutMap[workouts[i]['workoutname']] = workouts[i];
+            workoutMap[workouts[i]['workoutname']] = workouts[i];
 
-        a.addEventListener("click", () => {itemClickEvent(a, "rec")});
+            a.addEventListener("click", () => {itemClickEvent(a, "rec")});
 
-        element.appendChild(a);
-
-        i++;
-        //}
+            element.appendChild(a);
+        }
+        else{
+            count++;
+        }
     }
 }
 
@@ -72,6 +72,8 @@ async function itemClickEvent(element, type){
         curSelection = element;
 
         const wo = workoutMap[element.innerText];
+
+        console.log("wo: " + JSON.stringify(wo));
         
         const q1 = await fetch('/users/'+wo['userid']);
         const creator = await q1.json();
