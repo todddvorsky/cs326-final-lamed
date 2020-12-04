@@ -459,7 +459,7 @@ async function thisDaysDietWorkout(day) {
 			document.getElementById('workout_txt').innerHTML = 'Pick a workout';
 			document.getElementById('workout_desc').innerHTML = '';
 		} else {
-			const response2 = await fetch(`/workouts/${woid}/exercises`);
+			const response2 = await fetch(`/workouts/${db.workoutid}/exercises`);
 			if (!response2.ok) {
 				console.log(response2.error);
 				return;
