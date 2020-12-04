@@ -65,8 +65,9 @@ router.put('/exercises/update/:exercise', function (req, res) {
 	res.send('update exercise: ' + req.exercise);
 });
 /* Delete a workout */
-router.delete('/delete/:workout', function (req, res) {
-	res.send('delete workout: ' + req.workout);
+router.delete('/delete/:workoutid', async function (req, res) {
+	const workout = await database.handleDeleteWorkout(req.params.workoutid, req.user);
+	res.json(workout);
 });
 /* Delete a exercise */
 router.delete('/exercise/delete/:exercise', function (req, res) {

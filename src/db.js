@@ -147,6 +147,26 @@ async function handleGetMyFriends(currentUserId) {
 	);
 }
 
+//DELETE the specified diet from the current user
+async function handleDeleteDiet(dietid, currentUserId){
+	await connectAndRun((db) =>
+		db.none(
+			'DELETE FROM diets WHERE userId = $1 AND dietid = $2;',
+			[currentUserId, dietid]
+		)
+	);
+}
+
+//DELETE the specified workout from the current user
+async function handleDeleteWorkout(workoutid, currentUserId){
+	await connectAndRun((db) =>
+		db.none(
+			'DELETE FROM workouts WHERE userId = $1 AND workoutid = $2;',
+			[currentUserId, workoutid]
+		)
+	);
+}
+
 //DELETE to delete the selected friend from the current users friends list
 async function handleDeleteFriend(friendsid, currentUserId) {
 	await connectAndRun((db) =>
@@ -416,6 +436,7 @@ module.exports = {
 	handlePostUpdateDaysDiet,
 	handlePostUpdateDaysWorkout,
 	handleDeleteFriend,
+	handleDeleteWorkout,
 	handlePostUpdateUserNames_Email,
 	handleGetMyProfileInfo,
 	handleGetaDaysPlan,
@@ -427,6 +448,7 @@ module.exports = {
 	friendFunctions,
 	getUserByEmail,
 	handleGetUserWorkoutsWithName,
+	handleDeleteDiet,
 	createExercise,
 	createWorkout,
 	handleGetUserDietsWithName,

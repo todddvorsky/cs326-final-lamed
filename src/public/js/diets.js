@@ -35,9 +35,11 @@ async function loadUserWorkouts(element){
 }
 async function loadRecs(element){
     const diets = await (await fetch('/diets/allDiets')).json();
-
+    
     let i=0;
     while(i<5 && i<diets.length){
+        //Need this to filter out the diets from the current user
+        //if(diets[i]['userid'] !== CURRENT USER ID){
         const a = document.createElement('a');
         a.href = '#'; //TODO
         a.classList.add('list-group-item', 'list-group-item-action');
@@ -50,6 +52,7 @@ async function loadRecs(element){
         element.appendChild(a);
 
         i++;
+        //}
     }
 }
 
@@ -69,7 +72,7 @@ async function itemClickEvent(element, type){
         curSelection = element;
 
         const di = dietMap[element.innerText];
-        
+        const nameOfDiet = di.dietname;
         const q1 = await fetch('/users/'+di['userid']);
         const creator = await q1.json();
 
@@ -106,26 +109,39 @@ async function itemClickEvent(element, type){
             btn.classList.add("btn", "btn-success");
             btn.innerText = "Add This Diet";
             btn.addEventListener("click", async () => {
-                // TODO fix this route
-                const res = await fetch('/');
-                if(res.ok){
+                let newDiet = await fetch('diets/create', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'dietName' : nameOfDiet
+                    }),
+                });
+                if(newDiet.ok){
                     alert("Diet added!");
                 }
                 else{
                     alert("failed to add diet, sorry!");
                 }
+                newDiet = await newDiet.json();
             });
         }
         else{
             btn.classList.add("btn", "btn-danger", "browse-btn");
             btn.innerText = "Delete Diet"
             btn.addEventListener("click", async () => {
-                //TODO fix this route
-                const res = await fetch('/');
+                let res = await fetch(`diets/delete/${di.dietid}`,{
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'DELETE'
+                });
                 if(res.ok)
                     alert("Diet deleted!");
                 else
                     alert("failed to delete diet, sorry!");
+                res = await res.json();
             });
         }
 
