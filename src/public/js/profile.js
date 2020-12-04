@@ -1,4 +1,3 @@
-//let currentUserId = 2;
 let currentDayClicked;
 
 window.addEventListener("load", async function(){
