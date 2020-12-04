@@ -38,19 +38,21 @@ This is just a welcome page and just has a list of all of the other pages you ca
 go to as well.
 
 ## Diet
-Here you can create a new diet to show up in the "browse diets" page and add to your profile. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
+Here you can create a new diet to show up in the "browse diets" page. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
 
 ## Browse Diets
 This page allows you to browse diets input by other users and to save
 these diets for own page. You will see the contents of the diet when you click the
-diet to get a better sense of whether it fits yourself.
+diet to get a better sense of whether it fits yourself, and then choose to save it 
+under your own profile.
 
 ## Workout
-Here you can create a new workout to show up in the "browse workouts" page and add to your profile. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
+Here you can create a new workout to show up in the "browse workouts" page. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
 
 ## Browse Workouts
 Again like the browse diets page, this is a page to browse diets from other users and
-save them as your own to use in your own profile. Click the workout to get more information about it.
+save them as your own to use in your own profile. Click the workout to get more information about it,
+and then save it under your own profile if you like it!
 
 ## Social
 This is a page to see what your friends are up to. You can add a friend by inputting
@@ -211,26 +213,23 @@ passwords Table
 
 | End Point      | Type of request | Description              |
 |--------------|-----------|--------------------------|
-| user/user/ | GET| Get all of the users in the database |
-| user/:user | GET| Get a user with the specified userID |
-| user/workouts/:user | GET| Get the workouts associated with the userID given|
-| user/diets/:user | GET| Get the diets associated with the userID given |
-| user/diets/recipes/:dietid | GET| Get the recipes associated with a specific diet|
-| user/workouts/exercises/:workoutid | GET| Get the exercises associated with a specific workout |
-| user/addfriend/:friendemail | POST| Add to this user's friends with the given friend's email |
-| user/friends/myfriends | GET| Get this users accepted friends from the DB |
-| user/friends/delete/:friendid | DELETE| Delete the current chosen friend from this users friends list |
-| user/update/:user | POST| update a specified users info|
-| user/profile/myinfo | GET| Get the current users profile info |
-| user/profile/myplan| GET| Get the current users profile workout/diet plan |
-| user/profile/info/update | POST| Update the current users profile info with the inputed info |
-| user/profile/info/create | POST| Create an initial entry in the database for the current users profile info|
-| user/profile/plan/create | POST| Create an initial entry in the database for the current users profile plan|
-| user/profile/workout/update |POST| Update the workout plan for the current user on the selected day |
-| user/profile/diet/update| POST| Update the diet plan for the current user on the selected day |
-| user/profile/plan/:day | GET| Get the profile's plan for the specified day given |
-| user/workouts/:user/:name | GET| Get a specific users workout with the specific name given|
-| user/diets/:user/:name | GET| Get a specific users diets with the specified name|
+| users/ | GET| Get all of the users in the database |
+| users/:user | GET| Get a user with the specified userID |
+| users/workouts/currentuser | GET| Get the workouts associated with the current user|
+| users/diets/currentUser | GET| Get the diets associated with the current user |
+| users/diets/recipes/:dietid | GET| Get the recipes associated with a specific diet|
+| users/workouts/exercises/:workoutid | GET| Get the exercises associated with a specific workout |
+| users/addfriend/:friendemail | POST| Add to this user's friends with the given friend's email |
+| users/friends/myfriends | GET| Get this users accepted friends from the DB |
+| users/friends/delete/:friendid | DELETE| Delete the current chosen friend from this users friends list |
+| users/update/current | POST| update a the current users info|
+| users/profile/myinfo | GET| Get the current users profile info |
+| users/profile/info/update | POST| Update the current users profile info with the inputed info |
+| users/profile/info/create | POST| Create an initial entry in the database for the current users profile info|
+| users/profile/plan/create | POST| Create an initial entry in the database for the current users profile plan|
+| users/profile/workout/update |POST| Update the workout plan for the current user on the selected day |
+| users/profile/diet/update| POST| Update the diet plan for the current user on the selected day |
+| users/profile/plan/:day | GET| Get the profile's plan for the specified day given |
 
 
 ## Authentication/Authorization

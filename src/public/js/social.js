@@ -1,5 +1,3 @@
-//global id's to track
-let curr_user_id = 2;
 let curr_friend_id;
 
 window.addEventListener("load", async function(){
@@ -13,7 +11,6 @@ window.addEventListener("load", async function(){
     document.getElementById('delete-friend-btn').addEventListener('click', deleteUser);
     document.getElementById('friendalert').style.display = "none";
     const updateBody = {firstname: 'Bob', lastname: 'Hansen', email: 'bob@bob.com'};
-    //updateUser(updateBody);
 });
 
 /*Populate the friends list with the current users friends.
