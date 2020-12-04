@@ -21,7 +21,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 		alert('Please fill out all fields');
 	} else {
 		const dietName = document.getElementById('dietName').value;
-		let dietId = await fetch(`/users/diets/${dietName}`); // use req.params to get curr_user and workoutname
+		let dietId = await fetch(`/users/diets/${dietName}`);
 		dietId = await dietId.json();
 		if (dietId.length) dietId = dietId[0].dietid;
 
