@@ -138,7 +138,7 @@ router.get('/profile/plan/:day', async function (req, res) {
 // GET a specific user's workouts with name
 router.get('/workouts/:name', async function (req, res) {
 	const userWorkouts = await database.handleGetUserWorkoutsWithName(
-		req.params.user,
+		req.user,
 		req.params.name
 	);
 	res.send(userWorkouts);
@@ -147,7 +147,7 @@ router.get('/workouts/:name', async function (req, res) {
 // GET a specific user's diets with name
 router.get('/diets/:name', async function (req, res) {
 	const userDiets = await database.handleGetUserDietsWithName(
-		req.params.user,
+		req.user,
 		req.params.name
 	);
 	res.send(userDiets);
