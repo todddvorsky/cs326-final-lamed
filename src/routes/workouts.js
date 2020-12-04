@@ -29,17 +29,16 @@ router.get('/:workout', async function (req, res) {
 });
 /* GET a specific workout's exercises. */
 router.get('/:workout/exercises', async function (req, res) {
-	const exers = await database.handleGetWorkoutsExercises(req.workout.workoutid);
+	const exers = await database.handleGetWorkoutsExercises(
+		req.workout.workoutid
+	);
 	res.json(exers);
 	res.status(200);
 });
 /* Create a workout */
 router.post('/create', async function (req, res) {
 	// name, userId, return workout Id
-	const workout = await database.createWorkout(
-		req.body.workoutName,
-		req.body.userId
-	);
+	const workout = await database.createWorkout(req.body.workoutName, req.user);
 	console.log('jjjjj', workout);
 	res.status(200);
 	res.send(workout);

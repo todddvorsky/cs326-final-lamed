@@ -1,5 +1,3 @@
-const currentUserID = 1;
-
 document.getElementById('submit').addEventListener('click', async () => {
 	if (
 		!(
@@ -14,9 +12,7 @@ document.getElementById('submit').addEventListener('click', async () => {
 		alert('Please fill out all fields');
 	} else {
 		const workoutName = document.getElementById('workoutName').value;
-		let workoutId = await fetch(
-			`/users/workouts/${currentUserID}/${workoutName}`
-		);
+		let workoutId = await fetch(`/users/workouts/${workoutName}`);
 		workoutId = await workoutId.json();
 		if (workoutId.length) workoutId = workoutId[0].workoutid;
 		if (workoutId.constructor === Array) {
@@ -27,7 +23,6 @@ document.getElementById('submit').addEventListener('click', async () => {
 				method: 'POST',
 				body: JSON.stringify({
 					workoutName,
-					userId: currentUserID,
 				}),
 			});
 			workoutId = await workoutId.json();

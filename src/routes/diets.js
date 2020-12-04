@@ -36,7 +36,7 @@ router.get('/:diet/recipes', async function (req, res) {
 
 /* Create a diet */
 router.post('/create', async function (req, res) {
-	const diet = await database.createDiet(req.body.dietName, req.body.userId);
+	const diet = await database.createDiet(req.body.dietName, req.user);
 	res.status(200);
 	res.send(diet);
 });
