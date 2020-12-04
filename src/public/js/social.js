@@ -75,7 +75,7 @@ async function populateWorkout(userid){
 can populate the social page with a specified friends diet components
 */
 async function getDietRecipes(dietid){
-    const response = await fetch(`/users/diets/recipes/${dietid}`);
+    const response = await fetch(`/diets/${dietid}/recipes`);
     if (!response.ok) {
         console.log(response.error);
         return;

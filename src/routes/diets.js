@@ -55,14 +55,6 @@ router.post('/recipe/create', async function (req, res) {
 	res.send(recipe);
 });
 
-/* Update a diet */
-router.put('/update/:diet', function (req, res) {
-	res.send('update diet: ' + req.diet);
-});
-/* Update a recipe */
-router.put('/recipes/update/:recipe', function (req, res) {
-	res.send('update recipe: ' + req.recipe);
-});
 /* Delete a diet */
 router.delete('/delete/:dietid', async function (req, res) {
 	const diet = await database.handleDeleteDiet(req.params.dietid, req.user);
@@ -72,10 +64,6 @@ router.delete('/delete/:dietid', async function (req, res) {
 router.post('/add', async function (req, res) {
 	const diet = await database.handleAddDiet(req.body.dietid, req.user, req.body.dietName);
 	res.send(diet);
-});
-/* Delete a recipe */
-router.delete('/recipe/delete/:recipe', function (req, res) {
-	res.send('delete recipe: ' + req.recipe);
 });
 
 module.exports = router;

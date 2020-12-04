@@ -214,7 +214,7 @@ async function populateDietList(){
         newName.classList.add('dropdown-item');
         newName.innerHTML = diet.dietname;
         const dietId = diet.dietid;
-        const resp = await fetch(`/users/diets/recipes/${dietId}`);
+        const resp = await fetch(`/diets/${dietId}/recipes`);
         if (!resp.ok) {
             console.log(resp.error);
             return;
@@ -248,7 +248,7 @@ async function populateWorkoutList(){
         newName.classList.add('dropdown-item');
         newName.innerHTML = wo.workoutname;
         const woid = wo.workoutid;
-        const resp = await fetch(`/users/workouts/exercises/${woid}`);
+        const resp = await fetch(`/workouts/${woid}/exercises`);
         if (!resp.ok) {
             console.log(resp.error);
             return;
@@ -379,7 +379,7 @@ async function thisDaysDietWorkout(day){
             document.getElementById('dinner_desc').innerHTML = '';
         }
         else{
-            const response1 = await fetch(`/users/diets/recipes/${db.dietid}`);
+            const response1 = await fetch(`/diets/${db.dietid}/recipes`);
             if (!response1.ok) {
                 console.log(response1.error);
                 return;
@@ -392,7 +392,7 @@ async function thisDaysDietWorkout(day){
             document.getElementById("workout_desc").innerHTML = '';
         }
         else{
-            const response2 = await fetch(`/users/workouts/exercises/${db.workoutid}`);
+            const response2 = await fetch(`/workouts/${woid}/exercises`);
             if (!response2.ok) {
                 console.log(response2.error);
                 return;

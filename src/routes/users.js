@@ -27,22 +27,6 @@ router.get('/diets/currentUser', async function (req, res) {
 	res.send(userDiets);
 });
 
-/*GET a specific diet's recipes
-This really belongs in the diets route, not here */
-router.get('/diets/recipes/:dietid', async function (req, res) {
-	const recipes = await database.handleGetDietsRecipes(req.params.dietid);
-	res.send(recipes);
-});
-
-/*GET a specific workouts exercises
-This really belongs in the workouts route, not here */
-router.get('/workouts/exercises/:workoutid', async function (req, res) {
-	const exercises = await database.handleGetWorkoutsExercises(
-		req.params.workoutid
-	);
-	res.send(exercises);
-});
-
 /*POST to add a friend*/
 router.post('/addfriend/:friendemail', async function (req, res) {
 	const user = await database.getUserByEmail(req.params.friendemail);

@@ -37,9 +37,7 @@ router.get('/:workout/exercises', async function (req, res) {
 });
 /* Create a workout */
 router.post('/create', async function (req, res) {
-	// name, userId, return workout Id
 	const workout = await database.createWorkout(req.body.workoutName, req.user);
-	console.log('jjjjj', workout);
 	res.status(200);
 	res.send(workout);
 });
@@ -56,14 +54,6 @@ router.post('/exercise/create', async function (req, res) {
 	res.status(200);
 	res.send(exercise);
 });
-/* Update a workout */
-router.put('/update/:workout', function (req, res) {
-	res.send('update workout: ' + req.workout);
-});
-/* Update a exercise */
-router.put('/exercises/update/:exercise', function (req, res) {
-	res.send('update exercise: ' + req.exercise);
-});
 /* Delete a workout */
 router.delete('/delete/:workoutid', async function (req, res) {
 	const workout = await database.handleDeleteWorkout(req.params.workoutid, req.user);
@@ -73,10 +63,6 @@ router.delete('/delete/:workoutid', async function (req, res) {
 router.post('/add', async function (req, res) {
 	const workout = await database.handleAddWorkout(req.body.workoutId, req.user, req.body.workoutName);
 	res.send(workout);
-});
-/* Delete a exercise */
-router.delete('/exercise/delete/:exercise', function (req, res) {
-	res.send('delete exercise: ' + req.exercise);
 });
 
 module.exports = router;

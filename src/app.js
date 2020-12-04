@@ -18,11 +18,6 @@ const app = (module.exports = express());
 
 // Session configuration
 
-// const session = {
-// 	secret: process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
-// 	resave: false,
-// 	saveUninitialized: false,
-// };
 app.use(cookieSession({
 	name: 'session',
 	secret: process.env.SECRET || 'SECRET',
@@ -30,18 +25,6 @@ app.use(cookieSession({
 	// Cookie Options
 	maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
-// app.use(
-// 	expressSession({
-// 		cookie: { maxAge: 86400000 },
-// 		store: new MemoryStore({
-// 			checkPeriod: 86400000, // prune expired entries every 24h
-// 		}),
-// 		resave: false,
-// 		secret: process.env.SECRET || 'SECRET',
-// 		saveUninitialized: true,
-// 	})
-// );
-// Passport configuration
 
 const strategy = new LocalStrategy(async (email, password, done) => {
 	const [found, id] = await findUser(email);
@@ -56,8 +39,6 @@ const strategy = new LocalStrategy(async (email, password, done) => {
 	if (!valPass) {
 		console.log('bad valpass');
 		// invalid password
-		// delay return to rate-limit brute-force attacks
-		//await new Promise((r) => setTimeout(r, 2000)); // two second delay
 		return done(null, false, { message: 'Invalid password' });
 	}
 	// success!
@@ -158,7 +139,6 @@ app.get('/', checkLoggedIn, async (req, res) => {
 // If we successfully add a new user, go to /login, else, back to /register.
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
-// TODO
 app.post(
 	'/register',
 	async function (req, res, next) {

@@ -18,7 +18,7 @@ async function loadUserWorkouts(element){
 
     for(let i=0; i<5 && i<diets.length; i++){
         const a = document.createElement('a');
-        a.href = '#'; //TODO
+        a.href = '#';
         a.classList.add('list-group-item', 'list-group-item-action');
         a.innerText = diets[i]['dietname'];
 
@@ -36,7 +36,7 @@ async function loadRecs(element){
     for(let i=0; i<count && i<diets.length; i++){
         if(filterHelper(diets[i]['dietid'])){
             const a = document.createElement('a');
-            a.href = '#'; //TODO
+            a.href = '#';
             a.classList.add('list-group-item', 'list-group-item-action');
             a.innerText = diets[i]['dietname'];
 

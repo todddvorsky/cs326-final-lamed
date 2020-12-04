@@ -339,7 +339,6 @@ async function handlePostUpdateDaysDiet(info, currentUserId) {
 }
 
 //POST a new user in both the user table and password table
-//TODO update to also post to user table
 async function handlePostNewUser(email, fname, lname, salt, hpwd) {
 	await connectAndRun((db) =>
 		db.none(

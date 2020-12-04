@@ -1,8 +1,6 @@
 window.addEventListener("load", () =>{
     document.getElementById('login-form').addEventListener('submit', async function(event) {
         event.preventDefault();
-        //TODO
-        console.log("logging in...");
 
         const data = {
             username: event.target.email.value,
@@ -27,8 +25,6 @@ window.addEventListener("load", () =>{
     
     document.getElementById('register-form').addEventListener('submit', async function(event) {
         event.preventDefault();
-        //TODO
-        console.log("registering...");
 
         const data = {
             fname: event.target.fname.value,
