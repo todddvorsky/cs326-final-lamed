@@ -168,7 +168,7 @@ async function updateUser(msgbody){
           },
         body: JSON.stringify(msgbody)
     };
-    const response = await fetch(`/users/update/${curr_user_id}`, myInit);
+    const response = await fetch(`/users/update/current`, myInit);
     if (!response.ok) {
         console.log(response.error);
         return;

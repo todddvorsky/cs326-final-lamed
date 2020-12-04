@@ -1,4 +1,4 @@
-let currentUserId = 2;
+//let currentUserId = 2;
 let currentDayClicked;
 
 window.addEventListener("load", async function(){
@@ -204,7 +204,7 @@ function helpPopulateFood(recipes){
 
 /*function to populate the diet list of the current users plan*/
 async function populateDietList(){
-    const response = await fetch(`/users/diets/${currentUserId}`);
+    const response = await fetch(`/users/diets/currentUser`);
     if (!response.ok) {
         console.log(response.error);
         return;
@@ -228,7 +228,7 @@ async function populateDietList(){
             if(b){
                 updateDaysDiet(dietId, currentDayClicked);
             }else{
-                createPlanOfDay({'userId': currentUserId, 'day':currentDayClicked, 'dietId': dietId,'workoutId':null });
+                createPlanOfDay({'day':currentDayClicked, 'dietId': dietId,'workoutId':null });
             }
         });
         document.getElementById("diet_dropdownDiv").appendChild(newName);
@@ -237,7 +237,7 @@ async function populateDietList(){
 
 /*function to populate the workout list of the current users plan*/
 async function populateWorkoutList(){
-    const response = await fetch(`/users/workouts/${currentUserId}`);
+    const response = await fetch(`/users/workouts/currentUser`);
     if (!response.ok) {
         console.log(response.error);
         return;
@@ -262,7 +262,7 @@ async function populateWorkoutList(){
             if(planExists(currentDayClicked)){
                 updateDaysWorkout(woid, currentDayClicked);
             }else{
-                createPlanOfDay({'userId': currentUserId, 'day':currentDayClicked, 'dietId': null,'workoutId':woid });
+                createPlanOfDay({'day':currentDayClicked, 'dietId': null,'workoutId':woid });
             }
         });
         document.getElementById("WO_dropdownDiv").appendChild(newName);
