@@ -41,7 +41,6 @@ router.post('/create', async function (req, res) {
 	res.send(diet);
 });
 
-
 /* Create a recipe */
 router.post('/recipe/create', async function (req, res) {
 	const recipe = await database.createRecipe(
@@ -62,7 +61,11 @@ router.delete('/delete/:dietid', async function (req, res) {
 });
 /* add a diet */
 router.post('/add', async function (req, res) {
-	const diet = await database.handleAddDiet(req.body.dietid, req.user, req.body.dietName);
+	const diet = await database.handleAddDiet(
+		req.body.dietid,
+		req.user,
+		req.body.dietName
+	);
 	res.send(diet);
 });
 

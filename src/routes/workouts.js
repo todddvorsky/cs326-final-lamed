@@ -56,12 +56,19 @@ router.post('/exercise/create', async function (req, res) {
 });
 /* Delete a workout */
 router.delete('/delete/:workoutid', async function (req, res) {
-	const workout = await database.handleDeleteWorkout(req.params.workoutid, req.user);
+	const workout = await database.handleDeleteWorkout(
+		req.params.workoutid,
+		req.user
+	);
 	res.json(workout);
 });
 /* add a workout to usersworkouts */
 router.post('/add', async function (req, res) {
-	const workout = await database.handleAddWorkout(req.body.workoutId, req.user, req.body.workoutName);
+	const workout = await database.handleAddWorkout(
+		req.body.workoutId,
+		req.user,
+		req.body.workoutName
+	);
 	res.send(workout);
 });
 
