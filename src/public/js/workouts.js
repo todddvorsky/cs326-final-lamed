@@ -4,6 +4,7 @@ window.addEventListener("load", function() {
 });
 
 const workoutMap = {};
+let curSelection = null;
 
 async function loadUserWorkouts(element){
     element.innerHTML='';
@@ -53,16 +54,20 @@ async function loadRecs(element){
 }
 
 async function itemClickEvent(element){
-    if(document.getElementById("readmore")){
-        document.getElementById("readmore").remove();
-    }
     const left = document.getElementById("container-b");
-    //check if item is currently open in right-hand container
-    //TODO add an & to this condition checking if its the one currently being displayed
-    if(left.classList.contains("col-5")){
+    let right = document.getElementById("readmore");
+
+    if( curSelection && curSelection === element) {
         left.classList.remove("col-5");
+        curSelection = null;
+
+        if(right){
+            right.remove();
+        }
     }
     else{
+        curSelection = element;
+
         const wo = workoutMap[element.innerText];
         
         const q1 = await fetch('/users/'+wo['userid']);
@@ -73,8 +78,10 @@ async function itemClickEvent(element){
 
         left.classList.add("col-5");
 
-        const right = document.createElement("div");
-        right.classList.add("col-7", "container");
+        if(!right){
+            right = document.createElement("div");
+            right.classList.add("col-7", "container");
+        }
         
         let html = "";
         html += "<h2><u>" + element.innerText + "</u></h2>";
@@ -91,6 +98,7 @@ async function itemClickEvent(element){
 
         right.innerHTML = html;
         right.id = "readmore";
+        
         document.getElementById("container-a").appendChild(right);
     }
 }
