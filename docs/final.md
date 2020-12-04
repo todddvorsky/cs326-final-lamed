@@ -106,7 +106,7 @@ A simple about page for how we made this project and who made it.
   | users       | table | 
   | workouts    | table | 
 
-Users Table
+#### Users Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | UserId | serial INT    | The ID of a user  |
@@ -115,7 +115,7 @@ Users Table
 | email | VARCHAR(255)   | email of the user that is unique in the table |
 
 
-profileInfo Table
+#### profileInfo Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | the ID of the user who's profile it is |
@@ -128,7 +128,7 @@ profileInfo Table
 |    favworkout | VARCHAR(255) | name of this user's favorite workout |
 |    favrecipe | VARCHAR(255) | name of this user's favorite recipe |
 
-profilePlan Table
+#### profilePlan Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | the ID of the user who's profile it is |
@@ -136,14 +136,14 @@ profilePlan Table
 | dietId | INT | ID of the associated diet |
 | workoutId | INT | ID of the associated workout |
 
-friends Table
+#### friends Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | ID for identifying the user |
 | friendId | INT | ID for identifying another user  |
 | status | VARCHAR(255) | The status of the friend request (pending or accepted) |
 
-workouts Table
+#### workouts Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | workoutID | INT | ID for this specific workout |
@@ -151,7 +151,7 @@ workouts Table
 | workoutName | VARCHAR(255) | A unique name for this specific workout |
 
 
-exercises Table
+#### exercises Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | exerciseId | INT | Unique serial ID for this specific exercise |
@@ -162,14 +162,14 @@ exercises Table
 | reps | INT | number of reps to do for this exercise |
 | tag | VARCHAR(255) | a tag to associate with this exercise |
 
-diets Table
+#### diets Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | dietId | INT | ID for this specific diet |
 | userId | INT | ID of a user to associate this diet with  |
 | dietName | VARCHAR(255) | A unique name for this specific diet |
 
-recipes Table
+#### recipes Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | recipeId | INT | Unique serial ID for this specific recipe |
@@ -179,7 +179,7 @@ recipes Table
 | ingredients | TEXT | List of ingredients for this recipe |
 | tag | TEXT | a tag to associate with this recipe (breakfast, lunch, or dinner) |
 
-passwords Table
+#### passwords Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | ID of the user to associate with the password |
@@ -256,6 +256,7 @@ Once a user is logged in, their session is used throughout the site in order to 
 - JS implementation of the social page
 - JS implementation of the profile page
 - Milestone and final markdown write-ups
+- DB design/implementation
 
 #### Todd Dvorsky
 - design of the navigation bar, home page, login page, workout page, diet page, and about page
