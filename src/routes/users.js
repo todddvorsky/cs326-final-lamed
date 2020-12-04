@@ -50,8 +50,8 @@ router.post('/addfriend/:friendemail', async function (req, res) {
 		res.json({ msg: 'No user with that email was found' });
 	} else {
 		const friendId = user.userid;
-		const friendStatus = await database.handlePostCheckFriend(friendId);
-		const yourStatus = await database.handlePostCheckOwnRequest(friendId);
+		const friendStatus = await database.handlePostCheckFriend(friendId, req.user);
+		const yourStatus = await database.handlePostCheckOwnRequest(friendId, req.user);
 		if (!yourStatus[0]) {
 			if (!friendStatus[0]) {
 				await database.friendFunctions(req.user, friendId, 'add_pending');
@@ -73,13 +73,13 @@ router.post('/addfriend/:friendemail', async function (req, res) {
 
 /*GET a specific users friends*/
 router.get('/friends/myfriends', async function (req, res) {
-	const myFriends = await database.handleGetMyFriends();
+	const myFriends = await database.handleGetMyFriends(req.user);
 	res.send(myFriends);
 });
 
 /* DELETE the friend selected off the current users friends list */
 router.delete('/friends/delete/:friendid', async function (req, res) {
-	const updated = await database.handleDeleteFriend(req.params.friendid);
+	const updated = await database.handleDeleteFriend(req.params.friendid, req.user);
 	res.json({ msg: 'User has been deleted off friends list' });
 });
 
@@ -94,44 +94,45 @@ router.post('/update/current', async function (req, res) {
 
 /*GET the current users profile info*/
 router.get('/profile/myinfo', async function (req, res) {
-	const myInfo = await database.handleGetMyProfileInfo();
+	const myInfo = await database.handleGetMyProfileInfo(req.user);
 	res.send(myInfo);
 });
 
 /*POST to update the profile info*/
 router.post('/profile/info/update', async function (req, res) {
-	const updated = await database.handlePostUpdateProfileInfo(req.body);
+	const updated = await database.handlePostUpdateProfileInfo(req.body, req.user);
 	res.send(updated);
 });
 
 /*POST to Create the initial profile info*/
 router.post('/profile/info/create', async function (req, res) {
-	const updated = await database.handlePostCreateInitialProfile(req.body);
+	const updated = await database.handlePostCreateInitialProfile(req.body, req.user);
 	res.send(updated);
 });
 
 /*POST to Create the the days plan*/
 router.post('/profile/plan/create', async function (req, res) {
-	const updated = await database.handlePostCreateDaysPlan(req.body);
-	updated['userId'] = req.user;
+	const newBody = req.body;
+	newBody['userId'] = req.user;
+	const updated = await database.handlePostCreateDaysPlan(newBody);
 	res.send(updated);
 });
 
 /*POST to update the profile days workout*/
 router.post('/profile/workout/update', async function (req, res) {
-	const updated = await database.handlePostUpdateDaysWorkout(req.body);
+	const updated = await database.handlePostUpdateDaysWorkout(req.body, req.user);
 	res.send(updated);
 });
 
 /*POST to update the profile days diet*/
 router.post('/profile/diet/update', async function (req, res) {
-	const updated = await database.handlePostUpdateDaysDiet(req.body);
+	const updated = await database.handlePostUpdateDaysDiet(req.body, req.user);
 	res.send(updated);
 });
 
 /*GET to get the a day for the profile plan*/
 router.get('/profile/plan/:day', async function (req, res) {
-	const created = await database.handleGetaDaysPlan(req.params.day);
+	const created = await database.handleGetaDaysPlan(req.params.day, req.user);
 	res.send(created);
 });
 

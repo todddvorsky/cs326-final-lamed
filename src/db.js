@@ -11,7 +11,7 @@ const pgp = require('pg-promise')({
 	},
 });
 
-let currentUserId = 1; // temp
+//let currentUserId = 1; // temp
 
 let secrets;
 let password;
@@ -78,7 +78,7 @@ async function handleGetWorkoutsExercises(workoutid) {
 	);
 }
 // Check to see if the friend has already sent one to you
-async function handlePostCheckFriend(friendid) {
+async function handlePostCheckFriend(friendid, currentUserId) {
 	return connectAndRun((db) =>
 		db.any('SELECT * FROM friends WHERE friendid = $1 AND userid = $2;', [
 			currentUserId,
@@ -87,7 +87,7 @@ async function handlePostCheckFriend(friendid) {
 	);
 }
 // Check to see if you already sent a friend request
-async function handlePostCheckOwnRequest(friendid) {
+async function handlePostCheckOwnRequest(friendid, currentUserId) {
 	return connectAndRun((db) =>
 		db.any('SELECT * FROM friends WHERE friendid = $1 AND userid = $2;', [
 			friendid,
@@ -96,13 +96,13 @@ async function handlePostCheckOwnRequest(friendid) {
 	);
 }
 
-async function friendFunctions(userid, friendid, action) {
+async function friendFunctions(currentUserId, friendid, action) {
 	// if no status was found for these friends
 	if (action === 'add_pending') {
 		await connectAndRun((db) =>
 			db.none(
 				'INSERT INTO friends(userId, friendId, status) VALUES($1,$2,$3);',
-				[userid, friendid, 'pending']
+				[currentUserId, friendid, 'pending']
 			)
 		);
 	}
@@ -111,7 +111,7 @@ async function friendFunctions(userid, friendid, action) {
 		await connectAndRun((db) =>
 			db.none(
 				'INSERT INTO friends(userId, friendId, status) VALUES($1,$2,$3);',
-				[userid, friendid, 'accepted']
+				[currentUserId, friendid, 'accepted']
 			)
 		);
 	}
@@ -120,13 +120,13 @@ async function friendFunctions(userid, friendid, action) {
 		await connectAndRun((db) =>
 			db.none(
 				'DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;',
-				[friendid, userid, 'pending']
+				[friendid, currentUserId, 'pending']
 			)
 		);
 		await connectAndRun((db) =>
 			db.none(
 				'INSERT INTO friends(userId, friendId, status) VALUES($1,$2,$3);',
-				[friendid, userid, 'accepted']
+				[friendid, currentUserId, 'accepted']
 			)
 		);
 	}
@@ -138,7 +138,7 @@ async function getUserByEmail(email) {
 }
 
 //Get the current users friends
-async function handleGetMyFriends() {
+async function handleGetMyFriends(currentUserId) {
 	return connectAndRun((db) =>
 		db.any('SELECT * FROM friends WHERE userid = $1 AND status = $2;', [
 			currentUserId,
@@ -148,7 +148,7 @@ async function handleGetMyFriends() {
 }
 
 //DELETE to delete the selected friend from the current users friends list
-async function handleDeleteFriend(friendsid) {
+async function handleDeleteFriend(friendsid, currentUserId) {
 	await connectAndRun((db) =>
 		db.none(
 			'DELETE FROM friends WHERE userId = $1 AND friendId = $2 AND status = $3;',
@@ -164,7 +164,7 @@ async function handleDeleteFriend(friendsid) {
 }
 
 //UPDATE the specified fields for a user, Body must contain firstname,lastname,email
-async function handlePostUpdateUserNames_Email(userid, body) {
+async function handlePostUpdateUserNames_Email(currentUserId, body) {
 	await connectAndRun((db) =>
 		db.any(
 			'UPDATE users SET firstname = $1, lastname = $2, email=$3 WHERE userid = $4;',
@@ -172,26 +172,27 @@ async function handlePostUpdateUserNames_Email(userid, body) {
 		)
 	);
 	return connectAndRun((db) =>
-		db.any('SELECT * from users WHERE userid =$1;', [userid])
+		db.any('SELECT * from users WHERE userid =$1;', [currentUserId])
 	);
 }
 
 //Get the profile info for the current user
-async function handleGetMyProfileInfo() {
+async function handleGetMyProfileInfo(currentUserId) {
 	return connectAndRun((db) =>
 		db.any('SELECT * FROM profileinfo WHERE userId = $1;', [currentUserId])
 	);
 }
 
+//
 //Get the profile plan for the current user
-async function handleGetMyProfilePlan() {
+async function handleGetMyProfilePlan(currentUserId) {
 	return connectAndRun((db) =>
 		db.any('SELECT * FROM profileplan WHERE userId = $1;', [currentUserId])
 	);
 }
 
 //CREATE the profile info with initial values in DB
-async function handlePostCreateInitialProfile(info) {
+async function handlePostCreateInitialProfile(info, currentUserId) {
 	console.log(info);
 	return connectAndRun((db) =>
 		db.any(
@@ -211,8 +212,9 @@ async function handlePostCreateInitialProfile(info) {
 	);
 }
 
+//
 //CREATE the profile plan with initial values in DB
-async function handlePostCreateInitialProfilePlan(info) {
+async function handlePostCreateInitialProfilePlan(info, currentUserId) {
 	console.log(info);
 	return connectAndRun((db) =>
 		db.any(
@@ -244,7 +246,7 @@ async function handlePostCreateDaysPlan(info) {
 }
 
 //GET a specific day's diet and workout for the profile page
-async function handleGetaDaysPlan(day) {
+async function handleGetaDaysPlan(day, currentUserId) {
 	return connectAndRun((db) =>
 		db.any('SELECT * FROM profileplan WHERE userId = $1 AND day= $2;', [
 			currentUserId,
@@ -254,7 +256,7 @@ async function handleGetaDaysPlan(day) {
 }
 
 //UPDATE the profile info with whatever is inputed into the html
-async function handlePostUpdateProfileInfo(info) {
+async function handlePostUpdateProfileInfo(info, currentUserId) {
 	return connectAndRun((db) =>
 		db.any(
 			'UPDATE profileinfo SET username = $1, age=$2, goalweight = $3, country = $4, about = $5, favgym = $6, favworkout = $7, favrecipe = $8 WHERE userId = $9;',
@@ -274,7 +276,7 @@ async function handlePostUpdateProfileInfo(info) {
 }
 
 //UPDATE the profile workout for the day given in info
-async function handlePostUpdateDaysWorkout(info) {
+async function handlePostUpdateDaysWorkout(info, currentUserId) {
 	return connectAndRun((db) =>
 		db.any(
 			'UPDATE profileplan SET workoutId = $1 WHERE userId = $2 AND day = $3;',
@@ -284,7 +286,7 @@ async function handlePostUpdateDaysWorkout(info) {
 }
 
 //UPDATE the profile diet for the day given in info
-async function handlePostUpdateDaysDiet(info) {
+async function handlePostUpdateDaysDiet(info, currentUserId) {
 	return connectAndRun((db) =>
 		db.any(
 			'UPDATE profileplan SET dietId = $1 WHERE userId = $2 AND day = $3;',
