@@ -117,7 +117,7 @@ async function itemClickEvent(element, type){
             });
         }
         else{
-            btn.classList.add("btn", "btn-danger");
+            btn.classList.add("btn", "btn-danger", "browse-btn");
             btn.innerText = "Delete Diet"
             btn.addEventListener("click", async () => {
                 //TODO fix this route
