@@ -5,20 +5,16 @@ window.addEventListener("load", async function() {
 
 const dietMap = {};
 let curSelection = null;
-let curUserId = null;
 
 async function loadUserWorkouts(element){
     element.innerHTML='';
 
     //get the users posted diets
     const diets = await (await fetch('/diets/userDiets')).json();
-    console.log(diets);
     if(!diets || diets.length === 0){
         element.innerHTML = "<i>You have not posted any diets</i>";
         return;
     }
-
-    curUserId = diets[0]['userid'];
 
     for(let i=0; i<5 && i<diets.length; i++){
         const a = document.createElement('a');
@@ -38,7 +34,7 @@ async function loadRecs(element){
     
     let count = 5;
     for(let i=0; i<count && i<diets.length; i++){
-        if(diets[i]['userid'] !== curUserId){
+        if(filterHelper(diets[i]['dietid'])){
             const a = document.createElement('a');
             a.href = '#'; //TODO
             a.classList.add('list-group-item', 'list-group-item-action');
@@ -54,6 +50,15 @@ async function loadRecs(element){
             count++;
         }
     }
+}
+function filterHelper(id) {
+    const vals = Object.values(dietMap);
+    for(let i=0; i<vals.length; i++){
+        if (vals[i]['dietid'] === id){
+            return false;
+        }
+    }
+    return true;
 }
 
 async function itemClickEvent(element, type){
@@ -109,8 +114,6 @@ async function itemClickEvent(element, type){
             btn.classList.add("btn", "btn-success");
             btn.innerText = "Add This Diet";
             btn.addEventListener("click", async () => {
-                console.log(di.dietid);
-                console.log(di.dietname);
                 let newDiet = await fetch('diets/add', {
                     headers: {
                         'Content-Type': 'application/json',
@@ -134,7 +137,6 @@ async function itemClickEvent(element, type){
             btn.classList.add("btn", "btn-danger", "browse-btn");
             btn.innerText = "Delete Diet"
             btn.addEventListener("click", async () => {
-                console.log(di.dietid);
                 let res = await fetch(`diets/delete/${di.dietid}`,{
                     headers: {
                         'Content-Type': 'application/json',
