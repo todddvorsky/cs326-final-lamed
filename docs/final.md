@@ -88,7 +88,58 @@ A simple about page for how we made this project and who made it.
 
 
 ## APIs:
+### Diet Routes:
 
+| End Point      | Type of request | Description              |
+|--------------|-----------|--------------------------|
+| diet/allDiets | GET| Get all of the diets in the database |
+| diet/:diet | GET| Get a diet with the specified dietID |
+| diet/:diet/recipes | GET| Get the recipes associated with diet specified with the dietID given|
+| diet/create | POST| Create a diet to put in the DB |
+| diet/recipe/create | POST| create a recipe to put in the DB|
+| diet/update/:diet | PUT| Update a diet with the specified dietID |
+| diet/recipes/update/:recipe | PUT| Update a recipe with the specified recipeID |
+| diet/delete/:diet | DELETE| Delete a specified diet |
+| diet/recipe/delete/:recipe | DELETE| Delete a specified recipe |
+
+### Workout Routes:
+
+| End Point      | Type of request | Description              |
+|--------------|-----------|--------------------------|
+| workout/allWorkouts | GET| Get all of the workouts in the database |
+| workout/:workout | GET| Get a workout with the specified workoutID |
+| workout/:workout/exercises | GET| Get the exercises associated with a specific workout|
+| workout/create | POST| Create a workout to put in the DB |
+| workout/exercise/create | POST| create an exercise to put in the DB|
+| workout/update/:workout | PUT| Update a workout with the specified workoutID |
+| workout/exercises/update/:exercise | PUT| Update an exercise with the specified exerciseID |
+| workout/delete/:workout | DELETE| Delete a specified workout from the DB |
+| workout/exercise/delete/:exercise | DELETE| Delete a specified exercise from the DB |
+
+
+### User Routes:
+
+| End Point      | Type of request | Description              |
+|--------------|-----------|--------------------------|
+| users/ | GET| Get all of the users in the database |
+| users/:user | GET| Get a user with the specified userID |
+| users/workouts/currentuser | GET| Get the workouts associated with the current user|
+| users/diets/currentUser | GET| Get the diets associated with the current user |
+| users/addfriend/:friendemail | POST| Add to this user's friends with the given friend's email |
+| users/friends/myfriends | GET| Get this users accepted friends from the DB |
+| users/friends/delete/:friendid | DELETE| Delete the current chosen friend from this users friends list |
+| users/update/current | POST| update a the current users info|
+| users/profile/myinfo | GET| Get the current users profile info |
+| users/profile/info/update | POST| Update the current users profile info with the inputed info |
+| users/profile/info/create | POST| Create an initial entry in the database for the current users profile info|
+| users/profile/plan/create | POST| Create an initial entry in the database for the current users profile plan|
+| users/profile/workout/update |POST| Update the workout plan for the current user on the selected day |
+| users/profile/diet/update| POST| Update the diet plan for the current user on the selected day |
+| users/profile/plan/:day | GET| Get the profile's plan for the specified day given |
+| users/diets/:name | GET| Get dietId associated with the named diet given |
+| users/workouts/:name | GET| Get the workoutID associated with the named workout given |
+| users/user/workouts/:userid | GET| Get the workouts associated with this user |
+| users/user/diets/:userid | GET| Get the diets associated with this user |
 
 ## Database Description:
 
@@ -206,59 +257,8 @@ A simple about page for how we made this project and who made it.
 | hashedpwd | CHAR(128) | The hashed password for this user |
 
 ## URL Routes/Mapping:
+ - 
 
-### Diet Routes:
-
-| End Point      | Type of request | Description              |
-|--------------|-----------|--------------------------|
-| diet/allDiets | GET| Get all of the diets in the database |
-| diet/:diet | GET| Get a diet with the specified dietID |
-| diet/:diet/recipes | GET| Get the recipes associated with diet specified with the dietID given|
-| diet/create | POST| Create a diet to put in the DB |
-| diet/recipe/create | POST| create a recipe to put in the DB|
-| diet/update/:diet | PUT| Update a diet with the specified dietID |
-| diet/recipes/update/:recipe | PUT| Update a recipe with the specified recipeID |
-| diet/delete/:diet | DELETE| Delete a specified diet |
-| diet/recipe/delete/:recipe | DELETE| Delete a specified recipe |
-
-### Workout Routes:
-
-| End Point      | Type of request | Description              |
-|--------------|-----------|--------------------------|
-| workout/allWorkouts | GET| Get all of the workouts in the database |
-| workout/:workout | GET| Get a workout with the specified workoutID |
-| workout/:workout/exercises | GET| Get the exercises associated with a specific workout|
-| workout/create | POST| Create a workout to put in the DB |
-| workout/exercise/create | POST| create an exercise to put in the DB|
-| workout/update/:workout | PUT| Update a workout with the specified workoutID |
-| workout/exercises/update/:exercise | PUT| Update an exercise with the specified exerciseID |
-| workout/delete/:workout | DELETE| Delete a specified workout from the DB |
-| workout/exercise/delete/:exercise | DELETE| Delete a specified exercise from the DB |
-
-
-### User Routes:
-
-| End Point      | Type of request | Description              |
-|--------------|-----------|--------------------------|
-| users/ | GET| Get all of the users in the database |
-| users/:user | GET| Get a user with the specified userID |
-| users/workouts/currentuser | GET| Get the workouts associated with the current user|
-| users/diets/currentUser | GET| Get the diets associated with the current user |
-| users/addfriend/:friendemail | POST| Add to this user's friends with the given friend's email |
-| users/friends/myfriends | GET| Get this users accepted friends from the DB |
-| users/friends/delete/:friendid | DELETE| Delete the current chosen friend from this users friends list |
-| users/update/current | POST| update a the current users info|
-| users/profile/myinfo | GET| Get the current users profile info |
-| users/profile/info/update | POST| Update the current users profile info with the inputed info |
-| users/profile/info/create | POST| Create an initial entry in the database for the current users profile info|
-| users/profile/plan/create | POST| Create an initial entry in the database for the current users profile plan|
-| users/profile/workout/update |POST| Update the workout plan for the current user on the selected day |
-| users/profile/diet/update| POST| Update the diet plan for the current user on the selected day |
-| users/profile/plan/:day | GET| Get the profile's plan for the specified day given |
-| users/diets/:name | GET| Get dietId associated with the named diet given |
-| users/workouts/:name | GET| Get the workoutID associated with the named workout given |
-| users/user/workouts/:userid | GET| Get the workouts associated with this user |
-| users/user/diets/:userid | GET| Get the diets associated with this user |
 
 
 ## Authentication/Authorization
