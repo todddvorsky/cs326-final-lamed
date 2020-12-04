@@ -249,7 +249,7 @@ We do not have any special permissions, except that a user must first log in bef
 Once a user is logged in, their session is used throughout the site in order to indentify who the current user is.
 
 ## Division of Labor:
-
+https://trello.com/b/VGpL7hCq/fit4fun
 
 #### Patrick Kelley
 - all of the user endpoints and functionality
