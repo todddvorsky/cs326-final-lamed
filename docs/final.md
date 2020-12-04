@@ -239,6 +239,8 @@ A simple about page for how we made this project and who made it.
 | users/profile/workout/update |POST| Update the workout plan for the current user on the selected day |
 | users/profile/diet/update| POST| Update the diet plan for the current user on the selected day |
 | users/profile/plan/:day | GET| Get the profile's plan for the specified day given |
+| users/diets/:name | GET| Get dietId associated with the named diet given |
+| users/workouts/:name | GET| Get the workoutID associated with the named workout given |
 
 
 ## Authentication/Authorization
