@@ -307,7 +307,6 @@ async function populateWorkoutList() {
 		return;
 	}
 	const workouts = await response.json();
-	console.log(workouts);
 	for (const wo of workouts) {
 		const newName = document.createElement('a');
 		newName.classList.add('dropdown-item');
@@ -319,7 +318,6 @@ async function populateWorkoutList() {
 			return;
 		}
 		const exercises = await resp.json();
-		console.log(exercises);
 		newName.addEventListener('click', async function () {
 			document.getElementById('workout_txt').innerHTML = exercises[0].name;
 			document.getElementById('workout_desc').innerHTML =
@@ -328,10 +326,8 @@ async function populateWorkoutList() {
 				newName.innerHTML;
 			const exist = await planExists(currentDayClicked);
 			if (exist) {
-				console.log('plan exists so im updating the plan');
 				updateDaysWorkout(woid, currentDayClicked);
 			} else {
-				console.log('plan doesnt exist so im creating a new one');
 				createPlanOfDay({
 					day: currentDayClicked,
 					dietId: null,
@@ -408,10 +404,7 @@ async function planExists(day) {
 		return;
 	}
 	const dbs = await response.json();
-	console.log('plan exists:');
-	console.log(dbs);
 	const db = dbs[0];
-	console.log(db);
 	if (dbs.length === 0) {
 		return false;
 	}
@@ -427,7 +420,6 @@ async function thisDaysDietWorkout(day) {
 		return;
 	}
 	const dbs = await response.json();
-	console.log(dbs);
 	const db = dbs[0];
 	if (!db) {
 		document.getElementById('breakfast_txt').innerHTML = 'Pick a diet';
