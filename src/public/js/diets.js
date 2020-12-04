@@ -12,7 +12,7 @@ async function loadUserWorkouts(element){
 
     //get the users posted diets
     const diets = await (await fetch('/diets/userDiets')).json();
-
+    console.log(diets);
     if(!diets || diets.length === 0){
         element.innerHTML = "<i>You have not posted any diets</i>";
         return;
@@ -109,13 +109,16 @@ async function itemClickEvent(element, type){
             btn.classList.add("btn", "btn-success");
             btn.innerText = "Add This Diet";
             btn.addEventListener("click", async () => {
-                let newDiet = await fetch('diets/create', {
+                console.log(di.dietid);
+                console.log(di.dietname);
+                let newDiet = await fetch('diets/add', {
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     method: 'POST',
                     body: JSON.stringify({
-                        'dietName' : nameOfDiet
+                        'dietid' : di.dietid,
+                        'dietName' : di.dietname
                     }),
                 });
                 if(newDiet.ok){
@@ -124,13 +127,14 @@ async function itemClickEvent(element, type){
                 else{
                     alert("failed to add diet, sorry!");
                 }
-                newDiet = await newDiet.json();
+                //newDiet = await newDiet.json();
             });
         }
         else{
             btn.classList.add("btn", "btn-danger", "browse-btn");
             btn.innerText = "Delete Diet"
             btn.addEventListener("click", async () => {
+                console.log(di.dietid);
                 let res = await fetch(`diets/delete/${di.dietid}`,{
                     headers: {
                         'Content-Type': 'application/json',
@@ -141,7 +145,7 @@ async function itemClickEvent(element, type){
                     alert("Diet deleted!");
                 else
                     alert("failed to delete diet, sorry!");
-                res = await res.json();
+                //res = await res.json();
             });
         }
 
