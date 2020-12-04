@@ -254,13 +254,16 @@ async function populateWorkoutList(){
             return;
         }
         const exercises = await resp.json();
-        newName.addEventListener('click', function() {
+        newName.addEventListener('click', async function() {
             document.getElementById("workout_txt").innerHTML = exercises[0].name;
             document.getElementById("workout_desc").innerHTML = exercises[0].description;
             document.getElementById('WO_dropdownMenuButton').innerHTML = newName.innerHTML;
-            if(planExists(currentDayClicked)){
+            let exist =  await planExists(currentDayClicked);
+            if(exist){
+                console.log('plan exists so im updating the plan');
                 updateDaysWorkout(woid, currentDayClicked);
             }else{
+                console.log('plan doesnt exist so im creating a new one');
                 createPlanOfDay({'day':currentDayClicked, 'dietId': null,'workoutId':woid });
             }
         });
@@ -337,8 +340,12 @@ async function planExists(day){
     console.log(dbs);
     const db = dbs[0];
     console.log(db);
-    if(!db){return false;}
-    else {return true};
+    if(dbs.length === 0){
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 //Populate the plan based on the day givenS
@@ -349,6 +356,7 @@ async function thisDaysDietWorkout(day){
         return;
     }
     const dbs = await response.json();
+    console.log(dbs);
     const db = dbs[0];
     if(!db){
         document.getElementById('breakfast_txt').innerHTML = 'Pick a diet';
