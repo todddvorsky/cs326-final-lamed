@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS recipes CASCADE;
 DROP TABLE IF EXISTS profileinfo CASCADE;
 DROP TABLE IF EXISTS profileplan CASCADE;
 DROP TABLE IF EXISTS passwords CASCADE;
+DROP TABLE IF EXISTS usersDiets CASCADE;
+DROP TABLE IF EXISTS usersWorkouts CASCADE;
 
 
 CREATE TABLE users(
@@ -65,6 +67,20 @@ CREATE TABLE diets (
     dietId SERIAL PRIMARY KEY,
     userId INT,
     dietName VARCHAR(255) -- UNIQUE
+    -- FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE usersDiets (
+    dietId INT,
+    userId INT,
+    dietName VARCHAR(255)
+    -- FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE usersWorkouts (
+    workoutId INT,
+    userId INT,
+    workoutName VARCHAR(255)
     -- FOREIGN KEY (userId) REFERENCES users(userId)
 );
 

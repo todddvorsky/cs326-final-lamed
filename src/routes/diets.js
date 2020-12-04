@@ -68,6 +68,11 @@ router.delete('/delete/:dietid', async function (req, res) {
 	const diet = await database.handleDeleteDiet(req.params.dietid, req.user);
 	res.send(diet);
 });
+/* add a diet */
+router.post('/add', async function (req, res) {
+	const diet = await database.handleAddDiet(req.body.dietid, req.user, req.body.dietName);
+	res.send(diet);
+});
 /* Delete a recipe */
 router.delete('/recipe/delete/:recipe', function (req, res) {
 	res.send('delete recipe: ' + req.recipe);

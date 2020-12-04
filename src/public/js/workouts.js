@@ -110,13 +110,14 @@ async function itemClickEvent(element, type){
             btn.classList.add("btn", "btn-success");
             btn.innerText = "Add This Workout";
             btn.addEventListener("click", async () => {
-                let newWorkout = await fetch('workouts/create', {
+                let newWorkout = await fetch('workouts/add', {
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     method: 'POST',
                     body: JSON.stringify({
-                        'workoutName' : wo.workoutname
+                        'workoutName' : wo.workoutname,
+                        'workoutId' : wo.workoutid
                     }),
                 });
                 if(newWorkout.ok){
@@ -125,7 +126,7 @@ async function itemClickEvent(element, type){
                 else{
                     alert("failed to add workout, sorry!");
                 }
-                newWorkout = await newWorkout.json();
+                //newWorkout = await newWorkout.json();
             });
         }
         else{

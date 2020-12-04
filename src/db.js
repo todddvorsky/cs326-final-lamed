@@ -59,12 +59,12 @@ async function handleGetUserPwd(userid) {
 }
 async function handleGetUserWorkouts(userid) {
 	return connectAndRun((db) =>
-		db.any('SELECT * FROM workouts WHERE userid = $1;', [userid])
+		db.any('SELECT * FROM usersWorkouts WHERE userid = $1;', [userid])
 	);
 }
 async function handleGetUserDiets(userid) {
 	return connectAndRun((db) =>
-		db.any('SELECT * FROM diets WHERE userid = $1;', [userid])
+		db.any('SELECT * FROM usersDiets WHERE userid = $1;', [userid])
 	);
 }
 async function handleGetDietsRecipes(dietid) {
@@ -151,7 +151,7 @@ async function handleGetMyFriends(currentUserId) {
 async function handleDeleteDiet(dietid, currentUserId){
 	await connectAndRun((db) =>
 		db.none(
-			'DELETE FROM diets WHERE userId = $1 AND dietid = $2;',
+			'DELETE FROM usersdiets WHERE userId = $1 AND dietid = $2;',
 			[currentUserId, dietid]
 		)
 	);
@@ -161,11 +161,34 @@ async function handleDeleteDiet(dietid, currentUserId){
 async function handleDeleteWorkout(workoutid, currentUserId){
 	await connectAndRun((db) =>
 		db.none(
-			'DELETE FROM workouts WHERE userId = $1 AND workoutid = $2;',
+			'DELETE FROM usersWorkouts WHERE userId = $1 AND workoutid = $2;',
 			[currentUserId, workoutid]
 		)
 	);
 }
+
+//add a diet into usersdiets to keep track of what diets users have saved
+async function handleAddDiet(dietid, currentUserId, dietName) {
+	// if no status was found for these friends
+	await connectAndRun((db) =>
+		db.any(
+			'INSERT INTO usersDiets(dietId, userId, dietname) VALUES($1,$2, $3);',
+			[dietid, currentUserId, dietName]
+		)
+	);
+}
+
+//add a workout into usersworkouts to keep track of what workouts users have saved
+async function handleAddWorkout(workoutid, currentUserId, workoutName) {
+	// if no status was found for these friends
+	await connectAndRun((db) =>
+		db.any(
+			'INSERT INTO usersWorkouts(workoutId, userId, workoutname) VALUES($1,$2, $3);',
+			[workoutid, currentUserId, workoutName]
+		)
+	);
+}
+
 
 //DELETE to delete the selected friend from the current users friends list
 async function handleDeleteFriend(friendsid, currentUserId) {
@@ -434,6 +457,7 @@ module.exports = {
 	handlePostNewUser,
 	handlePostCheckOwnRequest,
 	handlePostUpdateDaysDiet,
+	handleAddWorkout,
 	handlePostUpdateDaysWorkout,
 	handleDeleteFriend,
 	handleDeleteWorkout,
@@ -456,6 +480,7 @@ module.exports = {
 	createDiet,
 	getAllWorkouts,
 	getAllDiets,
+	handleAddDiet,
 	handleGetSpecWorkout,
 	handleGetSpecDiet
 };
