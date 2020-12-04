@@ -257,8 +257,9 @@ A simple about page for how we made this project and who made it.
 | hashedpwd | CHAR(128) | The hashed password for this user |
 
 ## URL Routes/Mapping:
- - 
-
+- Our URL mapping is done by statically serving our entire public folder via Express.
+- This public folder contains all of the images, html files, and js files that are necessary to run the frontend
+- The only exceptions to this are the '/', '/login', and '/home' directories which handle making sure the user is logged in before accessing home.html. 
 
 
 ## Authentication/Authorization
