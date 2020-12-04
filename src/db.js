@@ -403,6 +403,16 @@ async function handleGetUserDietsWithName(userid, name) {
 	);
 }
 
+// Get user's diets with the given userid
+async function handleGetUsersDiets(userid) {
+	return connectAndRun((db) =>
+		db.any(
+			'SELECT * FROM usersDiets WHERE userid = $1;',
+			[userid]
+		)
+	);
+}
+
 // POST - create recipe
 async function createRecipe(dietId, name, description, ingredients, tag) {
 	return connectAndRun((db) =>
@@ -451,6 +461,7 @@ module.exports = {
 	handleGetUserWorkouts,
 	handleGetDietsRecipes,
 	handleGetWorkoutsExercises,
+	handleGetUsersDiets,
 	handleGetUserDiets,
 	handleGetMyFriends,
 	handlePostCheckFriend,

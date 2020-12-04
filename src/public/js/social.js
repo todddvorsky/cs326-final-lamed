@@ -22,6 +22,7 @@ async function populateFriends(){
         return;
     }
     const db = await response.json();
+    console.log(db);
     for(let user of db){
         const newName = document.createElement("a");
         const resp = await fetch(`/users/${user.friendid}`);
@@ -30,7 +31,8 @@ async function populateFriends(){
             return;
         }
         const friendz = await resp.json();
-        const friend = friendz[0];
+        console.log(friendz);
+        const friend = friendz;
         const f_Upcase = friend.firstname.charAt(0).toUpperCase();
         const l_Upcase = friend.lastname.charAt(0).toUpperCase();
         newName.innerHTML = f_Upcase+friend.firstname.slice(1)+' '+l_Upcase+friend.lastname.slice(1);
@@ -49,8 +51,8 @@ async function populateFriends(){
 /*Use the specified user id to populate the workout
     section of the social page for that friend
 */
-async function populateWorkout(id){
-    const response = await fetch(`/users/workouts/${id}`);
+async function populateWorkout(userid){
+    const response = await fetch(`/users/user/workouts/${userid}`);
     if (!response.ok) {
         console.log(response.error);
         return;
@@ -84,8 +86,8 @@ async function getDietRecipes(dietid){
 
 /*Use the specified user id to populate the diet
 section of the social page for that friend selected*/
-async function populateDiet(id){
-    const response = await fetch(`/users/diets/${id}`);
+async function populateDiet(userid){
+    const response = await fetch(`/users/user/diets/${userid}`);
     if (!response.ok) {
         console.log(response.error);
         return;

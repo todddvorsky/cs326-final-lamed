@@ -145,13 +145,29 @@ router.get('/workouts/:name', async function (req, res) {
 	res.send(userWorkouts);
 });
 
-// GET a specific user's diets with name
+// GET a specific user's diets with the dietname
 router.get('/diets/:name', async function (req, res) {
 	const userDiets = await database.handleGetUserDietsWithName(
 		req.user,
 		req.params.name
 	);
 	res.send(userDiets);
+});
+
+// GET a specific user's diets with the userid
+router.get('/user/diets/:userid', async function (req, res) {
+	const userDiets = await database.handleGetUserDiets(
+		req.params.userid
+	);
+	res.send(userDiets);
+});
+
+// GET a specific user's workouts with the userid
+router.get('/user/workouts/:userid', async function (req, res) {
+	const userWorkouts = await database.handleGetUserWorkouts(
+		req.params.userid
+	);
+	res.send(userWorkouts);
 });
 
 module.exports = router;
