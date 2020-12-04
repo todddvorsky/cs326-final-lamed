@@ -32,27 +32,33 @@ make one on the left! If you try to login without an existing account, you will
 stay on the login screen and be told there is no account with that info. You cannot
 get to any other page by changing the URL either, so you are forced to make an
 account and log in with that account.
+![Login Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/loginPage.png)
 
 ## Home
 This is just a welcome page and just has a list of all of the other pages you can
 go to as well.
+![Home Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/homePage.png)
 
 ## Diet
 Here you can create a new diet to show up in the "browse diets" page. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
+![Diet Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/dietPage.jpg)
 
 ## Browse Diets
 This page allows you to browse diets input by other users and to save
 these diets for own page. You will see the contents of the diet when you click the
 diet to get a better sense of whether it fits yourself, and then choose to save it 
 under your own profile.
+![Browse Diets Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/browseDietPage.jpg)
 
 ## Workout
 Here you can create a new workout to show up in the "browse workouts" page. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
+![Workout Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/workoutPage.png)
 
 ## Browse Workouts
 Again like the browse diets page, this is a page to browse diets from other users and
 save them as your own to use in your own profile. Click the workout to get more information about it,
 and then save it under your own profile if you like it!
+![Browse Workouts Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/browseWorkoutPage.png)
 
 ## Social
 This is a page to see what your friends are up to. You can add a friend by inputting
@@ -63,6 +69,7 @@ accepted, or if no user is found with that email. After you become friends, they
 will show up in the drop down menu labeled "friends list" and you can see a workout
 and diet that they have saved. You can also delete friends by clicking on them in the
 friends list and then pressing the "delete friend" button on the bottom of the page.
+![Social Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/socialPage.png)
 
 ## Profile
 This is where you can display all of your information for yourself to keep track of.
@@ -73,9 +80,11 @@ page, you can set the workout and diet that you'd like to follow for everyday of
 the week. Once you select a workout and diet within one of the days that you also
 have to select, it will save and you can view it for reference whenever you'd like.
 You can also change them whenever you'd like.
+![Profile Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/profilePage.png)
 
 ## About
 A simple about page for how we made this project and who made it.
+![About Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/aboutPage.png)
 
 
 ## APIs:
@@ -97,7 +106,7 @@ A simple about page for how we made this project and who made it.
   | users       | table | 
   | workouts    | table | 
 
-Users Table
+#### Users Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | UserId | serial INT    | The ID of a user  |
@@ -106,7 +115,7 @@ Users Table
 | email | VARCHAR(255)   | email of the user that is unique in the table |
 
 
-profileInfo Table
+#### profileInfo Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | the ID of the user who's profile it is |
@@ -119,7 +128,7 @@ profileInfo Table
 |    favworkout | VARCHAR(255) | name of this user's favorite workout |
 |    favrecipe | VARCHAR(255) | name of this user's favorite recipe |
 
-profilePlan Table
+#### profilePlan Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | the ID of the user who's profile it is |
@@ -127,14 +136,14 @@ profilePlan Table
 | dietId | INT | ID of the associated diet |
 | workoutId | INT | ID of the associated workout |
 
-friends Table
+#### friends Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | ID for identifying the user |
 | friendId | INT | ID for identifying another user  |
 | status | VARCHAR(255) | The status of the friend request (pending or accepted) |
 
-workouts Table
+#### workouts Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | workoutID | INT | ID for this specific workout |
@@ -142,7 +151,7 @@ workouts Table
 | workoutName | VARCHAR(255) | A unique name for this specific workout |
 
 
-exercises Table
+#### exercises Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | exerciseId | INT | Unique serial ID for this specific exercise |
@@ -153,14 +162,14 @@ exercises Table
 | reps | INT | number of reps to do for this exercise |
 | tag | VARCHAR(255) | a tag to associate with this exercise |
 
-diets Table
+#### diets Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | dietId | INT | ID for this specific diet |
 | userId | INT | ID of a user to associate this diet with  |
 | dietName | VARCHAR(255) | A unique name for this specific diet |
 
-recipes Table
+#### recipes Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | recipeId | INT | Unique serial ID for this specific recipe |
@@ -170,7 +179,7 @@ recipes Table
 | ingredients | TEXT | List of ingredients for this recipe |
 | tag | TEXT | a tag to associate with this recipe (breakfast, lunch, or dinner) |
 
-passwords Table
+#### passwords Table
 | Column       | Data Type | Description              |
 |--------------|-----------|--------------------------|
 | userId | INT | ID of the user to associate with the password |
@@ -247,6 +256,7 @@ Once a user is logged in, their session is used throughout the site in order to 
 - JS implementation of the social page
 - JS implementation of the profile page
 - Milestone and final markdown write-ups
+- DB design/implementation
 
 #### Todd Dvorsky
 - design of the navigation bar, home page, login page, workout page, diet page, and about page
