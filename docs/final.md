@@ -41,14 +41,14 @@ go to as well.
 
 ## Diet
 Here you can create a new diet to show up in the "browse diets" page. Fill out all of the input fields in order to make a complete diet. Click the button at the top to go to the "browse diets" page.
-![Diet Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/dietPage.png)
+![Diet Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/dietPage.jpg)
 
 ## Browse Diets
 This page allows you to browse diets input by other users and to save
 these diets for own page. You will see the contents of the diet when you click the
 diet to get a better sense of whether it fits yourself, and then choose to save it 
 under your own profile.
-![Browse Diets Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/browseDietPage.png)
+![Browse Diets Page](https://github.com/todddvorsky/cs326-final-lamed/blob/master/screenshots/final_screenshots/browseDietPage.jpg)
 
 ## Workout
 Here you can create a new workout to show up in the "browse workouts" page. Fill out all of the input fields in order to make a complete workout. Press the button at the top to go to the "browse workouts" page.
