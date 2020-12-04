@@ -16,7 +16,7 @@ async function loadUserWorkouts(element) {
 		return;
 	}
 
-	for (let i = 0; i < 5 && i < diets.length; i += 1) {
+	for (let i = 0; i < 20 && i < diets.length; i += 1) {
 		const a = document.createElement('a');
 		a.href = '#';
 		a.classList.add('list-group-item', 'list-group-item-action');
@@ -34,7 +34,7 @@ async function loadUserWorkouts(element) {
 async function loadRecs(element) {
 	const diets = await (await fetch('/diets/allDiets')).json();
 
-	let count = 5;
+	let count = 20;
 	for (let i = 0; i < count && i < diets.length; i += 1) {
 		if (filterHelper(diets[i].dietid)) {
 			const a = document.createElement('a');
