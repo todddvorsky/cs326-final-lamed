@@ -5,7 +5,6 @@ window.addEventListener("load", async function() {
 
 const workoutMap = {};
 let curSelection = null;
-let curUserId = null;
 
 async function loadUserWorkouts(element){
     element.innerHTML='';
@@ -17,8 +16,6 @@ async function loadUserWorkouts(element){
         element.innerHTML = "<i>You have not posted any workouts</i>";
         return;
     }
-
-    curUserId = workouts[0]['userid'];
 
     for(let i=0; i<5 && i<workouts.length; i++){
         const a = document.createElement('a');
@@ -38,7 +35,7 @@ async function loadRecs(element){
 
     let count = 5;
     for(let i=0; i<count && i<workouts.length; i++){
-        if(workouts[i]['userid'] !== curUserId){
+        if(filterHelper(workouts[i]['workoutid'])) {
             const a = document.createElement('a');
             a.href = '#'; //TODO
             a.classList.add('list-group-item', 'list-group-item-action');
@@ -54,6 +51,15 @@ async function loadRecs(element){
             count++;
         }
     }
+}
+function filterHelper(id) {
+    const vals = Object.values(workoutMap);
+    for(let i=0; i<vals.length; i++){
+        if (vals[i]['workoutid'] === id){
+            return false;
+        }
+    }
+    return true;
 }
 
 async function itemClickEvent(element, type){
@@ -72,8 +78,6 @@ async function itemClickEvent(element, type){
         curSelection = element;
 
         const wo = workoutMap[element.innerText];
-
-        console.log("wo: " + JSON.stringify(wo));
         
         const q1 = await fetch('/users/'+wo['userid']);
         const creator = await q1.json();
@@ -126,24 +130,26 @@ async function itemClickEvent(element, type){
                 else{
                     alert("failed to add workout, sorry!");
                 }
-                //newWorkout = await newWorkout.json();
+                location.reload();
             });
         }
         else{
             btn.classList.add("btn", "btn-danger", "browse-btn");
             btn.innerText = "Delete Workout"
             btn.addEventListener("click", async () => {
-                console.log(wo.workoutid);
                 let res = await fetch(`workouts/delete/${wo.workoutid}`,{
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     method: 'DELETE'
                 });
-                if(res.ok)
+                if(res.ok) {
                     alert("Workout deleted!");
-                else
+                }
+                else {
                     alert("failed to delete workout, sorry!");
+                }
+                location.reload();
             });
         }
 
