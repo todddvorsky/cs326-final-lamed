@@ -38,6 +38,8 @@ async function loadRecs(element){
 
     let i=0;
     while(i<5 && i<workouts.length){
+        //Need this to filter out the workouts from the current user
+        //if(workouts[i]['userid'] !== CURRENT USER ID){
         const a = document.createElement('a');
         a.href = '#'; //TODO
         a.classList.add('list-group-item', 'list-group-item-action');
@@ -50,6 +52,7 @@ async function loadRecs(element){
         element.appendChild(a);
 
         i++;
+        //}
     }
 }
 
@@ -105,22 +108,35 @@ async function itemClickEvent(element, type){
             btn.classList.add("btn", "btn-success");
             btn.innerText = "Add This Workout";
             btn.addEventListener("click", async () => {
-                // TODO fix this route
-                const res = await fetch('/');
-                if(res.ok){
+                let newWorkout = await fetch('workouts/create', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'workoutName' : wo.workoutname
+                    }),
+                });
+                if(newWorkout.ok){
                     alert("Workout added!");
                 }
                 else{
                     alert("failed to add workout, sorry!");
                 }
+                newWorkout = await newWorkout.json();
             });
         }
         else{
             btn.classList.add("btn", "btn-danger");
             btn.innerText = "Delete Workout"
             btn.addEventListener("click", async () => {
-                //TODO fix this route
-                const res = await fetch('/');
+                console.log(wo.workoutid);
+                let res = await fetch(`workouts/delete/${wo.workoutid}`,{
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'DELETE'
+                });
                 if(res.ok)
                     alert("Workout deleted!");
                 else

@@ -242,7 +242,7 @@ async function populateWorkoutList(){
         return;
     }
     const workouts = await response.json();
-
+    console.log(workouts);
     for(let wo of workouts){
         const newName = document.createElement("a");
         newName.classList.add('dropdown-item');
@@ -254,6 +254,7 @@ async function populateWorkoutList(){
             return;
         }
         const exercises = await resp.json();
+        console.log(exercises);
         newName.addEventListener('click', async function() {
             document.getElementById("workout_txt").innerHTML = exercises[0].name;
             document.getElementById("workout_desc").innerHTML = exercises[0].description;
